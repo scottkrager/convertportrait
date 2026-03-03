@@ -4,11 +4,12 @@ FROM php:8.2-apache
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ffmpeg \
     libsqlite3-dev \
+    libpq-dev \
     libzip-dev \
     unzip \
     curl \
     git \
-    && docker-php-ext-install pdo_sqlite zip \
+    && docker-php-ext-install pdo_sqlite pdo_pgsql zip \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install Node.js 20
