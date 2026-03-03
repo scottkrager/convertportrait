@@ -13,8 +13,7 @@ services:
       php artisan config:cache
       php artisan route:cache
       php artisan view:cache
-    run_command: |
-      php artisan migrate --force && heroku-php-apache2 public/
+    run_command: heroku-php-apache2 public/
     environment_slug: php
     instance_count: 1
     instance_size_slug: apps-s-1vcpu-0.5gb
@@ -36,4 +35,6 @@ services:
       - key: SESSION_DRIVER
         value: cookie
       - key: CACHE_STORE
-        value: file
+        value: array
+      - key: LOG_CHANNEL
+        value: stderr
