@@ -790,7 +790,7 @@ onUnmounted(() => {
                     <p v-else class="mt-3 text-xs text-white/25">Processing on server...</p>
 
                     <!-- Pro upsell during slow browser conversion -->
-                    <div v-if="!isPro && processingMode === 'browser' && progress > 5 && progress < 90" class="mt-8 bg-amber-400/[0.04] border border-amber-400/10 rounded-xl p-5 text-left">
+                    <div v-if="!isPro && processingMode === 'browser' && progress > 2 && progress < 90" class="mt-8 bg-amber-400/[0.04] border border-amber-400/10 rounded-xl p-5 text-left">
                         <div class="flex items-start gap-3">
                             <div class="w-8 h-8 rounded-lg bg-amber-400/10 flex items-center justify-center shrink-0 mt-0.5">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
