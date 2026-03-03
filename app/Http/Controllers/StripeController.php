@@ -24,6 +24,7 @@ class StripeController extends Controller
                 'quantity' => 1,
             ]],
             'mode' => 'payment',
+            'allow_promotion_codes' => true,
             'success_url' => url('/') . '?pro=activated',
             'cancel_url' => url('/') . '?pro=cancelled',
         ]);
