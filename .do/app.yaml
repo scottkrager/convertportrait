@@ -14,8 +14,7 @@ services:
       php artisan route:cache
       php artisan view:cache
     run_command: |
-      php artisan migrate --force
-      apache2-foreground
+      php artisan migrate --force && heroku-php-apache2 public/
     environment_slug: php
     instance_count: 1
     instance_size_slug: apps-s-1vcpu-0.5gb
@@ -31,7 +30,7 @@ services:
         value: https://convertportrait.com
       - key: APP_KEY
         type: SECRET
-        value: EV[APP_KEY]
+        value: "base64:9X0euTxeQwbUshcQST9IKwtiYizi4O3OSP3H7qisOtA="
       - key: DB_CONNECTION
         value: sqlite
       - key: SESSION_DRIVER
