@@ -31,6 +31,10 @@ RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf
 RUN echo '<Directory /var/www/html/public>\n    AllowOverride All\n</Directory>' > /etc/apache2/conf-available/allowoverride.conf \
     && a2enconf allowoverride
 
+# Use port 8080 for DO App Platform
+RUN sed -i 's/Listen 80/Listen 8080/' /etc/apache2/ports.conf \
+    && sed -i 's/:80/:8080/' /etc/apache2/sites-available/000-default.conf
+
 # Set working directory
 WORKDIR /var/www/html
 
@@ -48,21 +52,13 @@ COPY . .
 # Build frontend
 RUN npm run build
 
-# Laravel setup
-RUN touch database/database.sqlite \
-    && php artisan migrate --force \
-    && php artisan config:cache \
-    && php artisan route:cache \
-    && php artisan view:cache
+# Make entrypoint executable
+RUN chmod +x docker-entrypoint.sh
 
-# Storage permissions
-RUN mkdir -p storage/app/temp \
+# Storage dirs
+RUN mkdir -p storage/app/temp storage/framework/cache storage/framework/sessions storage/framework/views bootstrap/cache \
     && chown -R www-data:www-data storage bootstrap/cache database
 
 EXPOSE 8080
 
-# Use port 8080 for DO App Platform
-RUN sed -i 's/Listen 80/Listen 8080/' /etc/apache2/ports.conf \
-    && sed -i 's/:80/:8080/' /etc/apache2/sites-available/000-default.conf
-
-CMD ["apache2-foreground"]
+ENTRYPOINT ["./docker-entrypoint.sh"]
