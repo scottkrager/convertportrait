@@ -57,7 +57,7 @@
 
 /* Gradient mesh background */
 .mesh-gradient {
-    background:
+    background-image:
         radial-gradient(ellipse at 20% 50%, rgba(45, 212, 191, 0.06) 0%, transparent 50%),
         radial-gradient(ellipse at 80% 20%, rgba(52, 211, 153, 0.04) 0%, transparent 50%),
         radial-gradient(ellipse at 50% 80%, rgba(45, 212, 191, 0.03) 0%, transparent 50%);
