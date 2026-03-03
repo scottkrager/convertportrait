@@ -337,19 +337,58 @@ async function startServerConversion() {
 }
 
 function buildFilter() {
+    const w = videoDimensions.value.width;
     const h = videoDimensions.value.height;
-    const outW = Math.ceil((h * 16) / 9 / 2) * 2;
-    const outH = Math.ceil(h / 2) * 2;
+
+    // Target 1920x1080 (or proportional) — always 16:9 landscape
+    let outH, outW;
+    if (h > 1080) {
+        outH = 1080;
+        outW = 1920;
+    } else {
+        outH = Math.ceil(h / 2) * 2;
+        outW = Math.ceil((outH * 16) / 9 / 2) * 2;
+    }
+
+    // Scale the portrait video to fit within the 16:9 frame height
+    const fgH = outH;
+    const fgW = Math.ceil((w * outH / h) / 2) * 2;
+
+    const padX = `(${outW}-${fgW})/2`;
+    const padY = 0;
 
     switch (selectedTemplate.value) {
         case 'blurred':
-            return `split[original][blur];[blur]scale=${outW}:${outH},boxblur=20:20[bg];[bg][original]overlay=(W-w)/2:(H-h)/2`;
+            // Scale input to fill 16:9, blur it, then overlay the sharp original centered
+            return [
+                `split[fg][bg]`,
+                `[bg]scale=${outW}:${outH}:force_original_aspect_ratio=increase,crop=${outW}:${outH},avgblur=sizeX=40:sizeY=40[blurred]`,
+                `[fg]scale=${fgW}:${fgH}[sharp]`,
+                `[blurred][sharp]overlay=${padX}:${padY}`
+            ].join(';');
+
         case 'gradient': {
             const g = gradients.find(g => g.id === gradientVariant.value) || gradients[0];
-            return `color=c=0x${g.from.slice(1)}:s=${outW}x${outH}:d=1[left];color=c=0x${g.to.slice(1)}:s=${outW}x${outH}:d=1[right];[left][right]blend=all_mode=addition:all_opacity=0.5[bg];[bg][0:v]overlay=(W-w)/2:(H-h)/2:shortest=1`;
+            const fromHex = g.from.slice(1);
+            const toHex = g.to.slice(1);
+            return [
+                `color=c=0x${fromHex}:s=${outW}x${outH}:d=1[left]`,
+                `color=c=0x${toHex}:s=${outW}x${outH}:d=1[right]`,
+                `[left][right]blend=all_mode=addition:all_opacity=0.5[bg]`,
+                `[0:v]scale=${fgW}:${fgH}[fg]`,
+                `[bg][fg]overlay=${padX}:${padY}:shortest=1`
+            ].join(';');
         }
-        case 'solid':
-            return `color=c=0x${solidColor.value.slice(1)}:s=${outW}x${outH}:d=1[bg];[bg][0:v]overlay=(W-w)/2:(H-h)/2:shortest=1`;
+
+        case 'solid': {
+            const hex = solidColor.value.slice(1);
+            return [
+                `color=c=0x${hex}:s=${outW}x${outH}:d=1[bg]`,
+                `[0:v]scale=${fgW}:${fgH}[fg]`,
+                `[bg][fg]overlay=${padX}:${padY}:shortest=1`
+            ].join(';');
+        }
+
         case 'pattern': {
             const hex = patternColor.value.slice(1);
             let drawboxes = '';
@@ -363,10 +402,20 @@ function buildFilter() {
                         drawboxes += `,drawbox=x=${x}:y=${y}:w=4:h=4:color=0x${hex}@0.4:t=fill`;
                 drawboxes = drawboxes.substring(0, 5000);
             }
-            return `color=c=0x111111:s=${outW}x${outH}:d=1${drawboxes}[bg];[bg][0:v]overlay=(W-w)/2:(H-h)/2:shortest=1`;
+            return [
+                `color=c=0x111111:s=${outW}x${outH}:d=1${drawboxes}[bg]`,
+                `[0:v]scale=${fgW}:${fgH}[fg]`,
+                `[bg][fg]overlay=${padX}:${padY}:shortest=1`
+            ].join(';');
         }
+
         default:
-            return `split[original][blur];[blur]scale=${outW}:${outH},boxblur=20:20[bg];[bg][original]overlay=(W-w)/2:(H-h)/2`;
+            return [
+                `split[fg][bg]`,
+                `[bg]scale=${outW}:${outH}:force_original_aspect_ratio=increase,crop=${outW}:${outH},avgblur=sizeX=40:sizeY=40[blurred]`,
+                `[fg]scale=${fgW}:${fgH}[sharp]`,
+                `[blurred][sharp]overlay=${padX}:${padY}`
+            ].join(';');
     }
 }
 

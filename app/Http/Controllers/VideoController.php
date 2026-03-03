@@ -87,21 +87,32 @@ class VideoController extends Controller
 
     private function buildFilter(string $template, int $width, int $height, array $options): string
     {
-        $outW = (int) (ceil(($height * 16) / 9 / 2) * 2);
-        $outH = (int) (ceil($height / 2) * 2);
+        // Target 1920x1080 or proportional 16:9
+        if ($height > 1080) {
+            $outH = 1080;
+            $outW = 1920;
+        } else {
+            $outH = (int) (ceil($height / 2) * 2);
+            $outW = (int) (ceil(($outH * 16) / 9 / 2) * 2);
+        }
+
+        // Scale foreground to fit height, maintain aspect ratio
+        $fgH = $outH;
+        $fgW = (int) (ceil(($width * $outH / $height) / 2) * 2);
+        $padX = "({$outW}-{$fgW})/2";
 
         switch ($template) {
             case 'blurred':
-                return "split[original][blur];[blur]scale={$outW}:{$outH},boxblur=20:20[bg];[bg][original]overlay=(W-w)/2:(H-h)/2";
+                return "split[fg][bg];[bg]scale={$outW}:{$outH}:force_original_aspect_ratio=increase,crop={$outW}:{$outH},boxblur=40:40[blurred];[fg]scale={$fgW}:{$fgH}[sharp];[blurred][sharp]overlay={$padX}:0";
 
             case 'gradient':
                 $from = ltrim($options['gradientFrom'] ?? 'f97316', '#');
                 $to = ltrim($options['gradientTo'] ?? '9333ea', '#');
-                return "color=c=0x{$from}:s={$outW}x{$outH}:d=1[left];color=c=0x{$to}:s={$outW}x{$outH}:d=1[right];[left][right]blend=all_mode=addition:all_opacity=0.5[bg];[bg][0:v]overlay=(W-w)/2:(H-h)/2:shortest=1";
+                return "color=c=0x{$from}:s={$outW}x{$outH}:d=1[left];color=c=0x{$to}:s={$outW}x{$outH}:d=1[right];[left][right]blend=all_mode=addition:all_opacity=0.5[bg];[0:v]scale={$fgW}:{$fgH}[fg];[bg][fg]overlay={$padX}:0:shortest=1";
 
             case 'solid':
                 $hex = ltrim($options['solidColor'] ?? '000000', '#');
-                return "color=c=0x{$hex}:s={$outW}x{$outH}:d=1[bg];[bg][0:v]overlay=(W-w)/2:(H-h)/2:shortest=1";
+                return "color=c=0x{$hex}:s={$outW}x{$outH}:d=1[bg];[0:v]scale={$fgW}:{$fgH}[fg];[bg][fg]overlay={$padX}:0:shortest=1";
 
             case 'pattern':
                 $hex = ltrim($options['patternColor'] ?? '2dd4bf', '#');
@@ -125,10 +136,10 @@ class VideoController extends Controller
                     $drawboxes = substr($drawboxes, 0, 5000);
                 }
 
-                return "color=c=0x111111:s={$outW}x{$outH}:d=1{$drawboxes}[bg];[bg][0:v]overlay=(W-w)/2:(H-h)/2:shortest=1";
+                return "color=c=0x111111:s={$outW}x{$outH}:d=1{$drawboxes}[bg];[0:v]scale={$fgW}:{$fgH}[fg];[bg][fg]overlay={$padX}:0:shortest=1";
 
             default:
-                return "split[original][blur];[blur]scale={$outW}:{$outH},boxblur=20:20[bg];[bg][original]overlay=(W-w)/2:(H-h)/2";
+                return "split[fg][bg];[bg]scale={$outW}:{$outH}:force_original_aspect_ratio=increase,crop={$outW}:{$outH},boxblur=40:40[blurred];[fg]scale={$fgW}:{$fgH}[sharp];[blurred][sharp]overlay={$padX}:0";
         }
     }
 }
