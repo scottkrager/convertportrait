@@ -753,7 +753,7 @@ onUnmounted(() => {
                     <button
                         @click="startCheckout"
                         :disabled="checkoutLoading"
-                        class="w-full bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-500 hover:to-orange-600 disabled:opacity-50 text-midnight font-bold text-base py-3.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-amber-500/15 active:scale-[0.99]"
+                        class="w-full bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-500 hover:to-orange-600 disabled:opacity-50 text-white font-bold text-base py-3.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-amber-500/15 active:scale-[0.99]"
                     >
                         <span v-if="checkoutLoading" class="inline-flex items-center gap-2">
                             <svg class="animate-spin w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
