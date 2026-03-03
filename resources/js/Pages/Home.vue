@@ -743,7 +743,7 @@ onUnmounted(() => {
                     <!-- Price -->
                     <div class="text-center mb-6">
                         <div class="flex items-baseline justify-center gap-1">
-                            <span class="text-3xl font-extrabold">$9</span>
+                            <span class="text-3xl font-extrabold">$19</span>
                             <span class="text-lg font-bold text-white/50">.99</span>
                         </div>
                         <p class="text-xs text-white/30 mt-1">One-time payment &middot; No subscription</p>

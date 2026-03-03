@@ -19,7 +19,7 @@ class StripeController extends Controller
                         'name' => 'ConvertPortrait Pro',
                         'description' => 'Lifetime access — all templates, unlimited video length',
                     ],
-                    'unit_amount' => 999, // $9.99
+                    'unit_amount' => 1999, // $19.99
                 ],
                 'quantity' => 1,
             ]],
