@@ -13,6 +13,7 @@ const showRestoreModal = ref(false);
 const restoreEmail = ref('');
 const restoreLoading = ref(false);
 const restoreMessage = ref('');
+const processingMode = ref('browser'); // 'browser' or 'server'
 
 // State
 const step = ref('upload');
@@ -232,6 +233,10 @@ async function startConversion() {
         return;
     }
 
+    if (isPro.value && processingMode.value === 'server') {
+        return startServerConversion();
+    }
+
     if (!ffmpegLoaded.value) {
         await loadFFmpeg();
         if (!ffmpegLoaded.value) return;
@@ -266,6 +271,57 @@ async function startConversion() {
     } catch (err) {
         console.error('Conversion error:', err);
         errorMessage.value = `Conversion failed: ${err.message}. Try a shorter clip or different format.`;
+        step.value = 'template';
+    }
+}
+
+async function startServerConversion() {
+    step.value = 'processing';
+    progress.value = -1; // indeterminate
+    progressMessage.value = 'Uploading video to server...';
+    errorMessage.value = '';
+
+    try {
+        const formData = new FormData();
+        formData.append('video', videoFile.value);
+        formData.append('template', selectedTemplate.value);
+
+        const options = {};
+        if (selectedTemplate.value === 'gradient') {
+            const g = gradients.find(g => g.id === gradientVariant.value) || gradients[0];
+            options.gradientFrom = g.from;
+            options.gradientTo = g.to;
+        } else if (selectedTemplate.value === 'solid') {
+            options.solidColor = solidColor.value;
+        } else if (selectedTemplate.value === 'pattern') {
+            options.patternColor = patternColor.value;
+            options.patternType = patternType.value;
+        }
+        formData.append('options', JSON.stringify(options));
+
+        const proEmail = localStorage.getItem('convertportrait_pro') || '';
+
+        progressMessage.value = 'Processing on server (much faster)...';
+
+        const res = await fetch('/api/process', {
+            method: 'POST',
+            headers: { 'X-Pro-Email': proEmail },
+            body: formData,
+        });
+
+        if (!res.ok) {
+            const err = await res.json().catch(() => ({}));
+            throw new Error(err.error || `Server error (${res.status})`);
+        }
+
+        progressMessage.value = 'Downloading result...';
+        const blob = await res.blob();
+        outputUrl.value = URL.createObjectURL(blob);
+        outputFilename.value = `${videoFile.value.name.replace(/\.[^.]+$/, '')}-landscape.mp4`;
+        step.value = 'done';
+    } catch (err) {
+        console.error('Server conversion error:', err);
+        errorMessage.value = `Server processing failed: ${err.message}. Try browser mode or a smaller file.`;
         step.value = 'template';
     }
 }
@@ -608,6 +664,40 @@ onUnmounted(() => {
                         <input type="color" v-model="patternColor" class="w-9 h-9 rounded-lg cursor-pointer border-0 bg-transparent">
                     </div>
 
+                    <!-- Processing mode toggle (Pro only) -->
+                    <div v-if="isPro" class="mb-4 bg-surface/50 rounded-xl border border-white/[0.04] p-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2.5">
+                                <svg v-if="processingMode === 'server'" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" />
+                                </svg>
+                                <svg v-else xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-teal" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+                                </svg>
+                                <div>
+                                    <p class="text-sm font-semibold text-white/80">
+                                        {{ processingMode === 'server' ? 'Fast mode' : 'Private mode' }}
+                                    </p>
+                                    <p class="text-[11px] text-white/30">
+                                        {{ processingMode === 'server' ? 'Server-side processing — faster, video uploaded temporarily' : 'Browser-only — video never leaves your device' }}
+                                    </p>
+                                </div>
+                            </div>
+                            <button
+                                @click="processingMode = processingMode === 'server' ? 'browser' : 'server'"
+                                :class="[
+                                    'relative w-11 h-6 rounded-full transition-colors duration-200',
+                                    processingMode === 'server' ? 'bg-amber-400' : 'bg-white/[0.1]'
+                                ]"
+                            >
+                                <div :class="[
+                                    'absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform duration-200',
+                                    processingMode === 'server' ? 'translate-x-[22px]' : 'translate-x-0.5'
+                                ]"></div>
+                            </button>
+                        </div>
+                    </div>
+
                     <!-- Duration warning -->
                     <div v-if="isVideoTooLong" class="mb-4 bg-amber-400/[0.06] border border-amber-400/15 rounded-xl px-5 py-3.5 text-sm flex items-center justify-between">
                         <div class="flex items-center gap-2 text-amber-400/80">
@@ -670,20 +760,24 @@ onUnmounted(() => {
 
                     <!-- Progress bar -->
                     <div class="relative bg-surface rounded-full h-2 overflow-hidden">
-                        <div
+                        <div v-if="progress >= 0"
                             class="absolute inset-y-0 left-0 bg-gradient-to-r from-teal to-emerald rounded-full transition-all duration-500 ease-out"
                             :style="`width: ${Math.max(progress, 3)}%`"
                         ></div>
                         <div class="absolute inset-0 shimmer rounded-full"></div>
                     </div>
-                    <p class="mt-3 text-xs text-white/25 tabular-nums">{{ progress }}%</p>
+                    <p v-if="progress >= 0" class="mt-3 text-xs text-white/25 tabular-nums">{{ progress }}%</p>
+                    <p v-else class="mt-3 text-xs text-white/25">Processing on server...</p>
 
-                    <!-- Privacy reminder -->
+                    <!-- Context reminder -->
                     <div class="mt-10 inline-flex items-center gap-1.5 text-[11px] text-white/20">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor">
+                        <svg v-if="processingMode === 'server'" xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" />
+                        </svg>
+                        <svg v-else xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
                         </svg>
-                        Processing locally on your device
+                        {{ processingMode === 'server' ? 'Server-side processing — file deleted after conversion' : 'Processing locally on your device' }}
                     </div>
                 </div>
             </div>

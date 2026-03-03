@@ -12,6 +12,7 @@ services:
       branch: main
       deploy_on_push: true
     build_command: |
+      apt-get update && apt-get install -y --no-install-recommends ffmpeg
       composer install --no-dev --optimize-autoloader
       npm ci
       npm run build
@@ -23,7 +24,7 @@ services:
     run_command: heroku-php-apache2 public/
     environment_slug: php
     instance_count: 1
-    instance_size_slug: apps-s-1vcpu-0.5gb
+    instance_size_slug: apps-s-1vcpu-1gb
     http_port: 8080
     envs:
       - key: APP_NAME
