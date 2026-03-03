@@ -5,11 +5,14 @@ const props = defineProps({ stripeKey: String });
 
 // Pro state
 const FREE_MAX_DURATION = 60; // seconds
-const PRO_TEMPLATES = ['gradient', 'pattern'];
 const isPro = ref(false);
 const showUpgradeModal = ref(false);
 const upgradeReason = ref('');
 const checkoutLoading = ref(false);
+const showRestoreModal = ref(false);
+const restoreEmail = ref('');
+const restoreLoading = ref(false);
+const restoreMessage = ref('');
 
 // State
 const step = ref('upload');
@@ -73,13 +76,46 @@ const formattedDuration = computed(() => {
 });
 
 function checkProStatus() {
-    isPro.value = localStorage.getItem('convertportrait_pro') === 'true';
-    // Check URL params for Stripe success
+    const stored = localStorage.getItem('convertportrait_pro');
+    if (stored) isPro.value = true;
+
+    // Check URL params for Stripe success — prompt for email to verify
     const params = new URLSearchParams(window.location.search);
     if (params.get('pro') === 'activated') {
-        isPro.value = true;
-        localStorage.setItem('convertportrait_pro', 'true');
         window.history.replaceState({}, '', '/');
+        showRestoreModal.value = true;
+        restoreMessage.value = 'Payment received! Enter the email you used at checkout to activate Pro.';
+    }
+}
+
+async function restorePurchase() {
+    if (!restoreEmail.value) return;
+    restoreLoading.value = true;
+    restoreMessage.value = '';
+
+    try {
+        const res = await fetch('/api/restore', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '',
+            },
+            body: JSON.stringify({ email: restoreEmail.value }),
+        });
+        const data = await res.json();
+
+        if (data.pro) {
+            isPro.value = true;
+            localStorage.setItem('convertportrait_pro', restoreEmail.value);
+            showRestoreModal.value = false;
+            restoreEmail.value = '';
+        } else {
+            restoreMessage.value = 'No Pro purchase found for that email. It may take a minute after payment — try again shortly.';
+        }
+    } catch {
+        restoreMessage.value = 'Something went wrong. Please try again.';
+    } finally {
+        restoreLoading.value = false;
     }
 }
 
@@ -801,6 +837,65 @@ onUnmounted(() => {
                             <span class="text-white/10">&middot;</span>
                             <div class="text-[11px] text-white/25">Instant activation</div>
                         </div>
+                        <button @click="showUpgradeModal = false; showRestoreModal = true" class="block mx-auto mt-3 text-[11px] text-white/20 hover:text-white/40 transition underline underline-offset-2">
+                            Already purchased? Restore here
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </Teleport>
+
+        <!-- Restore Modal -->
+        <Teleport to="body">
+            <div v-if="showRestoreModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 text-white" @click.self="showRestoreModal = false">
+                <div class="absolute inset-0 bg-black/70 backdrop-blur-md"></div>
+                <div class="relative max-w-sm w-full rounded-2xl overflow-hidden shadow-2xl step-enter">
+                    <div class="relative bg-[#111120] border border-white/[0.08] rounded-2xl p-8">
+
+                        <button @click="showRestoreModal = false" class="absolute top-4 right-4 w-8 h-8 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] flex items-center justify-center transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white/40" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+
+                        <div class="flex justify-center mb-5">
+                            <div class="w-12 h-12 rounded-2xl bg-teal/10 border border-teal/10 flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-teal" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                                </svg>
+                            </div>
+                        </div>
+
+                        <h3 class="text-lg font-bold text-center text-white mb-1.5">Restore Pro</h3>
+                        <p class="text-center text-white/35 text-sm mb-6">Enter the email you used at checkout.</p>
+
+                        <div v-if="restoreMessage" class="mb-4 bg-teal/[0.06] border border-teal/10 rounded-lg px-4 py-3 text-sm text-teal/80 text-center">
+                            {{ restoreMessage }}
+                        </div>
+
+                        <input
+                            v-model="restoreEmail"
+                            type="email"
+                            placeholder="you@example.com"
+                            class="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white placeholder-white/25 focus:outline-none focus:border-teal/30 focus:ring-1 focus:ring-teal/20 transition mb-4"
+                            @keydown.enter="restorePurchase"
+                        >
+
+                        <button
+                            @click="restorePurchase"
+                            :disabled="restoreLoading || !restoreEmail"
+                            class="w-full bg-gradient-to-r from-teal to-emerald hover:from-teal-dark hover:to-teal disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold py-3 rounded-xl transition-all duration-200 active:scale-[0.98]"
+                        >
+                            <span v-if="restoreLoading" class="inline-flex items-center gap-2">
+                                <svg class="animate-spin w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                                </svg>
+                                Checking...
+                            </span>
+                            <span v-else>Activate Pro</span>
+                        </button>
                     </div>
                 </div>
             </div>

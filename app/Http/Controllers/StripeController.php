@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ProUser;
 use Illuminate\Http\Request;
 
 class StripeController extends Controller
@@ -44,8 +45,30 @@ class StripeController extends Controller
             return response('', 400);
         }
 
-        // For now we handle pro activation client-side via the success URL
-        // In the future, use webhooks to issue license keys or set cookies
+        if ($event->type === 'checkout.session.completed') {
+            $session = $event->data->object;
+            $email = $session->customer_details->email ?? $session->customer_email;
+
+            if ($email) {
+                ProUser::updateOrCreate(
+                    ['email' => strtolower($email)],
+                    [
+                        'stripe_session_id' => $session->id,
+                        'stripe_customer_id' => $session->customer,
+                    ]
+                );
+            }
+        }
+
         return response('', 200);
+    }
+
+    public function restore(Request $request)
+    {
+        $request->validate(['email' => 'required|email']);
+
+        $exists = ProUser::where('email', strtolower($request->email))->exists();
+
+        return response()->json(['pro' => $exists]);
     }
 }

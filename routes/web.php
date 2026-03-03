@@ -12,3 +12,4 @@ Route::get('/', function () {
 
 Route::post('/api/checkout', [StripeController::class, 'createCheckout']);
 Route::post('/api/stripe/webhook', [StripeController::class, 'webhook']);
+Route::post('/api/restore', [StripeController::class, 'restore']);
