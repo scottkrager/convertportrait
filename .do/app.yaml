@@ -11,18 +11,7 @@ services:
       repo: scottkrager/convertportrait
       branch: main
       deploy_on_push: true
-    build_command: |
-      apt-get update && apt-get install -y --no-install-recommends ffmpeg
-      composer install --no-dev --optimize-autoloader
-      npm ci
-      npm run build
-      touch database/database.sqlite
-      php artisan migrate --force
-      php artisan config:cache
-      php artisan route:cache
-      php artisan view:cache
-    run_command: heroku-php-apache2 public/
-    environment_slug: php
+    dockerfile_path: Dockerfile
     instance_count: 1
     instance_size_slug: apps-s-1vcpu-1gb
     http_port: 8080
@@ -46,3 +35,12 @@ services:
         value: array
       - key: LOG_CHANNEL
         value: stderr
+      - key: STRIPE_KEY
+        type: SECRET
+        value: EV[STRIPE_KEY]
+      - key: STRIPE_SECRET
+        type: SECRET
+        value: EV[STRIPE_SECRET]
+      - key: STRIPE_WEBHOOK_SECRET
+        type: SECRET
+        value: EV[STRIPE_WEBHOOK_SECRET]

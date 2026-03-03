@@ -4,7 +4,6 @@ import { ref, computed, onMounted, onUnmounted } from 'vue';
 const props = defineProps({ stripeKey: String });
 
 // Pro state
-const FREE_MAX_DURATION = 60; // seconds
 const isPro = ref(false);
 const showUpgradeModal = ref(false);
 const upgradeReason = ref('');
@@ -34,6 +33,8 @@ const isDragging = ref(false);
 const ffmpegLoaded = ref(false);
 const ffmpegLoading = ref(false);
 const errorMessage = ref('');
+const estimatedTimeLeft = ref('');
+const conversionStartTime = ref(0);
 
 let ffmpeg = null;
 
@@ -68,12 +69,16 @@ const templates = [
     },
 ];
 
-const isVideoTooLong = computed(() => !isPro.value && videoDuration.value > FREE_MAX_DURATION);
-const formattedDuration = computed(() => {
-    const d = Math.round(videoDuration.value);
-    const m = Math.floor(d / 60);
-    const s = d % 60;
-    return m > 0 ? `${m}:${String(s).padStart(2, '0')}` : `${s}s`;
+const estimatedBrowserTime = computed(() => {
+    // Browser WASM runs at ~0.05x speed based on real data
+    const secs = Math.round(videoDuration.value / 0.05);
+    const m = Math.floor(secs / 60);
+    return m > 0 ? `~${m} min` : `~${secs}s`;
+});
+const estimatedServerTime = computed(() => {
+    // Server native FFmpeg runs at roughly 5-10x speed
+    const secs = Math.max(5, Math.round(videoDuration.value / 7));
+    return secs > 60 ? `~${Math.ceil(secs / 60)} min` : `~${secs}s`;
 });
 
 function checkProStatus() {
@@ -173,6 +178,14 @@ async function loadFFmpeg() {
         ffmpeg = new FFmpeg();
         ffmpeg.on('progress', ({ progress: p }) => {
             progress.value = Math.round(p * 100);
+            if (p > 0.05 && conversionStartTime.value) {
+                const elapsed = (Date.now() - conversionStartTime.value) / 1000;
+                const totalEstimate = elapsed / p;
+                const remaining = Math.max(0, Math.round(totalEstimate - elapsed));
+                const m = Math.floor(remaining / 60);
+                const s = remaining % 60;
+                estimatedTimeLeft.value = m > 0 ? `${m}m ${s}s left` : `${s}s left`;
+            }
         });
         ffmpeg.on('log', ({ message }) => console.log('[ffmpeg]', message));
 
@@ -228,11 +241,6 @@ function selectTemplate(id) {
 }
 
 async function startConversion() {
-    if (isVideoTooLong.value) {
-        triggerUpgrade('duration');
-        return;
-    }
-
     if (isPro.value && processingMode.value === 'server') {
         return startServerConversion();
     }
@@ -246,6 +254,8 @@ async function startConversion() {
     progress.value = 0;
     progressMessage.value = 'Reading video file...';
     errorMessage.value = '';
+    estimatedTimeLeft.value = estimatedBrowserTime.value;
+    conversionStartTime.value = Date.now();
 
     try {
         const { fetchFile } = await import('@ffmpeg/util');
@@ -698,17 +708,31 @@ onUnmounted(() => {
                         </div>
                     </div>
 
-                    <!-- Duration warning -->
-                    <div v-if="isVideoTooLong" class="mb-4 bg-amber-400/[0.06] border border-amber-400/15 rounded-xl px-5 py-3.5 text-sm flex items-center justify-between">
-                        <div class="flex items-center gap-2 text-amber-400/80">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
-                            </svg>
-                            <span>Video is {{ formattedDuration }} &mdash; free tier limited to 60s</span>
+                    <!-- Time estimate (free users) -->
+                    <div v-if="!isPro && videoDuration > 10" class="mb-4 bg-white/[0.02] rounded-xl border border-white/[0.04] p-4">
+                        <div class="flex items-center justify-between text-sm">
+                            <div class="flex items-center gap-3">
+                                <div class="flex flex-col items-center">
+                                    <span class="text-white/25 text-[10px] uppercase tracking-wider">Browser</span>
+                                    <span class="text-white/50 font-semibold">{{ estimatedBrowserTime }}</span>
+                                </div>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white/15" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                                <div class="flex flex-col items-center">
+                                    <span class="text-amber-400/60 text-[10px] uppercase tracking-wider flex items-center gap-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-2.5 h-2.5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" />
+                                        </svg>
+                                        Pro
+                                    </span>
+                                    <span class="text-amber-400/80 font-semibold">{{ estimatedServerTime }}</span>
+                                </div>
+                            </div>
+                            <button @click="triggerUpgrade('speed')" class="text-xs font-semibold text-amber-400/80 hover:text-amber-400 transition">
+                                Go faster &rarr;
+                            </button>
                         </div>
-                        <button @click="triggerUpgrade('duration')" class="text-xs font-bold text-amber-400 hover:text-amber-300 transition shrink-0 ml-3">
-                            Upgrade
-                        </button>
                     </div>
 
                     <div v-if="errorMessage" class="mb-4 bg-danger/[0.06] border border-danger/10 rounded-xl px-5 py-3.5 text-danger/80 text-sm text-center">
@@ -719,21 +743,15 @@ onUnmounted(() => {
                     <button
                         @click="startConversion"
                         :disabled="ffmpegLoading"
-                        :class="[
-                            'w-full font-bold text-base py-4 rounded-xl transition-all duration-200 active:scale-[0.99]',
-                            isVideoTooLong
-                                ? 'bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-midnight hover:shadow-lg hover:shadow-amber-500/10'
-                                : 'bg-gradient-to-r from-teal to-emerald hover:from-teal-dark hover:to-teal text-midnight hover:shadow-lg hover:shadow-teal/10 disabled:opacity-40 disabled:cursor-not-allowed'
-                        ]"
+                        class="w-full font-bold text-base py-4 rounded-xl transition-all duration-200 active:scale-[0.99] bg-gradient-to-r from-teal to-emerald hover:from-teal-dark hover:to-teal text-white hover:shadow-lg hover:shadow-teal/10 disabled:opacity-40 disabled:cursor-not-allowed"
                     >
-                        <span v-if="ffmpegLoading" class="inline-flex items-center gap-2 text-midnight/70">
+                        <span v-if="ffmpegLoading" class="inline-flex items-center gap-2 opacity-70">
                             <svg class="animate-spin w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
                             </svg>
                             Preparing engine...
                         </span>
-                        <span v-else-if="isVideoTooLong">Upgrade to Convert</span>
                         <span v-else>Convert to Landscape</span>
                     </button>
                 </div>
@@ -756,10 +774,12 @@ onUnmounted(() => {
                     </div>
 
                     <h2 class="text-xl font-bold mb-1.5 tracking-tight">Converting...</h2>
-                    <p class="text-sm text-white/30 mb-8">{{ progressMessage }}</p>
+                    <p class="text-sm text-white/30 mb-2">{{ progressMessage }}</p>
+                    <p v-if="estimatedTimeLeft && progress >= 0" class="text-sm text-white/50 font-semibold mb-6 tabular-nums">{{ estimatedTimeLeft }}</p>
+                    <p v-else class="mb-6"></p>
 
                     <!-- Progress bar -->
-                    <div class="relative bg-surface rounded-full h-2 overflow-hidden">
+                    <div class="relative bg-surface rounded-full h-2.5 overflow-hidden">
                         <div v-if="progress >= 0"
                             class="absolute inset-y-0 left-0 bg-gradient-to-r from-teal to-emerald rounded-full transition-all duration-500 ease-out"
                             :style="`width: ${Math.max(progress, 3)}%`"
@@ -768,6 +788,24 @@ onUnmounted(() => {
                     </div>
                     <p v-if="progress >= 0" class="mt-3 text-xs text-white/25 tabular-nums">{{ progress }}%</p>
                     <p v-else class="mt-3 text-xs text-white/25">Processing on server...</p>
+
+                    <!-- Pro upsell during slow browser conversion -->
+                    <div v-if="!isPro && processingMode === 'browser' && progress > 5 && progress < 90" class="mt-8 bg-amber-400/[0.04] border border-amber-400/10 rounded-xl p-5 text-left">
+                        <div class="flex items-start gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-amber-400/10 flex items-center justify-center shrink-0 mt-0.5">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" />
+                                </svg>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p class="text-sm font-semibold text-white/80 mb-1">Too slow? Pro is {{ estimatedServerTime }} with server processing</p>
+                                <p class="text-xs text-white/30 mb-3">Plus all templates unlocked and future features included.</p>
+                                <button @click="triggerUpgrade('speed')" class="text-xs font-bold text-amber-400 hover:text-amber-300 transition">
+                                    Upgrade to Pro &rarr;
+                                </button>
+                            </div>
+                        </div>
+                    </div>
 
                     <!-- Context reminder -->
                     <div class="mt-10 inline-flex items-center gap-1.5 text-[11px] text-white/20">
