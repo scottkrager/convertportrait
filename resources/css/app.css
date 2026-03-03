@@ -1,0 +1,15 @@
+@import 'tailwindcss';
+
+@source '../**/*.vue';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    --color-midnight: #0f0f1a;
+    --color-surface: #1a1a2e;
+    --color-surface-light: #25253d;
+    --color-accent: #7c3aed;
+    --color-accent-light: #a78bfa;
+    --color-success: #10b981;
+    --color-warning: #f59e0b;
+}
