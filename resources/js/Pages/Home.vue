@@ -690,84 +690,118 @@ onUnmounted(() => {
 
         <!-- Upgrade Modal -->
         <Teleport to="body">
-            <div v-if="showUpgradeModal" class="fixed inset-0 z-50 flex items-center justify-center p-4" @click.self="showUpgradeModal = false">
-                <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
-                <div class="relative bg-surface border border-white/[0.06] rounded-2xl max-w-md w-full p-8 shadow-2xl step-enter">
-                    <!-- Close -->
-                    <button @click="showUpgradeModal = false" class="absolute top-4 right-4 text-white/20 hover:text-white/50 transition">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
-                        </svg>
-                    </button>
+            <div v-if="showUpgradeModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 text-white" @click.self="showUpgradeModal = false">
+                <div class="absolute inset-0 bg-black/70 backdrop-blur-md"></div>
+                <div class="relative max-w-md w-full rounded-2xl overflow-hidden shadow-2xl shadow-amber-500/10 step-enter">
 
-                    <!-- Badge -->
-                    <div class="flex justify-center mb-5">
-                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-midnight" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    <!-- Glowing top accent -->
+                    <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-400/60 to-transparent"></div>
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-24 bg-amber-400/10 blur-3xl pointer-events-none"></div>
+
+                    <div class="relative bg-[#111120] border border-white/[0.08] rounded-2xl p-8">
+
+                        <!-- Close -->
+                        <button @click="showUpgradeModal = false" class="absolute top-4 right-4 w-8 h-8 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] flex items-center justify-center transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white/40" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
                             </svg>
+                        </button>
+
+                        <!-- Icon -->
+                        <div class="flex justify-center mb-6">
+                            <div class="relative">
+                                <div class="absolute inset-0 bg-amber-400/20 rounded-2xl blur-xl"></div>
+                                <div class="relative w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg shadow-amber-500/25">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-white" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Title -->
+                        <h3 class="text-2xl font-extrabold text-center tracking-tight text-white mb-1.5">Go Pro</h3>
+                        <p class="text-center text-white/40 text-sm mb-8">One-time payment. Yours forever.</p>
+
+                        <!-- Features -->
+                        <div class="space-y-4 mb-8">
+                            <div class="flex items-center gap-3.5">
+                                <div class="w-8 h-8 rounded-lg bg-teal/10 border border-teal/10 flex items-center justify-center shrink-0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-teal" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-semibold text-white">Unlimited video length</p>
+                                    <p class="text-xs text-white/35">No 60-second cap on conversions</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3.5">
+                                <div class="w-8 h-8 rounded-lg bg-teal/10 border border-teal/10 flex items-center justify-center shrink-0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-teal" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-semibold text-white">All templates unlocked</p>
+                                    <p class="text-xs text-white/35">Gradient Wash, Pattern Fill & future styles</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3.5">
+                                <div class="w-8 h-8 rounded-lg bg-teal/10 border border-teal/10 flex items-center justify-center shrink-0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-teal" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-semibold text-white">Lifetime updates</p>
+                                    <p class="text-xs text-white/35">Every new feature, included automatically</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Divider -->
+                        <div class="border-t border-white/[0.06] mb-6"></div>
+
+                        <!-- Price -->
+                        <div class="text-center mb-6">
+                            <div class="flex items-baseline justify-center gap-0.5">
+                                <span class="text-sm font-medium text-white/40 mr-1">USD</span>
+                                <span class="text-4xl font-extrabold text-white">$19</span>
+                                <span class="text-xl font-bold text-white/40">.99</span>
+                            </div>
+                            <p class="text-xs text-white/25 mt-1.5">One-time &middot; No subscription &middot; No recurring fees</p>
+                        </div>
+
+                        <!-- CTA -->
+                        <button
+                            @click="startCheckout"
+                            :disabled="checkoutLoading"
+                            class="group w-full relative bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-300 hover:to-orange-400 disabled:opacity-50 text-white font-bold text-base py-4 rounded-xl transition-all duration-200 hover:shadow-xl hover:shadow-amber-500/20 active:scale-[0.98]"
+                        >
+                            <div class="absolute inset-0 rounded-xl bg-gradient-to-t from-black/10 to-transparent pointer-events-none"></div>
+                            <span v-if="checkoutLoading" class="relative inline-flex items-center gap-2">
+                                <svg class="animate-spin w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                                </svg>
+                                Redirecting to checkout...
+                            </span>
+                            <span v-else class="relative">Get Pro Access</span>
+                        </button>
+
+                        <!-- Trust -->
+                        <div class="flex items-center justify-center gap-3 mt-5">
+                            <div class="flex items-center gap-1.5 text-[11px] text-white/25">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+                                </svg>
+                                Secured by Stripe
+                            </div>
+                            <span class="text-white/10">&middot;</span>
+                            <div class="text-[11px] text-white/25">Instant activation</div>
                         </div>
                     </div>
-
-                    <h3 class="text-xl font-bold text-center tracking-tight mb-2">Unlock ConvertPortrait Pro</h3>
-                    <p class="text-center text-white/40 text-sm mb-6">One-time payment. Use forever.</p>
-
-                    <!-- Features -->
-                    <div class="space-y-3 mb-8">
-                        <div class="flex items-center gap-3 text-sm">
-                            <div class="w-5 h-5 rounded-full bg-teal/10 flex items-center justify-center shrink-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-teal" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                            <span class="text-white/70"><strong class="text-white/90">Unlimited video length</strong> &mdash; no 60s cap</span>
-                        </div>
-                        <div class="flex items-center gap-3 text-sm">
-                            <div class="w-5 h-5 rounded-full bg-teal/10 flex items-center justify-center shrink-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-teal" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                            <span class="text-white/70"><strong class="text-white/90">All templates</strong> &mdash; Gradient, Pattern & more</span>
-                        </div>
-                        <div class="flex items-center gap-3 text-sm">
-                            <div class="w-5 h-5 rounded-full bg-teal/10 flex items-center justify-center shrink-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-teal" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                            <span class="text-white/70"><strong class="text-white/90">Future features included</strong> &mdash; lifetime access</span>
-                        </div>
-                    </div>
-
-                    <!-- Price -->
-                    <div class="text-center mb-6">
-                        <div class="flex items-baseline justify-center gap-1">
-                            <span class="text-3xl font-extrabold">$19</span>
-                            <span class="text-lg font-bold text-white/50">.99</span>
-                        </div>
-                        <p class="text-xs text-white/30 mt-1">One-time payment &middot; No subscription</p>
-                    </div>
-
-                    <!-- CTA -->
-                    <button
-                        @click="startCheckout"
-                        :disabled="checkoutLoading"
-                        class="w-full bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-500 hover:to-orange-600 disabled:opacity-50 text-white font-bold text-base py-3.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-amber-500/15 active:scale-[0.99]"
-                    >
-                        <span v-if="checkoutLoading" class="inline-flex items-center gap-2">
-                            <svg class="animate-spin w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
-                            </svg>
-                            Redirecting to checkout...
-                        </span>
-                        <span v-else>Get Pro Access</span>
-                    </button>
-
-                    <p class="text-center text-[11px] text-white/20 mt-4">
-                        Secure payment via Stripe &middot; Instant activation
-                    </p>
                 </div>
             </div>
         </Teleport>
