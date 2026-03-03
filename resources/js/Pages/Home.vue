@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue';
 
 const props = defineProps({ stripeKey: String });
 
@@ -19,6 +19,8 @@ const step = ref('upload');
 const videoFile = ref(null);
 const videoUrl = ref(null);
 const videoDimensions = ref({ width: 0, height: 0 });
+const videoFrame = ref(null); // captured ImageBitmap from video
+const previewCanvas = ref(null); // template ref for canvas element
 const videoDuration = ref(0);
 const selectedTemplate = ref('blurred');
 const gradientVariant = ref('sunset');
@@ -221,15 +223,112 @@ function handleFile(file) {
     videoFile.value = file;
     videoUrl.value = URL.createObjectURL(file);
     const video = document.createElement('video');
-    video.preload = 'metadata';
+    video.preload = 'auto';
+    video.muted = true;
+    video.playsInline = true;
     video.onloadedmetadata = () => {
         videoDimensions.value = { width: video.videoWidth, height: video.videoHeight };
         videoDuration.value = video.duration;
-        URL.revokeObjectURL(video.src);
+        // Seek to 1s to grab a representative frame
+        video.currentTime = Math.min(1, video.duration * 0.1);
+    };
+    video.onseeked = () => {
+        // Capture frame to canvas
+        const c = document.createElement('canvas');
+        c.width = video.videoWidth;
+        c.height = video.videoHeight;
+        const ctx = c.getContext('2d');
+        ctx.drawImage(video, 0, 0);
+        videoFrame.value = c;
         step.value = 'template';
+        // Draw initial preview after Vue renders the canvas
+        setTimeout(() => drawPreview(), 50);
     };
     video.src = videoUrl.value;
 }
+
+function drawPreview() {
+    const canvas = previewCanvas.value;
+    const frame = videoFrame.value;
+    if (!canvas || !frame) return;
+
+    const w = videoDimensions.value.width;
+    const h = videoDimensions.value.height;
+
+    // 16:9 canvas at reasonable preview size
+    const canvasW = 640;
+    const canvasH = 360;
+    canvas.width = canvasW;
+    canvas.height = canvasH;
+
+    const ctx = canvas.getContext('2d');
+
+    // Scale foreground to fit height
+    const fgH = canvasH;
+    const fgW = Math.round((w * canvasH) / h);
+    const fgX = Math.round((canvasW - fgW) / 2);
+
+    const tpl = selectedTemplate.value;
+
+    // Draw background based on template
+    if (tpl === 'blurred') {
+        // Draw stretched + blurred frame as background
+        ctx.filter = 'blur(20px)';
+        ctx.drawImage(frame, -20, -20, canvasW + 40, canvasH + 40);
+        ctx.filter = 'none';
+        // Slight darken overlay
+        ctx.fillStyle = 'rgba(0,0,0,0.15)';
+        ctx.fillRect(0, 0, canvasW, canvasH);
+    } else if (tpl === 'gradient') {
+        const g = gradients.find(g => g.id === gradientVariant.value) || gradients[0];
+        const grad = ctx.createLinearGradient(0, 0, canvasW, canvasH);
+        grad.addColorStop(0, g.from);
+        grad.addColorStop(1, g.to);
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, canvasW, canvasH);
+    } else if (tpl === 'solid') {
+        ctx.fillStyle = solidColor.value;
+        ctx.fillRect(0, 0, canvasW, canvasH);
+    } else if (tpl === 'pattern') {
+        ctx.fillStyle = '#111111';
+        ctx.fillRect(0, 0, canvasW, canvasH);
+        const pColor = patternColor.value;
+        ctx.fillStyle = pColor + '66'; // 40% opacity
+        if (patternType.value === 'dots') {
+            for (let y = 0; y < canvasH; y += 15) {
+                for (let x = 0; x < canvasW; x += 15) {
+                    ctx.beginPath();
+                    ctx.arc(x, y, 2, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+        } else if (patternType.value === 'lines') {
+            ctx.fillStyle = pColor + '4d'; // 30% opacity
+            for (let x = 0; x < canvasW; x += 20) {
+                ctx.fillRect(x, 0, 1, canvasH);
+            }
+        } else {
+            ctx.fillStyle = pColor + '26'; // 15% opacity
+            for (let x = 0; x < canvasW; x += 30) {
+                ctx.fillRect(x, 0, 15, canvasH);
+            }
+        }
+    }
+
+    // Draw the portrait video frame centered
+    // Add a subtle shadow
+    ctx.shadowColor = 'rgba(0,0,0,0.5)';
+    ctx.shadowBlur = 15;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 4;
+    ctx.drawImage(frame, fgX, 0, fgW, fgH);
+    ctx.shadowColor = 'transparent';
+}
+
+// Redraw preview when template or options change
+watch([selectedTemplate, gradientVariant, solidColor, patternType, patternColor], () => {
+    nextTick(() => drawPreview());
+});
 
 function selectTemplate(id) {
     const tpl = templates.find(t => t.id === id);
@@ -630,9 +729,14 @@ onUnmounted(() => {
                         </button>
                     </div>
 
-                    <!-- Video preview -->
+                    <!-- Template preview -->
                     <div class="mb-8 bg-surface/60 rounded-xl border border-white/[0.04] p-3">
-                        <video :src="videoUrl" class="max-h-44 mx-auto rounded-lg" controls muted></video>
+                        <div class="relative">
+                            <canvas ref="previewCanvas" class="w-full rounded-lg" style="aspect-ratio: 16/9;"></canvas>
+                            <div class="absolute bottom-2 right-2 bg-black/50 backdrop-blur-sm text-[10px] text-white/60 px-2 py-1 rounded">
+                                Preview
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Templates -->
