@@ -3,11 +3,11 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Convert Portrait - Turn Shorts into Landscape Videos</title>
-        <meta name="description" content="Convert portrait TikTok and YouTube Shorts to landscape format instantly in your browser. Free, private, no upload required.">
+        <title>ConvertPortrait — Turn Shorts into Landscape Videos</title>
+        <meta name="description" content="Convert portrait TikTok and YouTube Shorts to landscape format instantly. Runs 100% in your browser — zero uploads, zero tracking, zero servers.">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Newsreader:ital,wght@1,400&display=swap" rel="stylesheet">
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @inertiaHead
     </head>
