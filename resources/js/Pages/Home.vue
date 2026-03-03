@@ -1,11 +1,22 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 
+const props = defineProps({ stripeKey: String });
+
+// Pro state
+const FREE_MAX_DURATION = 60; // seconds
+const PRO_TEMPLATES = ['gradient', 'pattern'];
+const isPro = ref(false);
+const showUpgradeModal = ref(false);
+const upgradeReason = ref('');
+const checkoutLoading = ref(false);
+
 // State
 const step = ref('upload');
 const videoFile = ref(null);
 const videoUrl = ref(null);
 const videoDimensions = ref({ width: 0, height: 0 });
+const videoDuration = ref(0);
 const selectedTemplate = ref('blurred');
 const gradientVariant = ref('sunset');
 const solidColor = ref('#000000');
@@ -27,27 +38,75 @@ const templates = [
         id: 'blurred',
         name: 'Blurred Mirror',
         description: 'Video blurred as background fill',
+        pro: false,
         icon: `<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="2" width="24" height="28" rx="2" opacity="0.3"/><rect x="11" y="4" width="10" height="24" rx="1"/><path d="M6 8h3M6 14h3M6 20h3M23 8h3M23 14h3M23 20h3" opacity="0.3"/></svg>`,
     },
     {
         id: 'gradient',
         name: 'Gradient Wash',
         description: 'Color gradients on the sides',
+        pro: true,
         icon: `<svg viewBox="0 0 32 32" fill="none"><defs><linearGradient id="gw" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="currentColor" stop-opacity="0.6"/><stop offset="100%" stop-color="currentColor" stop-opacity="0.1"/></linearGradient></defs><rect x="4" y="2" width="24" height="28" rx="2" fill="url(#gw)"/><rect x="11" y="4" width="10" height="24" rx="1" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>`,
     },
     {
         id: 'solid',
         name: 'Solid Color',
         description: 'Clean single-color backdrop',
+        pro: false,
         icon: `<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="2" width="24" height="28" rx="2"/><rect x="11" y="4" width="10" height="24" rx="1"/></svg>`,
     },
     {
         id: 'pattern',
         name: 'Pattern Fill',
         description: 'Geometric patterns, your colors',
+        pro: true,
         icon: `<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="2" width="24" height="28" rx="2"/><rect x="11" y="4" width="10" height="24" rx="1"/><circle cx="7" cy="8" r="1" fill="currentColor" opacity="0.3"/><circle cx="7" cy="14" r="1" fill="currentColor" opacity="0.3"/><circle cx="7" cy="20" r="1" fill="currentColor" opacity="0.3"/><circle cx="25" cy="8" r="1" fill="currentColor" opacity="0.3"/><circle cx="25" cy="14" r="1" fill="currentColor" opacity="0.3"/><circle cx="25" cy="20" r="1" fill="currentColor" opacity="0.3"/></svg>`,
     },
 ];
+
+const isVideoTooLong = computed(() => !isPro.value && videoDuration.value > FREE_MAX_DURATION);
+const formattedDuration = computed(() => {
+    const d = Math.round(videoDuration.value);
+    const m = Math.floor(d / 60);
+    const s = d % 60;
+    return m > 0 ? `${m}:${String(s).padStart(2, '0')}` : `${s}s`;
+});
+
+function checkProStatus() {
+    isPro.value = localStorage.getItem('convertportrait_pro') === 'true';
+    // Check URL params for Stripe success
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('pro') === 'activated') {
+        isPro.value = true;
+        localStorage.setItem('convertportrait_pro', 'true');
+        window.history.replaceState({}, '', '/');
+    }
+}
+
+function triggerUpgrade(reason) {
+    upgradeReason.value = reason;
+    showUpgradeModal.value = true;
+}
+
+async function startCheckout() {
+    checkoutLoading.value = true;
+    try {
+        const res = await fetch('/api/checkout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '',
+            },
+        });
+        const data = await res.json();
+        if (data.url) window.location.href = data.url;
+    } catch (err) {
+        console.error('Checkout error:', err);
+        errorMessage.value = 'Could not start checkout. Please try again.';
+    } finally {
+        checkoutLoading.value = false;
+    }
+}
 
 const gradients = [
     { id: 'sunset', name: 'Sunset', from: '#f97316', to: '#9333ea' },
@@ -115,15 +174,28 @@ function handleFile(file) {
     video.preload = 'metadata';
     video.onloadedmetadata = () => {
         videoDimensions.value = { width: video.videoWidth, height: video.videoHeight };
+        videoDuration.value = video.duration;
         URL.revokeObjectURL(video.src);
         step.value = 'template';
     };
     video.src = videoUrl.value;
 }
 
-function selectTemplate(id) { selectedTemplate.value = id; }
+function selectTemplate(id) {
+    const tpl = templates.find(t => t.id === id);
+    if (tpl?.pro && !isPro.value) {
+        triggerUpgrade('template');
+        return;
+    }
+    selectedTemplate.value = id;
+}
 
 async function startConversion() {
+    if (isVideoTooLong.value) {
+        triggerUpgrade('duration');
+        return;
+    }
+
     if (!ffmpegLoaded.value) {
         await loadFFmpeg();
         if (!ffmpegLoaded.value) return;
@@ -209,12 +281,16 @@ function startOver() {
     videoFile.value = null;
     videoUrl.value = null;
     outputUrl.value = null;
+    videoDuration.value = 0;
     step.value = 'upload';
     progress.value = 0;
     errorMessage.value = '';
 }
 
-onMounted(() => loadFFmpeg());
+onMounted(() => {
+    checkProStatus();
+    loadFFmpeg();
+});
 onUnmounted(() => {
     if (videoUrl.value) URL.revokeObjectURL(videoUrl.value);
     if (outputUrl.value) URL.revokeObjectURL(outputUrl.value);
@@ -235,12 +311,28 @@ onUnmounted(() => {
                     </div>
                     <span class="text-[15px] font-bold tracking-tight text-white/90">ConvertPortrait</span>
                 </div>
-                <!-- Privacy badge -->
-                <div class="hidden sm:flex items-center gap-2 text-xs text-white/35 bg-white/[0.03] px-3 py-1.5 rounded-full border border-white/[0.04]">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-teal" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
-                    </svg>
-                    <span>Zero uploads &middot; Runs locally</span>
+                <div class="flex items-center gap-3">
+                    <!-- Privacy badge -->
+                    <div class="hidden sm:flex items-center gap-2 text-xs text-white/35 bg-white/[0.03] px-3 py-1.5 rounded-full border border-white/[0.04]">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-teal" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+                        </svg>
+                        <span>Zero uploads &middot; Runs locally</span>
+                    </div>
+                    <!-- Pro badge or upgrade button -->
+                    <button
+                        v-if="isPro"
+                        class="text-xs font-bold text-midnight bg-gradient-to-r from-amber-400 to-orange-400 px-3 py-1.5 rounded-full"
+                    >
+                        PRO
+                    </button>
+                    <button
+                        v-else
+                        @click="triggerUpgrade('header')"
+                        class="text-xs font-semibold text-amber-400/90 bg-amber-400/[0.08] hover:bg-amber-400/[0.14] px-3 py-1.5 rounded-full border border-amber-400/15 transition-all"
+                    >
+                        Upgrade to Pro
+                    </button>
                 </div>
             </div>
         </header>
@@ -405,8 +497,11 @@ onUnmounted(() => {
                                     : 'border-white/[0.04] bg-surface/40 hover:border-white/[0.08] hover:bg-surface/60'
                             ]"
                         >
-                            <div :class="['w-8 h-8 mb-3 transition-colors', selectedTemplate === t.id ? 'text-teal' : 'text-white/25 group-hover:text-white/40']" v-html="t.icon"></div>
-                            <p class="text-sm font-semibold text-white/80">{{ t.name }}</p>
+                            <div :class="['w-8 h-8 mb-3 transition-colors', selectedTemplate === t.id ? 'text-teal' : t.pro && !isPro ? 'text-white/15' : 'text-white/25 group-hover:text-white/40']" v-html="t.icon"></div>
+                            <p class="text-sm font-semibold text-white/80 flex items-center gap-1.5">
+                                {{ t.name }}
+                                <span v-if="t.pro && !isPro" class="text-[10px] font-bold text-amber-400/80 bg-amber-400/[0.1] px-1.5 py-0.5 rounded">PRO</span>
+                            </p>
                             <p class="text-xs text-white/30 mt-0.5">{{ t.description }}</p>
                             <div v-if="selectedTemplate === t.id" class="absolute top-3 right-3 w-5 h-5 bg-teal rounded-full flex items-center justify-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-midnight" viewBox="0 0 20 20" fill="currentColor">
@@ -477,7 +572,20 @@ onUnmounted(() => {
                         <input type="color" v-model="patternColor" class="w-9 h-9 rounded-lg cursor-pointer border-0 bg-transparent">
                     </div>
 
-                    <div v-if="errorMessage" class="mb-6 bg-danger/[0.06] border border-danger/10 rounded-xl px-5 py-3.5 text-danger/80 text-sm text-center">
+                    <!-- Duration warning -->
+                    <div v-if="isVideoTooLong" class="mb-4 bg-amber-400/[0.06] border border-amber-400/15 rounded-xl px-5 py-3.5 text-sm flex items-center justify-between">
+                        <div class="flex items-center gap-2 text-amber-400/80">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                            </svg>
+                            <span>Video is {{ formattedDuration }} &mdash; free tier limited to 60s</span>
+                        </div>
+                        <button @click="triggerUpgrade('duration')" class="text-xs font-bold text-amber-400 hover:text-amber-300 transition shrink-0 ml-3">
+                            Upgrade
+                        </button>
+                    </div>
+
+                    <div v-if="errorMessage" class="mb-4 bg-danger/[0.06] border border-danger/10 rounded-xl px-5 py-3.5 text-danger/80 text-sm text-center">
                         {{ errorMessage }}
                     </div>
 
@@ -485,7 +593,12 @@ onUnmounted(() => {
                     <button
                         @click="startConversion"
                         :disabled="ffmpegLoading"
-                        class="w-full bg-gradient-to-r from-teal to-emerald hover:from-teal-dark hover:to-teal disabled:opacity-40 disabled:cursor-not-allowed text-midnight font-bold text-base py-4 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-teal/10 active:scale-[0.99]"
+                        :class="[
+                            'w-full font-bold text-base py-4 rounded-xl transition-all duration-200 active:scale-[0.99]',
+                            isVideoTooLong
+                                ? 'bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-midnight hover:shadow-lg hover:shadow-amber-500/10'
+                                : 'bg-gradient-to-r from-teal to-emerald hover:from-teal-dark hover:to-teal text-midnight hover:shadow-lg hover:shadow-teal/10 disabled:opacity-40 disabled:cursor-not-allowed'
+                        ]"
                     >
                         <span v-if="ffmpegLoading" class="inline-flex items-center gap-2 text-midnight/70">
                             <svg class="animate-spin w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -494,6 +607,7 @@ onUnmounted(() => {
                             </svg>
                             Preparing engine...
                         </span>
+                        <span v-else-if="isVideoTooLong">Upgrade to Convert</span>
                         <span v-else>Convert to Landscape</span>
                     </button>
                 </div>
@@ -573,6 +687,90 @@ onUnmounted(() => {
             </div>
 
         </main>
+
+        <!-- Upgrade Modal -->
+        <Teleport to="body">
+            <div v-if="showUpgradeModal" class="fixed inset-0 z-50 flex items-center justify-center p-4" @click.self="showUpgradeModal = false">
+                <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+                <div class="relative bg-surface border border-white/[0.06] rounded-2xl max-w-md w-full p-8 shadow-2xl step-enter">
+                    <!-- Close -->
+                    <button @click="showUpgradeModal = false" class="absolute top-4 right-4 text-white/20 hover:text-white/50 transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+
+                    <!-- Badge -->
+                    <div class="flex justify-center mb-5">
+                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-midnight" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-bold text-center tracking-tight mb-2">Unlock ConvertPortrait Pro</h3>
+                    <p class="text-center text-white/40 text-sm mb-6">One-time payment. Use forever.</p>
+
+                    <!-- Features -->
+                    <div class="space-y-3 mb-8">
+                        <div class="flex items-center gap-3 text-sm">
+                            <div class="w-5 h-5 rounded-full bg-teal/10 flex items-center justify-center shrink-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-teal" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <span class="text-white/70"><strong class="text-white/90">Unlimited video length</strong> &mdash; no 60s cap</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-sm">
+                            <div class="w-5 h-5 rounded-full bg-teal/10 flex items-center justify-center shrink-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-teal" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <span class="text-white/70"><strong class="text-white/90">All templates</strong> &mdash; Gradient, Pattern & more</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-sm">
+                            <div class="w-5 h-5 rounded-full bg-teal/10 flex items-center justify-center shrink-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-teal" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <span class="text-white/70"><strong class="text-white/90">Future features included</strong> &mdash; lifetime access</span>
+                        </div>
+                    </div>
+
+                    <!-- Price -->
+                    <div class="text-center mb-6">
+                        <div class="flex items-baseline justify-center gap-1">
+                            <span class="text-3xl font-extrabold">$9</span>
+                            <span class="text-lg font-bold text-white/50">.99</span>
+                        </div>
+                        <p class="text-xs text-white/30 mt-1">One-time payment &middot; No subscription</p>
+                    </div>
+
+                    <!-- CTA -->
+                    <button
+                        @click="startCheckout"
+                        :disabled="checkoutLoading"
+                        class="w-full bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-500 hover:to-orange-600 disabled:opacity-50 text-midnight font-bold text-base py-3.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-amber-500/15 active:scale-[0.99]"
+                    >
+                        <span v-if="checkoutLoading" class="inline-flex items-center gap-2">
+                            <svg class="animate-spin w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                            </svg>
+                            Redirecting to checkout...
+                        </span>
+                        <span v-else>Get Pro Access</span>
+                    </button>
+
+                    <p class="text-center text-[11px] text-white/20 mt-4">
+                        Secure payment via Stripe &middot; Instant activation
+                    </p>
+                </div>
+            </div>
+        </Teleport>
 
         <!-- Footer -->
         <footer class="border-t border-white/[0.03] mt-8">

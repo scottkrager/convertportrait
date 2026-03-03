@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>ConvertPortrait — Turn Shorts into Landscape Videos</title>
         <meta name="description" content="Convert portrait TikTok and YouTube Shorts to landscape format instantly. Runs 100% in your browser — zero uploads, zero tracking, zero servers.">
         <link rel="preconnect" href="https://fonts.googleapis.com">
