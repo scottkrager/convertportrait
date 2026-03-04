@@ -44,6 +44,16 @@ services:
         type: SECRET
       - key: STRIPE_WEBHOOK_SECRET
         type: SECRET
+      - key: AWS_ACCESS_KEY_ID
+        type: SECRET
+      - key: AWS_SECRET_ACCESS_KEY
+        type: SECRET
+      - key: AWS_DEFAULT_REGION
+        value: us-east-1
+      - key: AWS_BUCKET
+        value: convertportrait-processing
+      - key: AWS_LAMBDA_FUNCTION
+        value: convertportrait-processor
 databases:
   - name: db
     engine: PG

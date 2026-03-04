@@ -41,4 +41,12 @@ return [
         'webhook_secret' => env('STRIPE_WEBHOOK_SECRET'),
     ],
 
+    'aws' => [
+        'key' => env('AWS_ACCESS_KEY_ID'),
+        'secret' => env('AWS_SECRET_ACCESS_KEY'),
+        'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
+        'bucket' => env('AWS_BUCKET', 'convertportrait-processing'),
+        'lambda_function' => env('AWS_LAMBDA_FUNCTION', 'convertportrait-processor'),
+    ],
+
 ];

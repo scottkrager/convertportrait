@@ -409,95 +409,118 @@ async function switchToFastMode() {
     startConversion();
 }
 
+function buildOptions() {
+    const options = {};
+    if (selectedTemplate.value === 'gradient') {
+        const g = gradients.find(g => g.id === gradientVariant.value) || gradients[0];
+        options.gradientFrom = g.from;
+        options.gradientTo = g.to;
+    } else if (selectedTemplate.value === 'solid') {
+        options.solidColor = solidColor.value;
+    } else if (selectedTemplate.value === 'pattern') {
+        options.patternColor = patternColor.value;
+        options.patternType = patternType.value;
+    }
+    return options;
+}
+
+async function pollForCompletion(jobId, proEmail) {
+    while (true) {
+        await new Promise(r => setTimeout(r, 2000));
+        const resp = await fetch(`/api/process/status/${jobId}`, {
+            headers: { 'X-Pro-Email': proEmail },
+        });
+        if (!resp.ok) throw new Error('Status check failed');
+        const data = await resp.json();
+
+        if (data.status === 'failed') {
+            throw new Error(data.error || 'Processing failed on server');
+        }
+
+        // Map Lambda progress (0-100) to UI progress (42-95)
+        progress.value = Math.min(95, 42 + Math.round(data.progress * 0.53));
+        progressMessage.value = data.status === 'uploading' ? 'Saving result...' : 'Converting on server...';
+
+        if (data.status === 'completed' && data.downloadUrl) {
+            return data.downloadUrl;
+        }
+    }
+}
+
 async function startServerConversion() {
     step.value = 'processing';
     progress.value = 0;
-    progressMessage.value = 'Uploading video to server...';
+    progressMessage.value = 'Preparing upload...';
     errorMessage.value = '';
     conversionStartTime.value = Date.now();
 
+    const proEmail = localStorage.getItem('convertportrait_pro') || '';
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content || '';
+
     try {
-        const formData = new FormData();
-        formData.append('video', videoFile.value);
-        formData.append('template', selectedTemplate.value);
-
-        const options = {};
-        if (selectedTemplate.value === 'gradient') {
-            const g = gradients.find(g => g.id === gradientVariant.value) || gradients[0];
-            options.gradientFrom = g.from;
-            options.gradientTo = g.to;
-        } else if (selectedTemplate.value === 'solid') {
-            options.solidColor = solidColor.value;
-        } else if (selectedTemplate.value === 'pattern') {
-            options.patternColor = patternColor.value;
-            options.patternType = patternType.value;
+        // Phase 1: Get presigned upload URL
+        const initResp = await fetch('/api/process/init', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Pro-Email': proEmail,
+                'X-CSRF-TOKEN': csrfToken,
+            },
+            body: JSON.stringify({
+                template: selectedTemplate.value,
+                options: JSON.stringify(buildOptions()),
+            }),
+        });
+        if (!initResp.ok) {
+            const err = await initResp.json().catch(() => ({}));
+            throw new Error(err.error || 'Failed to initialize');
         }
-        formData.append('options', JSON.stringify(options));
+        const { jobId, uploadUrl } = await initResp.json();
 
-        const proEmail = localStorage.getItem('convertportrait_pro') || '';
-
-        // Use XMLHttpRequest for upload progress tracking
-        const blob = await new Promise((resolve, reject) => {
+        // Phase 2: Upload directly to S3 with real progress
+        progressMessage.value = 'Uploading video...';
+        await new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
-            xhr.open('POST', '/api/process');
-            xhr.setRequestHeader('X-Pro-Email', proEmail);
-            xhr.responseType = 'blob';
+            xhr.open('PUT', uploadUrl);
+            xhr.setRequestHeader('Content-Type', 'video/mp4');
 
             xhr.upload.onprogress = (e) => {
                 if (e.lengthComputable) {
-                    const uploadPct = Math.round((e.loaded / e.total) * 50); // Upload = 0-50%
-                    progress.value = uploadPct;
-                    if (uploadPct < 50) {
-                        progressMessage.value = 'Uploading video to server...';
-                    }
+                    progress.value = Math.round((e.loaded / e.total) * 40);
                 }
-            };
-
-            xhr.upload.onload = () => {
-                progress.value = 50;
-                progressMessage.value = 'Converting on server...';
-                // Simulate progress during server processing
-                const interval = setInterval(() => {
-                    if (progress.value < 90) {
-                        progress.value += 1;
-                    } else {
-                        clearInterval(interval);
-                    }
-                }, 800);
-                xhr._progressInterval = interval;
             };
 
             xhr.onload = () => {
-                if (xhr._progressInterval) clearInterval(xhr._progressInterval);
-                if (xhr.status >= 200 && xhr.status < 300) {
-                    progress.value = 95;
-                    progressMessage.value = 'Downloading result...';
-                    resolve(xhr.response);
-                } else {
-                    try {
-                        const reader = new FileReader();
-                        reader.onload = () => {
-                            try {
-                                const err = JSON.parse(reader.result);
-                                reject(new Error(err.error || `Server error (${xhr.status})`));
-                            } catch {
-                                reject(new Error(`Server error (${xhr.status})`));
-                            }
-                        };
-                        reader.readAsText(xhr.response);
-                    } catch {
-                        reject(new Error(`Server error (${xhr.status})`));
-                    }
-                }
+                if (xhr.status >= 200 && xhr.status < 300) resolve();
+                else reject(new Error(`Upload failed (${xhr.status})`));
             };
-
-            xhr.onerror = () => {
-                if (xhr._progressInterval) clearInterval(xhr._progressInterval);
-                reject(new Error('Network error — check your connection'));
-            };
-
-            xhr.send(formData);
+            xhr.onerror = () => reject(new Error('Upload failed — check your connection'));
+            xhr.send(videoFile.value);
         });
+
+        // Phase 3: Trigger Lambda
+        progress.value = 42;
+        progressMessage.value = 'Starting conversion...';
+        const startResp = await fetch('/api/process/start', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Pro-Email': proEmail,
+                'X-CSRF-TOKEN': csrfToken,
+            },
+            body: JSON.stringify({ jobId }),
+        });
+        if (!startResp.ok) throw new Error('Failed to start processing');
+
+        // Phase 4: Poll for real progress
+        progressMessage.value = 'Converting on server...';
+        const downloadUrl = await pollForCompletion(jobId, proEmail);
+
+        // Phase 5: Download result
+        progress.value = 96;
+        progressMessage.value = 'Downloading result...';
+        const resultResp = await fetch(downloadUrl);
+        const blob = await resultResp.blob();
 
         progress.value = 100;
         outputUrl.value = URL.createObjectURL(blob);
