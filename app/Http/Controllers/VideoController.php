@@ -58,12 +58,12 @@ class VideoController extends Controller
                 'ffmpeg', '-y',
                 '-i', $inputPath,
                 '-vf', $filter,
-                '-c:v', 'libx264', '-preset', 'fast', '-crf', '23',
+                '-c:v', 'libx264', '-preset', 'ultrafast', '-crf', '23',
                 '-c:a', 'aac', '-b:a', '128k',
                 '-movflags', '+faststart',
                 $outputPath,
             ]);
-            $ffmpeg->setTimeout(300);
+            $ffmpeg->setTimeout(600);
             $ffmpeg->run();
 
             if (!$ffmpeg->isSuccessful()) {
@@ -87,14 +87,9 @@ class VideoController extends Controller
 
     private function buildFilter(string $template, int $width, int $height, array $options): string
     {
-        // Target 1920x1080 or proportional 16:9
-        if ($height > 1080) {
-            $outH = 1080;
-            $outW = 1920;
-        } else {
-            $outH = (int) (ceil($height / 2) * 2);
-            $outW = (int) (ceil(($outH * 16) / 9 / 2) * 2);
-        }
+        // Always target 1920x1080
+        $outH = 1080;
+        $outW = 1920;
 
         // Scale foreground to fit height, maintain aspect ratio
         $fgH = $outH;

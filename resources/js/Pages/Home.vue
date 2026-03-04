@@ -85,7 +85,10 @@ const estimatedServerTime = computed(() => {
 
 function checkProStatus() {
     const stored = localStorage.getItem('convertportrait_pro');
-    if (stored) isPro.value = true;
+    if (stored) {
+        isPro.value = true;
+        processingMode.value = 'server';
+    }
 
     // Check URL params for Stripe success — prompt for email to verify
     const params = new URLSearchParams(window.location.search);
@@ -114,6 +117,7 @@ async function restorePurchase() {
 
         if (data.pro) {
             isPro.value = true;
+            processingMode.value = 'server';
             localStorage.setItem('convertportrait_pro', restoreEmail.value);
             showRestoreModal.value = false;
             restoreEmail.value = '';
@@ -378,17 +382,39 @@ async function startConversion() {
         await ffmpeg.deleteFile('input.mp4');
         await ffmpeg.deleteFile('output.mp4');
     } catch (err) {
+        // If cancelled via terminate(), don't show error
+        if (step.value !== 'processing') return;
         console.error('Conversion error:', err);
         errorMessage.value = `Conversion failed: ${err.message}. Try a shorter clip or different format.`;
         step.value = 'template';
     }
 }
 
+async function cancelBrowserConversion() {
+    if (ffmpeg) {
+        try { ffmpeg.terminate(); } catch (e) { /* already terminated */ }
+        ffmpeg = null;
+        ffmpegLoaded.value = false;
+    }
+    progress.value = 0;
+    progressMessage.value = '';
+    estimatedTimeLeft.value = '';
+    step.value = 'template';
+}
+
+async function switchToFastMode() {
+    await cancelBrowserConversion();
+    processingMode.value = 'server';
+    await nextTick();
+    startConversion();
+}
+
 async function startServerConversion() {
     step.value = 'processing';
-    progress.value = -1; // indeterminate
+    progress.value = 0;
     progressMessage.value = 'Uploading video to server...';
     errorMessage.value = '';
+    conversionStartTime.value = Date.now();
 
     try {
         const formData = new FormData();
@@ -410,21 +436,70 @@ async function startServerConversion() {
 
         const proEmail = localStorage.getItem('convertportrait_pro') || '';
 
-        progressMessage.value = 'Processing on server (much faster)...';
+        // Use XMLHttpRequest for upload progress tracking
+        const blob = await new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/api/process');
+            xhr.setRequestHeader('X-Pro-Email', proEmail);
+            xhr.responseType = 'blob';
 
-        const res = await fetch('/api/process', {
-            method: 'POST',
-            headers: { 'X-Pro-Email': proEmail },
-            body: formData,
+            xhr.upload.onprogress = (e) => {
+                if (e.lengthComputable) {
+                    const uploadPct = Math.round((e.loaded / e.total) * 50); // Upload = 0-50%
+                    progress.value = uploadPct;
+                    if (uploadPct < 50) {
+                        progressMessage.value = 'Uploading video to server...';
+                    }
+                }
+            };
+
+            xhr.upload.onload = () => {
+                progress.value = 50;
+                progressMessage.value = 'Converting on server...';
+                // Simulate progress during server processing
+                const interval = setInterval(() => {
+                    if (progress.value < 90) {
+                        progress.value += 1;
+                    } else {
+                        clearInterval(interval);
+                    }
+                }, 800);
+                xhr._progressInterval = interval;
+            };
+
+            xhr.onload = () => {
+                if (xhr._progressInterval) clearInterval(xhr._progressInterval);
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    progress.value = 95;
+                    progressMessage.value = 'Downloading result...';
+                    resolve(xhr.response);
+                } else {
+                    try {
+                        const reader = new FileReader();
+                        reader.onload = () => {
+                            try {
+                                const err = JSON.parse(reader.result);
+                                reject(new Error(err.error || `Server error (${xhr.status})`));
+                            } catch {
+                                reject(new Error(`Server error (${xhr.status})`));
+                            }
+                        };
+                        reader.readAsText(xhr.response);
+                    } catch {
+                        reject(new Error(`Server error (${xhr.status})`));
+                    }
+                }
+            };
+
+            xhr.onerror = () => {
+                if (xhr._progressInterval) clearInterval(xhr._progressInterval);
+                reject(new Error('Network error — check your connection'));
+            };
+
+            xhr.send(formData);
         });
 
-        if (!res.ok) {
-            const err = await res.json().catch(() => ({}));
-            throw new Error(err.error || `Server error (${res.status})`);
-        }
-
-        progressMessage.value = 'Downloading result...';
-        const blob = await res.blob();
+        progress.value = 100;
         outputUrl.value = URL.createObjectURL(blob);
         outputFilename.value = `${videoFile.value.name.replace(/\.[^.]+$/, '')}-landscape.mp4`;
         step.value = 'done';
@@ -705,6 +780,70 @@ onUnmounted(() => {
                             <p class="text-[11px] text-white/25 leading-snug">Converts in your browser using WebAssembly. Fast and free.</p>
                         </div>
                     </div>
+
+                    <!-- How it works -->
+                    <div class="mt-20">
+                        <h2 class="text-lg font-bold tracking-tight text-center mb-8 text-white/60">How it works</h2>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                            <div class="text-center">
+                                <div class="w-8 h-8 mx-auto mb-3 rounded-full bg-teal/10 border border-teal/10 flex items-center justify-center text-xs font-bold text-teal">1</div>
+                                <p class="text-sm font-semibold text-white/60 mb-1">Upload your video</p>
+                                <p class="text-xs text-white/25 leading-relaxed">Drop any portrait video — TikTok, Reel, YouTube Short. MP4, MOV, or WebM.</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="w-8 h-8 mx-auto mb-3 rounded-full bg-teal/10 border border-teal/10 flex items-center justify-center text-xs font-bold text-teal">2</div>
+                                <p class="text-sm font-semibold text-white/60 mb-1">Pick a background</p>
+                                <p class="text-xs text-white/25 leading-relaxed">Choose blurred mirror, solid color, gradient, or pattern fill for the sides.</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="w-8 h-8 mx-auto mb-3 rounded-full bg-teal/10 border border-teal/10 flex items-center justify-center text-xs font-bold text-teal">3</div>
+                                <p class="text-sm font-semibold text-white/60 mb-1">Download landscape</p>
+                                <p class="text-xs text-white/25 leading-relaxed">Get a 1920x1080 video ready for YouTube, presentations, or any widescreen display.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ -->
+                    <div class="mt-20 mb-8">
+                        <h2 class="text-lg font-bold tracking-tight text-center mb-8 text-white/60">Frequently asked questions</h2>
+                        <div class="space-y-3 max-w-xl mx-auto">
+                            <details class="group bg-white/[0.02] border border-white/[0.06] rounded-xl">
+                                <summary class="flex items-center justify-between cursor-pointer px-5 py-4 text-sm font-semibold text-white/60 hover:text-white/80 transition">
+                                    How do I convert a portrait video to landscape?
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white/20 transition-transform group-open:rotate-180" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                                </summary>
+                                <p class="px-5 pb-4 text-xs text-white/30 leading-relaxed">Upload your portrait video, choose a background style, and click Convert. Your video is converted to 16:9 landscape format right in your browser — no software to install.</p>
+                            </details>
+                            <details class="group bg-white/[0.02] border border-white/[0.06] rounded-xl">
+                                <summary class="flex items-center justify-between cursor-pointer px-5 py-4 text-sm font-semibold text-white/60 hover:text-white/80 transition">
+                                    Is ConvertPortrait free?
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white/20 transition-transform group-open:rotate-180" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                                </summary>
+                                <p class="px-5 pb-4 text-xs text-white/30 leading-relaxed">Yes! The free tier includes browser-based conversion with blurred mirror and solid color backgrounds. Pro ($19.99 one-time) adds server-side fast processing, premium templates, and future features.</p>
+                            </details>
+                            <details class="group bg-white/[0.02] border border-white/[0.06] rounded-xl">
+                                <summary class="flex items-center justify-between cursor-pointer px-5 py-4 text-sm font-semibold text-white/60 hover:text-white/80 transition">
+                                    Is my video uploaded to a server?
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white/20 transition-transform group-open:rotate-180" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                                </summary>
+                                <p class="px-5 pb-4 text-xs text-white/30 leading-relaxed">In free mode, no — your video is processed entirely in your browser using WebAssembly and never leaves your device. Pro users can optionally use server-side processing for faster conversion, where the video is deleted immediately after.</p>
+                            </details>
+                            <details class="group bg-white/[0.02] border border-white/[0.06] rounded-xl">
+                                <summary class="flex items-center justify-between cursor-pointer px-5 py-4 text-sm font-semibold text-white/60 hover:text-white/80 transition">
+                                    What video formats are supported?
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white/20 transition-transform group-open:rotate-180" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                                </summary>
+                                <p class="px-5 pb-4 text-xs text-white/30 leading-relaxed">ConvertPortrait supports MP4, MOV, WebM, and AVI files up to 200MB in browser mode or 500MB with Pro server processing.</p>
+                            </details>
+                            <details class="group bg-white/[0.02] border border-white/[0.06] rounded-xl">
+                                <summary class="flex items-center justify-between cursor-pointer px-5 py-4 text-sm font-semibold text-white/60 hover:text-white/80 transition">
+                                    What background styles are available?
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white/20 transition-transform group-open:rotate-180" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                                </summary>
+                                <p class="px-5 pb-4 text-xs text-white/30 leading-relaxed">Free backgrounds include Blurred Mirror (your video blurred as background) and Solid Color (pick any color). Pro backgrounds include Gradient Wash (5 preset gradients like Sunset, Ocean, Neon) and Pattern Fill (dots, lines, or chevrons with custom colors).</p>
+                            </details>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -828,35 +967,44 @@ onUnmounted(() => {
                     </div>
 
                     <!-- Processing mode toggle (Pro only) -->
-                    <div v-if="isPro" class="mb-4 bg-surface/50 rounded-xl border border-white/[0.04] p-4">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-2.5">
-                                <svg v-if="processingMode === 'server'" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
-                                    <path d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" />
-                                </svg>
-                                <svg v-else xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-teal" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
-                                </svg>
-                                <div>
-                                    <p class="text-sm font-semibold text-white/80">
-                                        {{ processingMode === 'server' ? 'Fast mode' : 'Private mode' }}
-                                    </p>
-                                    <p class="text-[11px] text-white/30">
-                                        {{ processingMode === 'server' ? 'Server-side processing — faster, video uploaded temporarily' : 'Browser-only — video never leaves your device' }}
-                                    </p>
-                                </div>
-                            </div>
+                    <div v-if="isPro" class="mb-4">
+                        <p class="text-[11px] font-semibold text-white/30 uppercase tracking-wider mb-2">Processing</p>
+                        <div class="grid grid-cols-2 gap-2">
                             <button
-                                @click="processingMode = processingMode === 'server' ? 'browser' : 'server'"
+                                @click="processingMode = 'server'"
                                 :class="[
-                                    'relative w-11 h-6 rounded-full transition-colors duration-200',
-                                    processingMode === 'server' ? 'bg-amber-400' : 'bg-white/[0.1]'
+                                    'relative rounded-xl border p-3 text-left transition-all duration-200',
+                                    processingMode === 'server'
+                                        ? 'bg-amber-400/[0.08] border-amber-400/30'
+                                        : 'bg-white/[0.02] border-white/[0.06] hover:border-white/[0.1]'
                                 ]"
                             >
-                                <div :class="[
-                                    'absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform duration-200',
-                                    processingMode === 'server' ? 'translate-x-[22px]' : 'translate-x-0.5'
-                                ]"></div>
+                                <div class="flex items-center gap-2 mb-1.5">
+                                    <svg xmlns="http://www.w3.org/2000/svg" :class="['w-3.5 h-3.5', processingMode === 'server' ? 'text-amber-400' : 'text-white/30']" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" />
+                                    </svg>
+                                    <span :class="['text-xs font-bold', processingMode === 'server' ? 'text-amber-400' : 'text-white/50']">Fast</span>
+                                    <span v-if="processingMode === 'server'" class="ml-auto text-[9px] font-bold uppercase tracking-wider text-amber-400/60 bg-amber-400/10 px-1.5 py-0.5 rounded">Active</span>
+                                </div>
+                                <p class="text-[10px] leading-relaxed" :class="processingMode === 'server' ? 'text-white/40' : 'text-white/20'">Server-side — ~140x faster. Video uploaded temporarily, deleted after.</p>
+                            </button>
+                            <button
+                                @click="processingMode = 'browser'"
+                                :class="[
+                                    'relative rounded-xl border p-3 text-left transition-all duration-200',
+                                    processingMode === 'browser'
+                                        ? 'bg-teal/[0.08] border-teal/30'
+                                        : 'bg-white/[0.02] border-white/[0.06] hover:border-white/[0.1]'
+                                ]"
+                            >
+                                <div class="flex items-center gap-2 mb-1.5">
+                                    <svg xmlns="http://www.w3.org/2000/svg" :class="['w-3.5 h-3.5', processingMode === 'browser' ? 'text-teal' : 'text-white/30']" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+                                    </svg>
+                                    <span :class="['text-xs font-bold', processingMode === 'browser' ? 'text-teal' : 'text-white/50']">Private</span>
+                                    <span v-if="processingMode === 'browser'" class="ml-auto text-[9px] font-bold uppercase tracking-wider text-teal/60 bg-teal/10 px-1.5 py-0.5 rounded">Active</span>
+                                </div>
+                                <p class="text-[10px] leading-relaxed" :class="processingMode === 'browser' ? 'text-white/40' : 'text-white/20'">In-browser — video never leaves your device. Slower processing.</p>
                             </button>
                         </div>
                     </div>
@@ -942,7 +1090,30 @@ onUnmounted(() => {
                     <p v-if="progress >= 0" class="mt-3 text-xs text-white/25 tabular-nums">{{ progress }}%</p>
                     <p v-else class="mt-3 text-xs text-white/25">Processing on server...</p>
 
-                    <!-- Pro upsell during slow browser conversion -->
+                    <!-- Switch to fast mode (Pro users in browser mode) -->
+                    <div v-if="isPro && processingMode === 'browser' && progress > 0 && progress < 95" class="mt-8">
+                        <button
+                            @click="switchToFastMode"
+                            class="w-full bg-amber-400/[0.08] hover:bg-amber-400/[0.12] border border-amber-400/20 hover:border-amber-400/30 rounded-xl p-4 text-left transition-all duration-200 group"
+                        >
+                            <div class="flex items-center gap-3">
+                                <div class="w-9 h-9 rounded-lg bg-amber-400/15 flex items-center justify-center shrink-0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" />
+                                    </svg>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-bold text-amber-400 group-hover:text-amber-300 transition">Switch to Fast mode</p>
+                                    <p class="text-[11px] text-white/30">Cancel this and re-process on our server in {{ estimatedServerTime }}</p>
+                                </div>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-amber-400/50 group-hover:text-amber-400 group-hover:translate-x-0.5 transition-all" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                        </button>
+                    </div>
+
+                    <!-- Pro upsell during slow browser conversion (free users) -->
                     <div v-if="!isPro && processingMode === 'browser' && progress > 2 && progress < 90" class="mt-8 bg-amber-400/[0.04] border border-amber-400/10 rounded-xl p-5 text-left">
                         <div class="flex items-start gap-3">
                             <div class="w-8 h-8 rounded-lg bg-amber-400/10 flex items-center justify-center shrink-0 mt-0.5">
@@ -960,15 +1131,24 @@ onUnmounted(() => {
                         </div>
                     </div>
 
-                    <!-- Context reminder -->
-                    <div class="mt-10 inline-flex items-center gap-1.5 text-[11px] text-white/20">
-                        <svg v-if="processingMode === 'server'" xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" />
-                        </svg>
-                        <svg v-else xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
-                        </svg>
-                        {{ processingMode === 'server' ? 'Server-side processing — file deleted after conversion' : 'Processing locally on your device' }}
+                    <!-- Cancel / context reminder -->
+                    <div class="mt-10 flex flex-col items-center gap-3">
+                        <div class="inline-flex items-center gap-1.5 text-[11px] text-white/20">
+                            <svg v-if="processingMode === 'server'" xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" />
+                            </svg>
+                            <svg v-else xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+                            </svg>
+                            {{ processingMode === 'server' ? 'Server-side processing — file deleted after conversion' : 'Processing locally on your device' }}
+                        </div>
+                        <button
+                            v-if="processingMode === 'browser'"
+                            @click="cancelBrowserConversion"
+                            class="text-[11px] text-white/20 hover:text-white/40 transition"
+                        >
+                            Cancel conversion
+                        </button>
                     </div>
                 </div>
             </div>
