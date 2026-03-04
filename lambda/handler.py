@@ -150,8 +150,8 @@ def build_filter(template, width, height, options):
         fr = options.get('gradientFrom', 'f97316').lstrip('#')
         to = options.get('gradientTo', '9333ea').lstrip('#')
         return (
-            f"color=c=0x{fr}:s={out_w}x{out_h}:d=1[left];"
-            f"color=c=0x{to}:s={out_w}x{out_h}:d=1[right];"
+            f"color=c=0x{fr}:s={out_w}x{out_h}[left];"
+            f"color=c=0x{to}:s={out_w}x{out_h}[right];"
             f"[left][right]blend=all_mode=addition:all_opacity=0.5[bg];"
             f"[0:v]scale={fg_w}:{fg_h}[fg];"
             f"[bg][fg]overlay={pad_x}:0:shortest=1"
@@ -160,7 +160,7 @@ def build_filter(template, width, height, options):
     elif template == 'solid':
         hex_c = options.get('solidColor', '000000').lstrip('#')
         return (
-            f"color=c=0x{hex_c}:s={out_w}x{out_h}:d=1[bg];"
+            f"color=c=0x{hex_c}:s={out_w}x{out_h}[bg];"
             f"[0:v]scale={fg_w}:{fg_h}[fg];"
             f"[bg][fg]overlay={pad_x}:0:shortest=1"
         )
@@ -183,7 +183,7 @@ def build_filter(template, width, height, options):
             drawboxes = drawboxes[:5000]
 
         return (
-            f"color=c=0x111111:s={out_w}x{out_h}:d=1{drawboxes}[bg];"
+            f"color=c=0x111111:s={out_w}x{out_h}{drawboxes}[bg];"
             f"[0:v]scale={fg_w}:{fg_h}[fg];"
             f"[bg][fg]overlay={pad_x}:0:shortest=1"
         )
