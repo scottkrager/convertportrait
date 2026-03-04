@@ -26,8 +26,8 @@
         <!-- Structured Data -->
         <script type="application/ld+json">
         {
-            "@context": "https://schema.org",
-            "@type": "WebApplication",
+            "@@context": "https://schema.org",
+            "@@type": "WebApplication",
             "name": "ConvertPortrait",
             "url": "{{ url('/') }}",
             "description": "Convert portrait TikTok, Reels, and YouTube Shorts to landscape 16:9 format instantly. Free, private, runs in your browser.",
@@ -35,13 +35,13 @@
             "operatingSystem": "Any",
             "offers": [
                 {
-                    "@type": "Offer",
+                    "@@type": "Offer",
                     "price": "0",
                     "priceCurrency": "USD",
                     "description": "Free tier — browser-based conversion with blurred and solid color backgrounds"
                 },
                 {
-                    "@type": "Offer",
+                    "@@type": "Offer",
                     "price": "19.99",
                     "priceCurrency": "USD",
                     "description": "Pro — server-side fast conversion, all templates, lifetime access"
@@ -64,46 +64,46 @@
         <!-- FAQ Structured Data -->
         <script type="application/ld+json">
         {
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
+            "@@context": "https://schema.org",
+            "@@type": "FAQPage",
             "mainEntity": [
                 {
-                    "@type": "Question",
+                    "@@type": "Question",
                     "name": "How do I convert a portrait video to landscape?",
                     "acceptedAnswer": {
-                        "@type": "Answer",
+                        "@@type": "Answer",
                         "text": "Upload your portrait video (TikTok, Reel, or YouTube Short) to ConvertPortrait, choose a background style, and click Convert. The video is converted to 16:9 landscape format right in your browser."
                     }
                 },
                 {
-                    "@type": "Question",
+                    "@@type": "Question",
                     "name": "Is ConvertPortrait free?",
                     "acceptedAnswer": {
-                        "@type": "Answer",
+                        "@@type": "Answer",
                         "text": "Yes! The free tier includes browser-based conversion with blurred mirror and solid color backgrounds. Pro ($19.99 one-time) adds server-side fast processing and premium templates."
                     }
                 },
                 {
-                    "@type": "Question",
+                    "@@type": "Question",
                     "name": "Is my video uploaded to a server?",
                     "acceptedAnswer": {
-                        "@type": "Answer",
+                        "@@type": "Answer",
                         "text": "In free mode, no — your video is processed entirely in your browser using WebAssembly and never leaves your device. Pro users can optionally use server-side processing for faster conversion, where the video is deleted immediately after."
                     }
                 },
                 {
-                    "@type": "Question",
+                    "@@type": "Question",
                     "name": "What video formats are supported?",
                     "acceptedAnswer": {
-                        "@type": "Answer",
+                        "@@type": "Answer",
                         "text": "ConvertPortrait supports MP4, MOV, WebM, and AVI files up to 200MB in browser mode or 500MB with Pro server processing."
                     }
                 },
                 {
-                    "@type": "Question",
+                    "@@type": "Question",
                     "name": "What background styles are available?",
                     "acceptedAnswer": {
-                        "@type": "Answer",
+                        "@@type": "Answer",
                         "text": "Free backgrounds include Blurred Mirror (your video blurred as background) and Solid Color (pick any color). Pro backgrounds include Gradient Wash (5 preset gradients) and Pattern Fill (dots, lines, chevrons)."
                     }
                 }
