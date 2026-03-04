@@ -2,14 +2,22 @@ import json
 import os
 import subprocess
 import math
+import time
 import boto3
 
 s3 = boto3.client('s3')
 
 
+def log(msg):
+    print(f"[convertportrait] {msg}", flush=True)
+
+
 def lambda_handler(event, context):
     job_id = event['jobId']
     bucket = event['bucket']
+    start_time = time.time()
+
+    log(f"START job={job_id} bucket={bucket}")
 
     input_key = f"input/{job_id}.mp4"
     output_key = f"output/{job_id}.mp4"
@@ -25,9 +33,12 @@ def lambda_handler(event, context):
         config = json.loads(status_obj['Body'].read())
         template = config['template']
         options = config.get('options', {})
+        log(f"Config: template={template} options={options}")
 
         # Download input
         s3.download_file(bucket, input_key, input_path)
+        file_size = os.path.getsize(input_path)
+        log(f"Downloaded input: {file_size / 1024 / 1024:.1f} MB in {time.time() - start_time:.1f}s")
         update_status(bucket, status_key, 'probing', 15)
 
         # Probe dimensions
@@ -38,13 +49,16 @@ def lambda_handler(event, context):
         )
         dims = probe.stdout.strip().split(',')
         width, height = int(dims[0]), int(dims[1])
+        log(f"Probe: {width}x{height}")
 
         # Build filter
         vf = build_filter(template, width, height, options)
+        log(f"Filter: {vf[:200]}")
         update_status(bucket, status_key, 'processing', 20)
 
         # Get duration for progress tracking
         duration = get_duration(input_path)
+        log(f"Duration: {duration:.1f}s")
 
         # Run FFmpeg with progress output
         cmd = [
@@ -56,7 +70,9 @@ def lambda_handler(event, context):
             '-progress', 'pipe:1',
             output_path
         ]
+        log(f"FFmpeg cmd: {' '.join(cmd[:8])}...")
 
+        ffmpeg_start = time.time()
         process = subprocess.Popen(
             cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             universal_newlines=True
@@ -70,26 +86,40 @@ def lambda_handler(event, context):
                     if duration > 0:
                         pct = min(85, 20 + int((time_ms / (duration * 1_000_000)) * 65))
                         if pct > last_pct + 4:
+                            elapsed = time.time() - ffmpeg_start
+                            log(f"Progress: {pct}% (time_ms={time_ms}, elapsed={elapsed:.1f}s)")
                             update_status(bucket, status_key, 'processing', pct)
                             last_pct = pct
                 except (ValueError, ZeroDivisionError):
                     pass
 
         process.wait()
+        ffmpeg_elapsed = time.time() - ffmpeg_start
+        log(f"FFmpeg finished: returncode={process.returncode} elapsed={ffmpeg_elapsed:.1f}s")
+
         if process.returncode != 0:
             stderr = process.stderr.read()
+            log(f"FFmpeg STDERR: {stderr[:1000]}")
             raise Exception(f"FFmpeg failed: {stderr[:500]}")
+
+        output_size = os.path.getsize(output_path)
+        log(f"Output file: {output_size / 1024 / 1024:.1f} MB")
 
         # Upload result
         update_status(bucket, status_key, 'uploading', 90)
+        upload_start = time.time()
         s3.upload_file(
             output_path, bucket, output_key,
             ExtraArgs={'ContentType': 'video/mp4'}
         )
+        log(f"Uploaded result in {time.time() - upload_start:.1f}s")
 
         update_status(bucket, status_key, 'completed', 100)
+        total = time.time() - start_time
+        log(f"DONE job={job_id} total={total:.1f}s")
 
     except Exception as e:
+        log(f"ERROR job={job_id}: {e}")
         update_status(bucket, status_key, 'failed', 0, str(e))
         raise
     finally:
@@ -140,8 +170,7 @@ def build_filter(template, width, height, options):
     if template == 'blurred':
         return (
             f"split[fg][bg];"
-            f"[bg]scale={out_w}:{out_h}:force_original_aspect_ratio=increase,"
-            f"crop={out_w}:{out_h},boxblur=40:40[blurred];"
+            f"[bg]scale=480:270,boxblur=20:20,scale={out_w}:{out_h}[blurred];"
             f"[fg]scale={fg_w}:{fg_h}[sharp];"
             f"[blurred][sharp]overlay={pad_x}:0"
         )
@@ -191,8 +220,7 @@ def build_filter(template, width, height, options):
     else:
         return (
             f"split[fg][bg];"
-            f"[bg]scale={out_w}:{out_h}:force_original_aspect_ratio=increase,"
-            f"crop={out_w}:{out_h},boxblur=40:40[blurred];"
+            f"[bg]scale=480:270,boxblur=20:20,scale={out_w}:{out_h}[blurred];"
             f"[fg]scale={fg_w}:{fg_h}[sharp];"
             f"[blurred][sharp]overlay={pad_x}:0"
         )
