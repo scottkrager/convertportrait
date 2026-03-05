@@ -67,6 +67,7 @@ def lambda_handler(event, context):
             '-c:v', 'libx264', '-preset', 'ultrafast', '-crf', '23',
             '-c:a', 'aac', '-b:a', '128k',
             '-movflags', '+faststart',
+            '-metadata:s:v', 'rotate=0',
             '-progress', 'pipe:1',
             output_path
         ]
