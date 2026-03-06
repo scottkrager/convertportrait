@@ -23,6 +23,12 @@ Route::get('/video-aspect-ratio-converter', fn() => Inertia::render('Landing/Asp
 Route::get('/blog', [BlogController::class, 'index']);
 Route::get('/blog/{slug}', [BlogController::class, 'show']);
 
+// Info Pages
+Route::get('/about', fn() => Inertia::render('About'));
+Route::get('/contact', fn() => Inertia::render('Contact'));
+Route::get('/privacy', fn() => Inertia::render('Privacy'));
+Route::get('/terms', fn() => Inertia::render('Terms'));
+
 Route::post('/api/checkout', [StripeController::class, 'createCheckout']);
 Route::post('/api/stripe/webhook', [StripeController::class, 'webhook']);
 Route::post('/api/restore', [StripeController::class, 'restore']);

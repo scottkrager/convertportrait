@@ -51,16 +51,16 @@ const jsonLdFaq = JSON.stringify({
 
 <template>
     <Head>
-        <title>Convert TikTok to YouTube Format — Free Online Tool</title>
+        <title>Convert TikTok to YouTube Format — Free Online Tool | ConvertPortrait</title>
         <meta name="description" content="Convert TikTok videos from 9:16 portrait to 16:9 YouTube landscape format instantly. Free, private, no upload required. Works in your browser.">
         <link rel="canonical" href="https://convertportrait.com/convert-tiktok-to-youtube">
         <meta property="og:type" content="website">
         <meta property="og:url" content="https://convertportrait.com/convert-tiktok-to-youtube">
-        <meta property="og:title" content="Convert TikTok to YouTube Format — Free Online Tool">
+        <meta property="og:title" content="Convert TikTok to YouTube Format — Free Online Tool | ConvertPortrait">
         <meta property="og:description" content="Convert TikTok videos from 9:16 portrait to 16:9 YouTube landscape format instantly. Free, private, no upload required.">
         <meta property="og:site_name" content="ConvertPortrait">
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="Convert TikTok to YouTube Format — Free Online Tool">
+        <meta name="twitter:title" content="Convert TikTok to YouTube Format — Free Online Tool | ConvertPortrait">
         <meta name="twitter:description" content="Convert TikTok videos from 9:16 portrait to 16:9 YouTube landscape format instantly. Free, private, no upload required.">
         <component is="script" type="application/ld+json" v-html="jsonLdWebApp" />
         <component is="script" type="application/ld+json" v-html="jsonLdFaq" />

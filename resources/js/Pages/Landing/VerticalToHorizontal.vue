@@ -58,16 +58,16 @@ const jsonLdFaq = JSON.stringify({
 
 <template>
     <Head>
-        <title>Convert Vertical Video to Horizontal — Free Online Tool</title>
+        <title>Convert Vertical Video to Horizontal — Free Online Tool | ConvertPortrait</title>
         <meta name="description" content="Convert vertical video to horizontal 16:9 format online for free. No software needed — works in your browser. Perfect for YouTube, presentations, and TV.">
         <link rel="canonical" href="https://convertportrait.com/vertical-to-horizontal-video">
         <meta property="og:type" content="website">
         <meta property="og:url" content="https://convertportrait.com/vertical-to-horizontal-video">
-        <meta property="og:title" content="Convert Vertical Video to Horizontal — Free Online Tool">
+        <meta property="og:title" content="Convert Vertical Video to Horizontal — Free Online Tool | ConvertPortrait">
         <meta property="og:description" content="Convert vertical video to horizontal 16:9 format online for free. No software needed — works in your browser.">
         <meta property="og:site_name" content="ConvertPortrait">
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="Convert Vertical Video to Horizontal — Free Online Tool">
+        <meta name="twitter:title" content="Convert Vertical Video to Horizontal — Free Online Tool | ConvertPortrait">
         <meta name="twitter:description" content="Convert vertical video to horizontal 16:9 format online for free. No software needed — works in your browser.">
         <component is="script" type="application/ld+json" v-html="jsonLdWebApp" />
         <component is="script" type="application/ld+json" v-html="jsonLdFaq" />

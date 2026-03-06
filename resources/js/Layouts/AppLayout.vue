@@ -78,12 +78,15 @@ defineProps({
                         <h4 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-4">Resources</h4>
                         <ul class="space-y-2.5">
                             <li><a href="/blog" class="text-sm text-gray-600 hover:text-gray-800 transition">Blog</a></li>
+                            <li><a href="/about" class="text-sm text-gray-600 hover:text-gray-800 transition">About</a></li>
+                            <li><a href="/contact" class="text-sm text-gray-600 hover:text-gray-800 transition">Contact</a></li>
                         </ul>
                     </div>
                     <div>
-                        <h4 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-4">Product</h4>
+                        <h4 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-4">Legal</h4>
                         <ul class="space-y-2.5">
-                            <li><a href="/" class="text-sm text-gray-600 hover:text-gray-800 transition">Free Converter</a></li>
+                            <li><a href="/privacy" class="text-sm text-gray-600 hover:text-gray-800 transition">Privacy Policy</a></li>
+                            <li><a href="/terms" class="text-sm text-gray-600 hover:text-gray-800 transition">Terms of Service</a></li>
                         </ul>
                     </div>
                 </div>

@@ -58,16 +58,16 @@ const jsonLdFaq = JSON.stringify({
 
 <template>
     <Head>
-        <title>Video Aspect Ratio Converter — 9:16 to 16:9 Free</title>
+        <title>Video Aspect Ratio Converter — 9:16 to 16:9 Free | ConvertPortrait</title>
         <meta name="description" content="Change video aspect ratio from 9:16 portrait to 16:9 landscape online for free. No upload, no software — works in your browser with professional backgrounds.">
         <link rel="canonical" href="https://convertportrait.com/video-aspect-ratio-converter">
         <meta property="og:type" content="website">
         <meta property="og:url" content="https://convertportrait.com/video-aspect-ratio-converter">
-        <meta property="og:title" content="Video Aspect Ratio Converter — 9:16 to 16:9 Free">
+        <meta property="og:title" content="Video Aspect Ratio Converter — 9:16 to 16:9 Free | ConvertPortrait">
         <meta property="og:description" content="Change video aspect ratio from 9:16 portrait to 16:9 landscape online for free. No upload, no software.">
         <meta property="og:site_name" content="ConvertPortrait">
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="Video Aspect Ratio Converter — 9:16 to 16:9 Free">
+        <meta name="twitter:title" content="Video Aspect Ratio Converter — 9:16 to 16:9 Free | ConvertPortrait">
         <meta name="twitter:description" content="Change video aspect ratio from 9:16 portrait to 16:9 landscape online for free. No upload, no software.">
         <component is="script" type="application/ld+json" v-html="jsonLdWebApp" />
         <component is="script" type="application/ld+json" v-html="jsonLdFaq" />

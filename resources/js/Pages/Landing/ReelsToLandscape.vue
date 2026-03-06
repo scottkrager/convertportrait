@@ -58,16 +58,16 @@ const jsonLdFaq = JSON.stringify({
 
 <template>
     <Head>
-        <title>Convert Instagram Reels to Landscape — Free Tool</title>
+        <title>Convert Instagram Reels to Landscape — Free Tool | ConvertPortrait</title>
         <meta name="description" content="Convert Instagram Reels from 9:16 portrait to 16:9 landscape format. Free online tool, no upload required. Repurpose Reels for YouTube, presentations, and TV.">
         <link rel="canonical" href="https://convertportrait.com/convert-reels-to-landscape">
         <meta property="og:type" content="website">
         <meta property="og:url" content="https://convertportrait.com/convert-reels-to-landscape">
-        <meta property="og:title" content="Convert Instagram Reels to Landscape — Free Tool">
+        <meta property="og:title" content="Convert Instagram Reels to Landscape — Free Tool | ConvertPortrait">
         <meta property="og:description" content="Convert Instagram Reels from 9:16 portrait to 16:9 landscape format. Free, private, no upload required.">
         <meta property="og:site_name" content="ConvertPortrait">
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="Convert Instagram Reels to Landscape — Free Tool">
+        <meta name="twitter:title" content="Convert Instagram Reels to Landscape — Free Tool | ConvertPortrait">
         <meta name="twitter:description" content="Convert Instagram Reels from 9:16 portrait to 16:9 landscape format. Free, private, no upload required.">
         <component is="script" type="application/ld+json" v-html="jsonLdWebApp" />
         <component is="script" type="application/ld+json" v-html="jsonLdFaq" />

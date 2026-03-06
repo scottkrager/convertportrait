@@ -51,16 +51,16 @@ const jsonLdFaq = JSON.stringify({
 
 <template>
     <Head>
-        <title>Portrait to Landscape Video Converter — Free, No Upload</title>
+        <title>Portrait to Landscape Video Converter — Free, No Upload | ConvertPortrait</title>
         <meta name="description" content="Convert portrait video to landscape format online for free. No upload required — runs in your browser. Choose from blurred, gradient, solid, or pattern backgrounds.">
         <link rel="canonical" href="https://convertportrait.com/portrait-to-landscape-video-converter">
         <meta property="og:type" content="website">
         <meta property="og:url" content="https://convertportrait.com/portrait-to-landscape-video-converter">
-        <meta property="og:title" content="Portrait to Landscape Video Converter — Free, No Upload">
+        <meta property="og:title" content="Portrait to Landscape Video Converter — Free, No Upload | ConvertPortrait">
         <meta property="og:description" content="Convert portrait video to landscape format online for free. No upload required — runs in your browser.">
         <meta property="og:site_name" content="ConvertPortrait">
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="Portrait to Landscape Video Converter — Free, No Upload">
+        <meta name="twitter:title" content="Portrait to Landscape Video Converter — Free, No Upload | ConvertPortrait">
         <meta name="twitter:description" content="Convert portrait video to landscape format online for free. No upload required — runs in your browser.">
         <component is="script" type="application/ld+json" v-html="jsonLdWebApp" />
         <component is="script" type="application/ld+json" v-html="jsonLdFaq" />
