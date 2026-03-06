@@ -16,10 +16,7 @@ class StripeController extends Controller
             'line_items' => [[
                 'price_data' => [
                     'currency' => 'usd',
-                    'product_data' => [
-                        'name' => 'ConvertPortrait Pro',
-                        'description' => 'Yearly subscription — all templates, unlimited video length',
-                    ],
+                    'product' => 'prod_U6H1qusXarMTAK',
                     'unit_amount' => 1999, // $19.99
                     'recurring' => [
                         'interval' => 'year',
