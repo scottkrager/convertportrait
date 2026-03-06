@@ -13,7 +13,8 @@ class VideoController extends Controller
     {
         // Verify Pro status
         $email = $request->header('X-Pro-Email');
-        if (!$email || !ProUser::where('email', strtolower($email))->exists()) {
+        $proUser = $email ? ProUser::where('email', strtolower($email))->first() : null;
+        if (!$proUser || !$proUser->isActive()) {
             return response()->json(['error' => 'Pro access required'], 403);
         }
 

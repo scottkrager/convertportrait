@@ -34,7 +34,7 @@ const jsonLdWebApp = JSON.stringify({
     "operatingSystem": "Any",
     "offers": [
         { "@type": "Offer", "price": "0", "priceCurrency": "USD", "description": "Free browser-based conversion" },
-        { "@type": "Offer", "price": "19.99", "priceCurrency": "USD", "description": "Pro — fast server-side conversion, lifetime access" }
+        { "@type": "Offer", "price": "19.99", "priceCurrency": "USD", "description": "Pro — fast server-side conversion, $19.99/year" }
     ],
 });
 
@@ -190,7 +190,7 @@ const jsonLdFaq = JSON.stringify({
                     <div class="bg-amber-400/[0.03] rounded-2xl border border-amber-400/10 p-6">
                         <div class="flex items-center gap-2 mb-4">
                             <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">Pro</span>
-                            <span class="text-[10px] font-bold text-amber-400/60 bg-amber-400/10 px-2 py-0.5 rounded-full">$19.99 one-time</span>
+                            <span class="text-[10px] font-bold text-amber-400/60 bg-amber-400/10 px-2 py-0.5 rounded-full">$19.99/year</span>
                         </div>
                         <ul class="space-y-3">
                             <li class="flex items-start gap-2.5 text-sm text-gray-500">
@@ -207,7 +207,7 @@ const jsonLdFaq = JSON.stringify({
                             </li>
                             <li class="flex items-start gap-2.5 text-sm text-gray-500">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-amber-400 shrink-0 mt-0.5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
-                                Lifetime access + future features
+                                All future features included
                             </li>
                         </ul>
                     </div>

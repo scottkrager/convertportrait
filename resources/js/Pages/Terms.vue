@@ -18,7 +18,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
                 <p>ConvertPortrait is a video conversion tool that transforms portrait (vertical) videos into landscape (horizontal) format. The service is offered in two tiers:</p>
                 <ul>
                     <li><strong>Free tier:</strong> Browser-based conversion using WebAssembly. No account required. Video never leaves your device.</li>
-                    <li><strong>Pro tier ($19.99 one-time):</strong> Server-side conversion via AWS Lambda for faster processing. Includes all background templates and larger file support.</li>
+                    <li><strong>Pro tier ($19.99/year):</strong> Server-side conversion via AWS Lambda for faster processing. Includes all background templates and larger file support.</li>
                 </ul>
 
                 <h2>Acceptable Use</h2>
@@ -31,7 +31,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
                 </ul>
 
                 <h2>Pro Purchases</h2>
-                <p>Pro is a <strong>one-time lifetime purchase</strong> at $19.99 USD. "Lifetime" means for the lifetime of the service. There are no recurring charges. Your Pro status is tied to your email address.</p>
+                <p>Pro is a <strong>yearly subscription</strong> at $19.99 USD/year. You can cancel anytime from your Stripe billing portal. Your Pro status is tied to your email address.</p>
                 <p>Refunds are available within 7 days of purchase if you have not used the server-side processing feature. Contact <a href="mailto:scott@kragerlab.com">scott@kragerlab.com</a> for refund requests.</p>
 
                 <h2>Your Content</h2>

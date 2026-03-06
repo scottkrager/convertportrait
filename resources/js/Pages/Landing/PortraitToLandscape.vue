@@ -34,7 +34,7 @@ const jsonLdWebApp = JSON.stringify({
     "operatingSystem": "Any",
     "offers": [
         { "@type": "Offer", "price": "0", "priceCurrency": "USD", "description": "Free browser-based conversion" },
-        { "@type": "Offer", "price": "19.99", "priceCurrency": "USD", "description": "Pro — fast server-side conversion, lifetime access" }
+        { "@type": "Offer", "price": "19.99", "priceCurrency": "USD", "description": "Pro — fast server-side conversion, $19.99/year" }
     ],
 });
 

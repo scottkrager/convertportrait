@@ -662,6 +662,7 @@ onUnmounted(() => {
                 <div class="flex items-center gap-3">
                     <!-- Privacy badge -->
                     <nav class="hidden sm:flex items-center gap-4 text-sm text-gray-600">
+                        <a href="/pricing" class="hover:text-gray-600 transition">Pricing</a>
                         <a href="/blog" class="hover:text-gray-600 transition">Blog</a>
                     </nav>
                     <!-- Pro badge or upgrade button -->
@@ -950,7 +951,7 @@ onUnmounted(() => {
                             </div>
                             <div class="bg-gray-100/60 border border-gray-200 rounded-xl p-5">
                                 <p class="text-sm font-semibold text-gray-600 mb-1.5">Pro: 140x faster with server processing</p>
-                                <p class="text-xs text-gray-500 leading-relaxed">Upgrade to Pro for $19.99 (lifetime) and convert videos in seconds with server-side FFmpeg. Plus all premium templates included.</p>
+                                <p class="text-xs text-gray-500 leading-relaxed">Upgrade to Pro for $19.99/year and convert videos in seconds with server-side FFmpeg. Plus all premium templates included.</p>
                             </div>
                         </div>
                     </div>
@@ -993,7 +994,7 @@ onUnmounted(() => {
                                     Is ConvertPortrait free?
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-500 transition-transform group-open:rotate-180" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
                                 </summary>
-                                <p class="px-5 pb-4 text-xs text-gray-600 leading-relaxed">Yes! The free tier includes browser-based conversion with blurred mirror and solid color backgrounds. Pro ($19.99 one-time) adds server-side fast processing, premium templates, and future features.</p>
+                                <p class="px-5 pb-4 text-xs text-gray-600 leading-relaxed">Yes! The free tier includes browser-based conversion with blurred mirror and solid color backgrounds. Pro ($19.99/year) adds server-side fast processing, premium templates, and future features.</p>
                             </details>
                             <details class="group bg-gray-100/60 border border-gray-200 rounded-xl">
                                 <summary class="flex items-center justify-between cursor-pointer px-5 py-4 text-sm font-semibold text-gray-600 hover:text-gray-700 transition">
@@ -1396,7 +1397,7 @@ onUnmounted(() => {
 
                         <!-- Title -->
                         <h3 class="text-2xl font-extrabold text-center tracking-tight text-gray-900 mb-1.5">Go Pro</h3>
-                        <p class="text-center text-gray-600 text-sm mb-8">One-time payment. Yours forever.</p>
+                        <p class="text-center text-gray-600 text-sm mb-8">$19.99/year. Cancel anytime.</p>
 
                         <!-- Features -->
                         <div class="space-y-4 mb-8">
@@ -1429,7 +1430,7 @@ onUnmounted(() => {
                                     </svg>
                                 </div>
                                 <div>
-                                    <p class="text-sm font-semibold text-gray-900">Lifetime updates</p>
+                                    <p class="text-sm font-semibold text-gray-900">All future features included</p>
                                     <p class="text-xs text-gray-600">Every new feature, included automatically</p>
                                 </div>
                             </div>
@@ -1445,7 +1446,7 @@ onUnmounted(() => {
                                 <span class="text-4xl font-extrabold text-gray-900">$19</span>
                                 <span class="text-xl font-bold text-gray-600">.99</span>
                             </div>
-                            <p class="text-xs text-gray-500 mt-1.5">One-time &middot; No subscription &middot; No recurring fees</p>
+                            <p class="text-xs text-gray-500 mt-1.5">$19.99/year &middot; Cancel anytime &middot; No commitment</p>
                         </div>
 
                         <!-- CTA -->

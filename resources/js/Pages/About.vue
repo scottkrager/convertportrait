@@ -24,7 +24,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 
                 <h2>How It Works</h2>
                 <p>ConvertPortrait uses <strong>FFmpeg</strong>, the industry-standard video processing engine, compiled to <strong>WebAssembly</strong> so it runs right in your browser. Your portrait video is placed at full height in the center of a 16:9 landscape frame, with a styled background filling the sides. No cropping, no stretching, no quality loss.</p>
-                <p>For creators who need faster processing, our Pro tier ($19.99 lifetime) runs the same FFmpeg pipeline on dedicated AWS Lambda servers — converting videos up to 140x faster than browser mode.</p>
+                <p>For creators who need faster processing, our Pro tier ($19.99/year) runs the same FFmpeg pipeline on dedicated AWS Lambda servers — converting videos up to 140x faster than browser mode.</p>
 
                 <h2>Privacy First</h2>
                 <p>In free mode, your video literally never leaves your device. There are no analytics, no cookies, no tracking pixels. We built ConvertPortrait the way we'd want a tool to treat our own content: with zero compromise on privacy.</p>

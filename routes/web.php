@@ -23,6 +23,9 @@ Route::get('/video-aspect-ratio-converter', fn() => Inertia::render('Landing/Asp
 Route::get('/blog', [BlogController::class, 'index']);
 Route::get('/blog/{slug}', [BlogController::class, 'show']);
 
+// Pricing
+Route::get('/pricing', fn() => Inertia::render('Pricing'));
+
 // Info Pages
 Route::get('/about', fn() => Inertia::render('About'));
 Route::get('/contact', fn() => Inertia::render('Contact'));
