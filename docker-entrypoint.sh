@@ -33,4 +33,8 @@ chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 # Start Inertia SSR server in background
 node /var/www/html/bootstrap/ssr/ssr.js &
 
-exec apache2-foreground
+# Start PHP-FPM in background
+php-fpm &
+
+# Start nginx in foreground
+exec nginx -g "daemon off;"

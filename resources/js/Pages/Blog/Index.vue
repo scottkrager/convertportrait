@@ -25,7 +25,7 @@ function formatDate(dateStr) {
                 <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight mb-4">
                     The <span class="font-editorial font-normal text-teal">ConvertPortrait</span> Blog
                 </h1>
-                <p class="text-[15px] text-white/40 max-w-lg mx-auto leading-relaxed">
+                <p class="text-[15px] text-gray-400 max-w-lg mx-auto leading-relaxed">
                     Tips, tutorials, and guides on converting portrait videos to landscape — from TikTok to YouTube and beyond.
                 </p>
             </div>
@@ -36,13 +36,13 @@ function formatDate(dateStr) {
                     v-for="post in posts.data"
                     :key="post.id"
                     :href="`/blog/${post.slug}`"
-                    class="group block bg-surface/50 border border-white/[0.06] rounded-2xl p-6 hover:border-teal/20 hover:bg-surface-light/50 transition-all duration-300"
+                    class="group block bg-surface/50 border border-gray-200 rounded-2xl p-6 hover:border-teal/20 hover:bg-surface-light/50 transition-all duration-300"
                 >
-                    <time class="text-xs text-white/25 mb-3 block">{{ formatDate(post.published_at) }}</time>
-                    <h2 class="text-lg font-bold text-white/85 group-hover:text-white transition mb-2 leading-snug">
+                    <time class="text-xs text-gray-300 mb-3 block">{{ formatDate(post.published_at) }}</time>
+                    <h2 class="text-lg font-bold text-gray-800 group-hover:text-gray-900 transition mb-2 leading-snug">
                         {{ post.title }}
                     </h2>
-                    <p class="text-sm text-white/35 leading-relaxed line-clamp-3">
+                    <p class="text-sm text-gray-400 leading-relaxed line-clamp-3">
                         {{ post.excerpt }}
                     </p>
                     <span class="inline-flex items-center gap-1 text-xs text-teal/60 mt-4 group-hover:text-teal transition">
@@ -55,7 +55,7 @@ function formatDate(dateStr) {
             </div>
 
             <div v-else class="text-center py-20">
-                <p class="text-white/30">No posts yet. Check back soon!</p>
+                <p class="text-gray-400">No posts yet. Check back soon!</p>
             </div>
 
             <!-- Pagination -->
@@ -67,8 +67,8 @@ function formatDate(dateStr) {
                     :class="[
                         'w-9 h-9 rounded-lg flex items-center justify-center text-sm font-medium transition',
                         page === posts.current_page
-                            ? 'bg-teal text-midnight'
-                            : 'bg-white/[0.04] text-white/40 hover:bg-white/[0.08] hover:text-white/60'
+                            ? 'bg-teal text-white'
+                            : 'bg-gray-100/80 text-gray-400 hover:bg-gray-200/80 hover:text-gray-600'
                     ]"
                 >
                     {{ page }}

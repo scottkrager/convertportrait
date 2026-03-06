@@ -646,28 +646,28 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <div class="min-h-screen bg-midnight text-white noise-bg mesh-gradient">
+    <div class="min-h-screen bg-midnight text-gray-900 noise-bg mesh-gradient">
 
         <!-- Header -->
-        <header class="border-b border-white/[0.04]">
+        <header class="border-b border-gray-200">
             <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
                 <div class="flex items-center gap-2.5">
                     <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-pink-400 to-purple-400 flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-midnight" viewBox="0 0 20 20" fill="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 20 20" fill="currentColor">
                             <path d="M3 4a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 12a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H4a1 1 0 01-1-1v-4zM11 4a1 1 0 011-1h4a1 1 0 011 1v12a1 1 0 01-1 1h-4a1 1 0 01-1-1V4z" />
                         </svg>
                     </div>
-                    <span class="text-[15px] font-bold tracking-tight text-white/90">ConvertPortrait</span>
+                    <span class="text-[15px] font-bold tracking-tight text-gray-900">ConvertPortrait</span>
                 </div>
                 <div class="flex items-center gap-3">
                     <!-- Privacy badge -->
-                    <nav class="hidden sm:flex items-center gap-4 text-sm text-white/35">
-                        <a href="/blog" class="hover:text-white/60 transition">Blog</a>
+                    <nav class="hidden sm:flex items-center gap-4 text-sm text-gray-400">
+                        <a href="/blog" class="hover:text-gray-600 transition">Blog</a>
                     </nav>
                     <!-- Pro badge or upgrade button -->
                     <button
                         v-if="isPro"
-                        class="text-xs font-bold text-midnight bg-gradient-to-r from-amber-400 to-orange-400 px-3 py-1.5 rounded-full"
+                        class="text-xs font-bold text-white bg-gradient-to-r from-amber-400 to-orange-400 px-3 py-1.5 rounded-full"
                     >
                         PRO
                     </button>
@@ -704,7 +704,7 @@ onUnmounted(() => {
                             <span class="font-editorial font-normal text-teal">look amazing everywhere</span>
                         </h1>
 
-                        <p class="text-[15px] sm:text-base text-white/40 max-w-md mx-auto leading-relaxed">
+                        <p class="text-[15px] sm:text-base text-gray-400 max-w-md mx-auto leading-relaxed">
                             Turn your TikToks, Reels, and Shorts into gorgeous landscape videos.
                             Free, private, and takes literally seconds.
                         </p>
@@ -720,7 +720,7 @@ onUnmounted(() => {
                             'group relative rounded-2xl p-12 sm:p-16 text-center cursor-pointer transition-all duration-300 border-2 border-dashed',
                             isDragging
                                 ? 'border-teal bg-teal/[0.06] scale-[1.01]'
-                                : 'border-white/[0.08] hover:border-teal/30 bg-surface/50 upload-pulse'
+                                : 'border-gray-300 hover:border-teal/30 bg-surface/50 upload-pulse'
                         ]"
                     >
                         <input ref="fileInput" type="file" accept="video/*" class="hidden" @change="handleFileInput">
@@ -729,25 +729,25 @@ onUnmounted(() => {
                         <div class="mb-5">
                             <div :class="[
                                 'w-14 h-14 mx-auto rounded-2xl flex items-center justify-center transition-all duration-300',
-                                isDragging ? 'bg-teal/20' : 'bg-white/[0.04] group-hover:bg-teal/10'
+                                isDragging ? 'bg-teal/20' : 'bg-gray-100/80 group-hover:bg-teal/10'
                             ]">
-                                <svg xmlns="http://www.w3.org/2000/svg" :class="['w-6 h-6 transition-colors duration-300', isDragging ? 'text-teal' : 'text-white/30 group-hover:text-teal/70']" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                <svg xmlns="http://www.w3.org/2000/svg" :class="['w-6 h-6 transition-colors duration-300', isDragging ? 'text-teal' : 'text-gray-400 group-hover:text-teal/70']" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
                                 </svg>
                             </div>
                         </div>
 
-                        <p class="text-base font-semibold mb-1.5 text-white/80">
+                        <p class="text-base font-semibold mb-1.5 text-gray-700">
                             Drop your video here
                         </p>
-                        <p class="text-sm text-white/30">
+                        <p class="text-sm text-gray-400">
                             or click to browse &middot; MP4, MOV, WebM
                         </p>
                     </div>
 
                     <!-- Processor status -->
                     <div v-if="ffmpegLoading" class="mt-5 text-center">
-                        <div class="inline-flex items-center gap-2 text-xs text-white/30 bg-surface/80 px-4 py-2 rounded-full">
+                        <div class="inline-flex items-center gap-2 text-xs text-gray-400 bg-surface/80 px-4 py-2 rounded-full">
                             <svg class="animate-spin w-3 h-3 text-teal/60" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
@@ -772,104 +772,104 @@ onUnmounted(() => {
                     <!-- Trust signals -->
                     <div class="mt-14 grid grid-cols-3 gap-4 stagger">
                         <div class="text-center">
-                            <div class="w-9 h-9 mx-auto mb-2.5 rounded-xl bg-white/[0.03] flex items-center justify-center border border-white/[0.04]">
+                            <div class="w-9 h-9 mx-auto mb-2.5 rounded-xl bg-gray-100/70 flex items-center justify-center border border-gray-200">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-teal/60" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
                                 </svg>
                             </div>
-                            <p class="text-xs font-semibold text-white/50 mb-0.5">No uploads</p>
-                            <p class="text-[11px] text-white/25 leading-snug">Video stays on your device. Nothing is sent to any server.</p>
+                            <p class="text-xs font-semibold text-gray-500 mb-0.5">No uploads</p>
+                            <p class="text-[11px] text-gray-300 leading-snug">Video stays on your device. Nothing is sent to any server.</p>
                         </div>
                         <div class="text-center">
-                            <div class="w-9 h-9 mx-auto mb-2.5 rounded-xl bg-white/[0.03] flex items-center justify-center border border-white/[0.04]">
+                            <div class="w-9 h-9 mx-auto mb-2.5 rounded-xl bg-gray-100/70 flex items-center justify-center border border-gray-200">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-teal/60" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M3.707 2.293a1 1 0 00-1.414 1.414l14 14a1 1 0 001.414-1.414l-1.473-1.473A10.014 10.014 0 0019.542 10C18.268 5.943 14.478 3 10 3a9.958 9.958 0 00-4.512 1.074l-1.78-1.781zm4.261 4.26l1.514 1.515a2.003 2.003 0 012.45 2.45l1.514 1.514a4 4 0 00-5.478-5.478z" clip-rule="evenodd" />
                                     <path d="M12.454 16.697L9.75 13.992a4 4 0 01-3.742-3.741L2.335 6.578A9.98 9.98 0 00.458 10c1.274 4.057 5.065 7 9.542 7 .847 0 1.669-.105 2.454-.303z" />
                                 </svg>
                             </div>
-                            <p class="text-xs font-semibold text-white/50 mb-0.5">No tracking</p>
-                            <p class="text-[11px] text-white/25 leading-snug">No cookies, analytics, or data collection of any kind.</p>
+                            <p class="text-xs font-semibold text-gray-500 mb-0.5">No tracking</p>
+                            <p class="text-[11px] text-gray-300 leading-snug">No cookies, analytics, or data collection of any kind.</p>
                         </div>
                         <div class="text-center">
-                            <div class="w-9 h-9 mx-auto mb-2.5 rounded-xl bg-white/[0.03] flex items-center justify-center border border-white/[0.04]">
+                            <div class="w-9 h-9 mx-auto mb-2.5 rounded-xl bg-gray-100/70 flex items-center justify-center border border-gray-200">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-teal/60" viewBox="0 0 20 20" fill="currentColor">
                                     <path d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" />
                                 </svg>
                             </div>
-                            <p class="text-xs font-semibold text-white/50 mb-0.5">Instant results</p>
-                            <p class="text-[11px] text-white/25 leading-snug">Converts in your browser using WebAssembly. Fast and free.</p>
+                            <p class="text-xs font-semibold text-gray-500 mb-0.5">Instant results</p>
+                            <p class="text-[11px] text-gray-300 leading-snug">Converts in your browser using WebAssembly. Fast and free.</p>
                         </div>
                     </div>
 
                     <!-- How it works -->
                     <div class="mt-20">
-                        <h2 class="text-lg font-bold tracking-tight text-center mb-8 text-white/60">How it works</h2>
+                        <h2 class="text-lg font-bold tracking-tight text-center mb-8 text-gray-600">How it works</h2>
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
                             <div class="text-center">
                                 <div class="w-8 h-8 mx-auto mb-3 rounded-full bg-teal/10 border border-teal/10 flex items-center justify-center text-xs font-bold text-teal">1</div>
-                                <p class="text-sm font-semibold text-white/60 mb-1">Upload your video</p>
-                                <p class="text-xs text-white/25 leading-relaxed">Drop any portrait video — TikTok, Reel, YouTube Short. MP4, MOV, or WebM.</p>
+                                <p class="text-sm font-semibold text-gray-600 mb-1">Upload your video</p>
+                                <p class="text-xs text-gray-300 leading-relaxed">Drop any portrait video — TikTok, Reel, YouTube Short. MP4, MOV, or WebM.</p>
                             </div>
                             <div class="text-center">
                                 <div class="w-8 h-8 mx-auto mb-3 rounded-full bg-teal/10 border border-teal/10 flex items-center justify-center text-xs font-bold text-teal">2</div>
-                                <p class="text-sm font-semibold text-white/60 mb-1">Pick a background</p>
-                                <p class="text-xs text-white/25 leading-relaxed">Choose blurred mirror, solid color, gradient, or pattern fill for the sides.</p>
+                                <p class="text-sm font-semibold text-gray-600 mb-1">Pick a background</p>
+                                <p class="text-xs text-gray-300 leading-relaxed">Choose blurred mirror, solid color, gradient, or pattern fill for the sides.</p>
                             </div>
                             <div class="text-center">
                                 <div class="w-8 h-8 mx-auto mb-3 rounded-full bg-teal/10 border border-teal/10 flex items-center justify-center text-xs font-bold text-teal">3</div>
-                                <p class="text-sm font-semibold text-white/60 mb-1">Download landscape</p>
-                                <p class="text-xs text-white/25 leading-relaxed">Get a 1920x1080 video ready for YouTube, presentations, or any widescreen display.</p>
+                                <p class="text-sm font-semibold text-gray-600 mb-1">Download landscape</p>
+                                <p class="text-xs text-gray-300 leading-relaxed">Get a 1920x1080 video ready for YouTube, presentations, or any widescreen display.</p>
                             </div>
                         </div>
                     </div>
 
                     <!-- Use Cases -->
                     <div class="mt-20">
-                        <h2 class="text-lg font-bold tracking-tight text-center mb-3 text-white/60">Works with all your fave platforms</h2>
-                        <p class="text-sm text-white/25 text-center max-w-lg mx-auto mb-10 leading-relaxed">Repurpose your TikToks for YouTube, turn Reels into widescreen content, or make your Shorts look stunning on any screen.</p>
+                        <h2 class="text-lg font-bold tracking-tight text-center mb-3 text-gray-600">Works with all your fave platforms</h2>
+                        <p class="text-sm text-gray-300 text-center max-w-lg mx-auto mb-10 leading-relaxed">Repurpose your TikToks for YouTube, turn Reels into widescreen content, or make your Shorts look stunning on any screen.</p>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <a href="/convert-tiktok-to-youtube" class="group bg-white/[0.02] border border-white/[0.06] rounded-xl p-5 hover:border-teal/20 hover:bg-surface-light/30 transition-all duration-300">
+                            <a href="/convert-tiktok-to-youtube" class="group bg-gray-100/60 border border-gray-200 rounded-xl p-5 hover:border-teal/20 hover:bg-surface-light/30 transition-all duration-300">
                                 <div class="flex items-start gap-3.5">
                                     <div class="w-9 h-9 rounded-lg bg-pink-500/10 border border-pink-500/10 flex items-center justify-center shrink-0 mt-0.5">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-pink-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" /></svg>
                                     </div>
                                     <div>
-                                        <p class="text-sm font-semibold text-white/70 group-hover:text-white/90 transition mb-1">TikTok to YouTube</p>
-                                        <p class="text-xs text-white/25 leading-relaxed">Convert 9:16 TikTok videos to 16:9 landscape format ready for YouTube uploads.</p>
+                                        <p class="text-sm font-semibold text-gray-600 group-hover:text-gray-800 transition mb-1">TikTok to YouTube</p>
+                                        <p class="text-xs text-gray-300 leading-relaxed">Convert 9:16 TikTok videos to 16:9 landscape format ready for YouTube uploads.</p>
                                     </div>
                                 </div>
                             </a>
-                            <a href="/convert-reels-to-landscape" class="group bg-white/[0.02] border border-white/[0.06] rounded-xl p-5 hover:border-teal/20 hover:bg-surface-light/30 transition-all duration-300">
+                            <a href="/convert-reels-to-landscape" class="group bg-gray-100/60 border border-gray-200 rounded-xl p-5 hover:border-teal/20 hover:bg-surface-light/30 transition-all duration-300">
                                 <div class="flex items-start gap-3.5">
                                     <div class="w-9 h-9 rounded-lg bg-purple-500/10 border border-purple-500/10 flex items-center justify-center shrink-0 mt-0.5">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-purple-400" viewBox="0 0 20 20" fill="currentColor"><path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" /></svg>
                                     </div>
                                     <div>
-                                        <p class="text-sm font-semibold text-white/70 group-hover:text-white/90 transition mb-1">Instagram Reels to Landscape</p>
-                                        <p class="text-xs text-white/25 leading-relaxed">Repurpose your Reels for widescreen platforms without cropping or stretching.</p>
+                                        <p class="text-sm font-semibold text-gray-600 group-hover:text-gray-800 transition mb-1">Instagram Reels to Landscape</p>
+                                        <p class="text-xs text-gray-300 leading-relaxed">Repurpose your Reels for widescreen platforms without cropping or stretching.</p>
                                     </div>
                                 </div>
                             </a>
-                            <a href="/vertical-to-horizontal-video" class="group bg-white/[0.02] border border-white/[0.06] rounded-xl p-5 hover:border-teal/20 hover:bg-surface-light/30 transition-all duration-300">
+                            <a href="/vertical-to-horizontal-video" class="group bg-gray-100/60 border border-gray-200 rounded-xl p-5 hover:border-teal/20 hover:bg-surface-light/30 transition-all duration-300">
                                 <div class="flex items-start gap-3.5">
                                     <div class="w-9 h-9 rounded-lg bg-blue-500/10 border border-blue-500/10 flex items-center justify-center shrink-0 mt-0.5">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-blue-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 4a1 1 0 011-1h4a1 1 0 010 2H6.414l2.293 2.293a1 1 0 01-1.414 1.414L5 6.414V8a1 1 0 01-2 0V4zm9 1a1 1 0 110-2h4a1 1 0 011 1v4a1 1 0 11-2 0V6.414l-2.293 2.293a1 1 0 11-1.414-1.414L13.586 5H12zm-9 7a1 1 0 112 0v1.586l2.293-2.293a1 1 0 011.414 1.414L5.414 15H7a1 1 0 110 2H3a1 1 0 01-1-1v-4zm13.657 3.657a1 1 0 01-1.414 0L12.95 13.364a1 1 0 011.414-1.414l2.293 2.293V12.95a1 1 0 112 0v4a1 1 0 01-1 1h-4a1 1 0 110-2h1.586z" clip-rule="evenodd" /></svg>
                                     </div>
                                     <div>
-                                        <p class="text-sm font-semibold text-white/70 group-hover:text-white/90 transition mb-1">Vertical to Horizontal</p>
-                                        <p class="text-xs text-white/25 leading-relaxed">Convert any vertical video to horizontal for presentations, TV screens, and more.</p>
+                                        <p class="text-sm font-semibold text-gray-600 group-hover:text-gray-800 transition mb-1">Vertical to Horizontal</p>
+                                        <p class="text-xs text-gray-300 leading-relaxed">Convert any vertical video to horizontal for presentations, TV screens, and more.</p>
                                     </div>
                                 </div>
                             </a>
-                            <a href="/video-aspect-ratio-converter" class="group bg-white/[0.02] border border-white/[0.06] rounded-xl p-5 hover:border-teal/20 hover:bg-surface-light/30 transition-all duration-300">
+                            <a href="/video-aspect-ratio-converter" class="group bg-gray-100/60 border border-gray-200 rounded-xl p-5 hover:border-teal/20 hover:bg-surface-light/30 transition-all duration-300">
                                 <div class="flex items-start gap-3.5">
                                     <div class="w-9 h-9 rounded-lg bg-teal/10 border border-teal/10 flex items-center justify-center shrink-0 mt-0.5">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-teal" viewBox="0 0 20 20" fill="currentColor"><path d="M5 3a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V5a2 2 0 00-2-2H5zm9 4a1 1 0 10-2 0v6a1 1 0 102 0V7zm-3 2a1 1 0 10-2 0v4a1 1 0 102 0V9zM8 11a1 1 0 10-2 0v2a1 1 0 102 0v-2z" /></svg>
                                     </div>
                                     <div>
-                                        <p class="text-sm font-semibold text-white/70 group-hover:text-white/90 transition mb-1">Aspect Ratio Converter</p>
-                                        <p class="text-xs text-white/25 leading-relaxed">Change video aspect ratio from 9:16 to 16:9 — no black bars, no quality loss.</p>
+                                        <p class="text-sm font-semibold text-gray-600 group-hover:text-gray-800 transition mb-1">Aspect Ratio Converter</p>
+                                        <p class="text-xs text-gray-300 leading-relaxed">Change video aspect ratio from 9:16 to 16:9 — no black bars, no quality loss.</p>
                                     </div>
                                 </div>
                             </a>
@@ -878,52 +878,52 @@ onUnmounted(() => {
 
                     <!-- Background Styles Detail -->
                     <div class="mt-20">
-                        <h2 class="text-lg font-bold tracking-tight text-center mb-3 text-white/60">4 background styles to choose from</h2>
-                        <p class="text-sm text-white/25 text-center max-w-lg mx-auto mb-10 leading-relaxed">Your portrait video stays centered and sharp. The background fills the 16:9 frame with the style you choose.</p>
+                        <h2 class="text-lg font-bold tracking-tight text-center mb-3 text-gray-600">4 background styles to choose from</h2>
+                        <p class="text-sm text-gray-300 text-center max-w-lg mx-auto mb-10 leading-relaxed">Your portrait video stays centered and sharp. The background fills the 16:9 frame with the style you choose.</p>
 
                         <div class="space-y-3">
-                            <div class="bg-white/[0.02] border border-white/[0.06] rounded-xl p-5">
+                            <div class="bg-gray-100/60 border border-gray-200 rounded-xl p-5">
                                 <div class="flex items-start gap-4">
-                                    <div class="w-16 h-10 rounded-lg bg-gradient-to-r from-surface-light/80 via-surface/60 to-surface-light/80 flex items-center justify-center shrink-0 border border-white/[0.06] overflow-hidden">
+                                    <div class="w-16 h-10 rounded-lg bg-gradient-to-r from-surface-light/80 via-surface/60 to-surface-light/80 flex items-center justify-center shrink-0 border border-gray-200 overflow-hidden">
                                         <div class="w-4 h-9 bg-white/10 rounded-sm"></div>
                                     </div>
                                     <div>
-                                        <p class="text-sm font-semibold text-white/70 mb-1">Blurred Mirror <span class="text-[10px] text-emerald/60 font-medium ml-1.5">FREE</span></p>
-                                        <p class="text-xs text-white/30 leading-relaxed">Your video is blurred and scaled to fill the entire background. Creates a cohesive, professional look that extends your content naturally. The most popular choice for YouTube uploads.</p>
+                                        <p class="text-sm font-semibold text-gray-600 mb-1">Blurred Mirror <span class="text-[10px] text-emerald/60 font-medium ml-1.5">FREE</span></p>
+                                        <p class="text-xs text-gray-400 leading-relaxed">Your video is blurred and scaled to fill the entire background. Creates a cohesive, professional look that extends your content naturally. The most popular choice for YouTube uploads.</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="bg-white/[0.02] border border-white/[0.06] rounded-xl p-5">
+                            <div class="bg-gray-100/60 border border-gray-200 rounded-xl p-5">
                                 <div class="flex items-start gap-4">
-                                    <div class="w-16 h-10 rounded-lg bg-[#1a1a2e] flex items-center justify-center shrink-0 border border-white/[0.06]">
+                                    <div class="w-16 h-10 rounded-lg bg-[#1a1a2e] flex items-center justify-center shrink-0 border border-gray-200">
                                         <div class="w-4 h-9 bg-white/10 rounded-sm"></div>
                                     </div>
                                     <div>
-                                        <p class="text-sm font-semibold text-white/70 mb-1">Solid Color <span class="text-[10px] text-emerald/60 font-medium ml-1.5">FREE</span></p>
-                                        <p class="text-xs text-white/30 leading-relaxed">Pick any color for a clean, minimal backdrop. Great for branded content where you want the sides to match your brand colors. Includes a color picker and preset options.</p>
+                                        <p class="text-sm font-semibold text-gray-600 mb-1">Solid Color <span class="text-[10px] text-emerald/60 font-medium ml-1.5">FREE</span></p>
+                                        <p class="text-xs text-gray-400 leading-relaxed">Pick any color for a clean, minimal backdrop. Great for branded content where you want the sides to match your brand colors. Includes a color picker and preset options.</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="bg-white/[0.02] border border-white/[0.06] rounded-xl p-5">
+                            <div class="bg-gray-100/60 border border-gray-200 rounded-xl p-5">
                                 <div class="flex items-start gap-4">
-                                    <div class="w-16 h-10 rounded-lg bg-gradient-to-r from-orange-500/40 to-purple-500/40 flex items-center justify-center shrink-0 border border-white/[0.06]">
+                                    <div class="w-16 h-10 rounded-lg bg-gradient-to-r from-orange-500/40 to-purple-500/40 flex items-center justify-center shrink-0 border border-gray-200">
                                         <div class="w-4 h-9 bg-white/10 rounded-sm"></div>
                                     </div>
                                     <div>
-                                        <p class="text-sm font-semibold text-white/70 mb-1">Gradient Wash <span class="text-[10px] text-amber-400/60 font-bold ml-1.5">PRO</span></p>
-                                        <p class="text-xs text-white/30 leading-relaxed">Beautiful color gradients like Sunset, Ocean, Neon, Forest, and Mono. Adds visual energy and depth to your landscape video. Five hand-picked presets to choose from.</p>
+                                        <p class="text-sm font-semibold text-gray-600 mb-1">Gradient Wash <span class="text-[10px] text-amber-400/60 font-bold ml-1.5">PRO</span></p>
+                                        <p class="text-xs text-gray-400 leading-relaxed">Beautiful color gradients like Sunset, Ocean, Neon, Forest, and Mono. Adds visual energy and depth to your landscape video. Five hand-picked presets to choose from.</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="bg-white/[0.02] border border-white/[0.06] rounded-xl p-5">
+                            <div class="bg-gray-100/60 border border-gray-200 rounded-xl p-5">
                                 <div class="flex items-start gap-4">
-                                    <div class="w-16 h-10 rounded-lg bg-[#111] flex items-center justify-center shrink-0 border border-white/[0.06] relative overflow-hidden">
+                                    <div class="w-16 h-10 rounded-lg bg-[#111] flex items-center justify-center shrink-0 border border-gray-200 relative overflow-hidden">
                                         <div class="absolute inset-0 opacity-30" style="background-image: radial-gradient(circle, rgba(45,212,191,0.4) 1px, transparent 1px); background-size: 6px 6px;"></div>
                                         <div class="w-4 h-9 bg-white/10 rounded-sm relative z-10"></div>
                                     </div>
                                     <div>
-                                        <p class="text-sm font-semibold text-white/70 mb-1">Pattern Fill <span class="text-[10px] text-amber-400/60 font-bold ml-1.5">PRO</span></p>
-                                        <p class="text-xs text-white/30 leading-relaxed">Geometric patterns — dots, lines, or chevrons — with your choice of color. Adds texture and style without distracting from your content.</p>
+                                        <p class="text-sm font-semibold text-gray-600 mb-1">Pattern Fill <span class="text-[10px] text-amber-400/60 font-bold ml-1.5">PRO</span></p>
+                                        <p class="text-xs text-gray-400 leading-relaxed">Geometric patterns — dots, lines, or chevrons — with your choice of color. Adds texture and style without distracting from your content.</p>
                                     </div>
                                 </div>
                             </div>
@@ -932,25 +932,25 @@ onUnmounted(() => {
 
                     <!-- Why ConvertPortrait -->
                     <div class="mt-20">
-                        <h2 class="text-lg font-bold tracking-tight text-center mb-3 text-white/60">Why creators love it</h2>
-                        <p class="text-sm text-white/25 text-center max-w-lg mx-auto mb-10 leading-relaxed">The easiest way to make your vertical content look gorgeous in landscape. No downloads, no sign-ups, just vibes.</p>
+                        <h2 class="text-lg font-bold tracking-tight text-center mb-3 text-gray-600">Why creators love it</h2>
+                        <p class="text-sm text-gray-300 text-center max-w-lg mx-auto mb-10 leading-relaxed">The easiest way to make your vertical content look gorgeous in landscape. No downloads, no sign-ups, just vibes.</p>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div class="bg-white/[0.02] border border-white/[0.06] rounded-xl p-5">
-                                <p class="text-sm font-semibold text-white/60 mb-1.5">No cropping, no stretching</p>
-                                <p class="text-xs text-white/25 leading-relaxed">Your original video is preserved at full resolution. We add a styled background to fill the 16:9 frame — never cut content from your video.</p>
+                            <div class="bg-gray-100/60 border border-gray-200 rounded-xl p-5">
+                                <p class="text-sm font-semibold text-gray-600 mb-1.5">No cropping, no stretching</p>
+                                <p class="text-xs text-gray-300 leading-relaxed">Your original video is preserved at full resolution. We add a styled background to fill the 16:9 frame — never cut content from your video.</p>
                             </div>
-                            <div class="bg-white/[0.02] border border-white/[0.06] rounded-xl p-5">
-                                <p class="text-sm font-semibold text-white/60 mb-1.5">Works in your browser</p>
-                                <p class="text-xs text-white/25 leading-relaxed">No downloads, no installs. ConvertPortrait uses WebAssembly to process video directly in your browser. Your files never leave your device.</p>
+                            <div class="bg-gray-100/60 border border-gray-200 rounded-xl p-5">
+                                <p class="text-sm font-semibold text-gray-600 mb-1.5">Works in your browser</p>
+                                <p class="text-xs text-gray-300 leading-relaxed">No downloads, no installs. ConvertPortrait uses WebAssembly to process video directly in your browser. Your files never leave your device.</p>
                             </div>
-                            <div class="bg-white/[0.02] border border-white/[0.06] rounded-xl p-5">
-                                <p class="text-sm font-semibold text-white/60 mb-1.5">1920x1080 Full HD output</p>
-                                <p class="text-xs text-white/25 leading-relaxed">Every converted video outputs at 1920x1080 — the standard for YouTube, presentations, and any widescreen display.</p>
+                            <div class="bg-gray-100/60 border border-gray-200 rounded-xl p-5">
+                                <p class="text-sm font-semibold text-gray-600 mb-1.5">1920x1080 Full HD output</p>
+                                <p class="text-xs text-gray-300 leading-relaxed">Every converted video outputs at 1920x1080 — the standard for YouTube, presentations, and any widescreen display.</p>
                             </div>
-                            <div class="bg-white/[0.02] border border-white/[0.06] rounded-xl p-5">
-                                <p class="text-sm font-semibold text-white/60 mb-1.5">Pro: 140x faster with server processing</p>
-                                <p class="text-xs text-white/25 leading-relaxed">Upgrade to Pro for $19.99 (lifetime) and convert videos in seconds with server-side FFmpeg. Plus all premium templates included.</p>
+                            <div class="bg-gray-100/60 border border-gray-200 rounded-xl p-5">
+                                <p class="text-sm font-semibold text-gray-600 mb-1.5">Pro: 140x faster with server processing</p>
+                                <p class="text-xs text-gray-300 leading-relaxed">Upgrade to Pro for $19.99 (lifetime) and convert videos in seconds with server-side FFmpeg. Plus all premium templates included.</p>
                             </div>
                         </div>
                     </div>
@@ -958,63 +958,63 @@ onUnmounted(() => {
                     <!-- Blog Teaser -->
                     <div class="mt-20">
                         <div class="flex items-center justify-between mb-6">
-                            <h2 class="text-lg font-bold tracking-tight text-white/60">From the blog</h2>
+                            <h2 class="text-lg font-bold tracking-tight text-gray-600">From the blog</h2>
                             <a href="/blog" class="text-xs text-teal/60 hover:text-teal transition font-medium">View all &rarr;</a>
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                            <a href="/blog/convert-9-16-to-16-9-without-black-bars" class="group bg-white/[0.02] border border-white/[0.06] rounded-xl p-5 hover:border-teal/20 hover:bg-surface-light/30 transition-all duration-300">
-                                <p class="text-sm font-semibold text-white/60 group-hover:text-white/80 transition mb-1.5 leading-snug">Best Ways to Convert 9:16 to 16:9 Without Black Bars</p>
-                                <p class="text-xs text-white/25 leading-relaxed line-clamp-2">Black bars ruin the viewing experience. Here are the best ways to convert vertical video to landscape while keeping it professional.</p>
+                            <a href="/blog/convert-9-16-to-16-9-without-black-bars" class="group bg-gray-100/60 border border-gray-200 rounded-xl p-5 hover:border-teal/20 hover:bg-surface-light/30 transition-all duration-300">
+                                <p class="text-sm font-semibold text-gray-600 group-hover:text-gray-700 transition mb-1.5 leading-snug">Best Ways to Convert 9:16 to 16:9 Without Black Bars</p>
+                                <p class="text-xs text-gray-300 leading-relaxed line-clamp-2">Black bars ruin the viewing experience. Here are the best ways to convert vertical video to landscape while keeping it professional.</p>
                             </a>
-                            <a href="/blog/convert-tiktok-videos-to-youtube-format" class="group bg-white/[0.02] border border-white/[0.06] rounded-xl p-5 hover:border-teal/20 hover:bg-surface-light/30 transition-all duration-300">
-                                <p class="text-sm font-semibold text-white/60 group-hover:text-white/80 transition mb-1.5 leading-snug">How to Convert TikTok Videos to YouTube Format</p>
-                                <p class="text-xs text-white/25 leading-relaxed line-clamp-2">TikTok is 9:16 portrait, YouTube is 16:9 landscape. Here's how to convert between them without losing quality.</p>
+                            <a href="/blog/convert-tiktok-videos-to-youtube-format" class="group bg-gray-100/60 border border-gray-200 rounded-xl p-5 hover:border-teal/20 hover:bg-surface-light/30 transition-all duration-300">
+                                <p class="text-sm font-semibold text-gray-600 group-hover:text-gray-700 transition mb-1.5 leading-snug">How to Convert TikTok Videos to YouTube Format</p>
+                                <p class="text-xs text-gray-300 leading-relaxed line-clamp-2">TikTok is 9:16 portrait, YouTube is 16:9 landscape. Here's how to convert between them without losing quality.</p>
                             </a>
-                            <a href="/blog/portrait-vs-landscape-video-when-to-convert" class="group bg-white/[0.02] border border-white/[0.06] rounded-xl p-5 hover:border-teal/20 hover:bg-surface-light/30 transition-all duration-300">
-                                <p class="text-sm font-semibold text-white/60 group-hover:text-white/80 transition mb-1.5 leading-snug">Portrait vs Landscape Video: When to Convert</p>
-                                <p class="text-xs text-white/25 leading-relaxed line-clamp-2">Understanding when to convert between formats can help you reach more viewers and repurpose content across platforms.</p>
+                            <a href="/blog/portrait-vs-landscape-video-when-to-convert" class="group bg-gray-100/60 border border-gray-200 rounded-xl p-5 hover:border-teal/20 hover:bg-surface-light/30 transition-all duration-300">
+                                <p class="text-sm font-semibold text-gray-600 group-hover:text-gray-700 transition mb-1.5 leading-snug">Portrait vs Landscape Video: When to Convert</p>
+                                <p class="text-xs text-gray-300 leading-relaxed line-clamp-2">Understanding when to convert between formats can help you reach more viewers and repurpose content across platforms.</p>
                             </a>
                         </div>
                     </div>
 
                     <!-- FAQ -->
                     <div class="mt-20 mb-8">
-                        <h2 class="text-lg font-bold tracking-tight text-center mb-8 text-white/60">Frequently asked questions</h2>
+                        <h2 class="text-lg font-bold tracking-tight text-center mb-8 text-gray-600">Frequently asked questions</h2>
                         <div class="space-y-3 max-w-xl mx-auto">
-                            <details class="group bg-white/[0.02] border border-white/[0.06] rounded-xl">
-                                <summary class="flex items-center justify-between cursor-pointer px-5 py-4 text-sm font-semibold text-white/60 hover:text-white/80 transition">
+                            <details class="group bg-gray-100/60 border border-gray-200 rounded-xl">
+                                <summary class="flex items-center justify-between cursor-pointer px-5 py-4 text-sm font-semibold text-gray-600 hover:text-gray-700 transition">
                                     How do I convert a portrait video to landscape?
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white/20 transition-transform group-open:rotate-180" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-300 transition-transform group-open:rotate-180" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
                                 </summary>
-                                <p class="px-5 pb-4 text-xs text-white/30 leading-relaxed">Upload your portrait video, choose a background style, and click Convert. Your video is converted to 16:9 landscape format right in your browser — no software to install.</p>
+                                <p class="px-5 pb-4 text-xs text-gray-400 leading-relaxed">Upload your portrait video, choose a background style, and click Convert. Your video is converted to 16:9 landscape format right in your browser — no software to install.</p>
                             </details>
-                            <details class="group bg-white/[0.02] border border-white/[0.06] rounded-xl">
-                                <summary class="flex items-center justify-between cursor-pointer px-5 py-4 text-sm font-semibold text-white/60 hover:text-white/80 transition">
+                            <details class="group bg-gray-100/60 border border-gray-200 rounded-xl">
+                                <summary class="flex items-center justify-between cursor-pointer px-5 py-4 text-sm font-semibold text-gray-600 hover:text-gray-700 transition">
                                     Is ConvertPortrait free?
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white/20 transition-transform group-open:rotate-180" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-300 transition-transform group-open:rotate-180" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
                                 </summary>
-                                <p class="px-5 pb-4 text-xs text-white/30 leading-relaxed">Yes! The free tier includes browser-based conversion with blurred mirror and solid color backgrounds. Pro ($19.99 one-time) adds server-side fast processing, premium templates, and future features.</p>
+                                <p class="px-5 pb-4 text-xs text-gray-400 leading-relaxed">Yes! The free tier includes browser-based conversion with blurred mirror and solid color backgrounds. Pro ($19.99 one-time) adds server-side fast processing, premium templates, and future features.</p>
                             </details>
-                            <details class="group bg-white/[0.02] border border-white/[0.06] rounded-xl">
-                                <summary class="flex items-center justify-between cursor-pointer px-5 py-4 text-sm font-semibold text-white/60 hover:text-white/80 transition">
+                            <details class="group bg-gray-100/60 border border-gray-200 rounded-xl">
+                                <summary class="flex items-center justify-between cursor-pointer px-5 py-4 text-sm font-semibold text-gray-600 hover:text-gray-700 transition">
                                     Is my video uploaded to a server?
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white/20 transition-transform group-open:rotate-180" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-300 transition-transform group-open:rotate-180" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
                                 </summary>
-                                <p class="px-5 pb-4 text-xs text-white/30 leading-relaxed">In free mode, no — your video is processed entirely in your browser using WebAssembly and never leaves your device. Pro users can optionally use server-side processing for faster conversion, where the video is deleted immediately after.</p>
+                                <p class="px-5 pb-4 text-xs text-gray-400 leading-relaxed">In free mode, no — your video is processed entirely in your browser using WebAssembly and never leaves your device. Pro users can optionally use server-side processing for faster conversion, where the video is deleted immediately after.</p>
                             </details>
-                            <details class="group bg-white/[0.02] border border-white/[0.06] rounded-xl">
-                                <summary class="flex items-center justify-between cursor-pointer px-5 py-4 text-sm font-semibold text-white/60 hover:text-white/80 transition">
+                            <details class="group bg-gray-100/60 border border-gray-200 rounded-xl">
+                                <summary class="flex items-center justify-between cursor-pointer px-5 py-4 text-sm font-semibold text-gray-600 hover:text-gray-700 transition">
                                     What video formats are supported?
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white/20 transition-transform group-open:rotate-180" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-300 transition-transform group-open:rotate-180" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
                                 </summary>
-                                <p class="px-5 pb-4 text-xs text-white/30 leading-relaxed">ConvertPortrait supports MP4, MOV, WebM, and AVI files up to 200MB in browser mode or 500MB with Pro server processing.</p>
+                                <p class="px-5 pb-4 text-xs text-gray-400 leading-relaxed">ConvertPortrait supports MP4, MOV, WebM, and AVI files up to 200MB in browser mode or 500MB with Pro server processing.</p>
                             </details>
-                            <details class="group bg-white/[0.02] border border-white/[0.06] rounded-xl">
-                                <summary class="flex items-center justify-between cursor-pointer px-5 py-4 text-sm font-semibold text-white/60 hover:text-white/80 transition">
+                            <details class="group bg-gray-100/60 border border-gray-200 rounded-xl">
+                                <summary class="flex items-center justify-between cursor-pointer px-5 py-4 text-sm font-semibold text-gray-600 hover:text-gray-700 transition">
                                     What background styles are available?
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white/20 transition-transform group-open:rotate-180" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-300 transition-transform group-open:rotate-180" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
                                 </summary>
-                                <p class="px-5 pb-4 text-xs text-white/30 leading-relaxed">Free backgrounds include Blurred Mirror (your video blurred as background) and Solid Color (pick any color). Pro backgrounds include Gradient Wash (5 preset gradients like Sunset, Ocean, Neon) and Pattern Fill (dots, lines, or chevrons with custom colors).</p>
+                                <p class="px-5 pb-4 text-xs text-gray-400 leading-relaxed">Free backgrounds include Blurred Mirror (your video blurred as background) and Solid Color (pick any color). Pro backgrounds include Gradient Wash (5 preset gradients like Sunset, Ocean, Neon) and Pattern Fill (dots, lines, or chevrons with custom colors).</p>
                             </details>
                         </div>
                     </div>
@@ -1028,13 +1028,13 @@ onUnmounted(() => {
                     <div class="flex items-center justify-between mb-8">
                         <div>
                             <h2 class="text-xl font-bold tracking-tight">Choose a style</h2>
-                            <p class="text-white/30 text-sm mt-1">
+                            <p class="text-gray-400 text-sm mt-1">
                                 {{ videoDimensions.width }} &times; {{ videoDimensions.height }}px
                                 <span v-if="isPortrait" class="text-teal/60 ml-1.5">&middot; Portrait</span>
                                 <span v-else class="text-warning/60 ml-1.5">&middot; Landscape &mdash; will add side panels</span>
                             </p>
                         </div>
-                        <button @click="startOver" class="text-sm text-white/30 hover:text-white/60 transition flex items-center gap-1.5">
+                        <button @click="startOver" class="text-sm text-gray-400 hover:text-gray-600 transition flex items-center gap-1.5">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
                             </svg>
@@ -1043,10 +1043,10 @@ onUnmounted(() => {
                     </div>
 
                     <!-- Template preview -->
-                    <div class="mb-8 bg-surface/60 rounded-xl border border-white/[0.04] p-3">
+                    <div class="mb-8 bg-surface/60 rounded-xl border border-gray-200 p-3">
                         <div class="relative">
                             <canvas ref="previewCanvas" class="w-full rounded-lg" style="aspect-ratio: 16/9;"></canvas>
-                            <div class="absolute bottom-2 right-2 bg-black/50 backdrop-blur-sm text-[10px] text-white/60 px-2 py-1 rounded">
+                            <div class="absolute bottom-2 right-2 bg-black/50 backdrop-blur-sm text-[10px] text-gray-600 px-2 py-1 rounded">
                                 Preview
                             </div>
                         </div>
@@ -1062,17 +1062,17 @@ onUnmounted(() => {
                                 'group relative rounded-xl p-4 text-left transition-all duration-200 border',
                                 selectedTemplate === t.id
                                     ? 'border-teal/40 bg-teal/[0.06] ring-1 ring-teal/20'
-                                    : 'border-white/[0.04] bg-surface/40 hover:border-white/[0.08] hover:bg-surface/60'
+                                    : 'border-gray-200 bg-surface/40 hover:border-gray-300 hover:bg-surface/60'
                             ]"
                         >
-                            <div :class="['w-8 h-8 mb-3 transition-colors', selectedTemplate === t.id ? 'text-teal' : t.pro && !isPro ? 'text-white/15' : 'text-white/25 group-hover:text-white/40']" v-html="t.icon"></div>
-                            <p class="text-sm font-semibold text-white/80 flex items-center gap-1.5">
+                            <div :class="['w-8 h-8 mb-3 transition-colors', selectedTemplate === t.id ? 'text-teal' : t.pro && !isPro ? 'text-gray-200' : 'text-gray-300 group-hover:text-gray-500']" v-html="t.icon"></div>
+                            <p class="text-sm font-semibold text-gray-700 flex items-center gap-1.5">
                                 {{ t.name }}
                                 <span v-if="t.pro && !isPro" class="text-[10px] font-bold text-amber-400/80 bg-amber-400/[0.1] px-1.5 py-0.5 rounded">PRO</span>
                             </p>
-                            <p class="text-xs text-white/30 mt-0.5">{{ t.description }}</p>
+                            <p class="text-xs text-gray-400 mt-0.5">{{ t.description }}</p>
                             <div v-if="selectedTemplate === t.id" class="absolute top-3 right-3 w-5 h-5 bg-teal rounded-full flex items-center justify-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-midnight" viewBox="0 0 20 20" fill="currentColor">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-white" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                                 </svg>
                             </div>
@@ -1080,8 +1080,8 @@ onUnmounted(() => {
                     </div>
 
                     <!-- Gradient options -->
-                    <div v-if="selectedTemplate === 'gradient'" class="bg-surface/50 rounded-xl border border-white/[0.04] p-5 mb-6 step-enter">
-                        <p class="text-xs font-semibold text-white/40 uppercase tracking-wider mb-3">Gradient</p>
+                    <div v-if="selectedTemplate === 'gradient'" class="bg-surface/50 rounded-xl border border-gray-200 p-5 mb-6 step-enter">
+                        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Gradient</p>
                         <div class="flex flex-wrap gap-2">
                             <button
                                 v-for="g in gradients"
@@ -1091,18 +1091,18 @@ onUnmounted(() => {
                                     'flex items-center gap-2 px-3.5 py-2 rounded-lg border transition-all text-sm',
                                     gradientVariant === g.id
                                         ? 'border-teal/30 bg-teal/[0.06]'
-                                        : 'border-white/[0.04] hover:border-white/[0.08]'
+                                        : 'border-gray-200 hover:border-gray-300'
                                 ]"
                             >
-                                <div class="w-5 h-5 rounded-full ring-1 ring-white/10" :style="`background: linear-gradient(135deg, ${g.from}, ${g.to})`"></div>
-                                <span class="text-white/60">{{ g.name }}</span>
+                                <div class="w-5 h-5 rounded-full ring-1 ring-gray-300" :style="`background: linear-gradient(135deg, ${g.from}, ${g.to})`"></div>
+                                <span class="text-gray-600">{{ g.name }}</span>
                             </button>
                         </div>
                     </div>
 
                     <!-- Solid options -->
-                    <div v-if="selectedTemplate === 'solid'" class="bg-surface/50 rounded-xl border border-white/[0.04] p-5 mb-6 step-enter">
-                        <p class="text-xs font-semibold text-white/40 uppercase tracking-wider mb-3">Color</p>
+                    <div v-if="selectedTemplate === 'solid'" class="bg-surface/50 rounded-xl border border-gray-200 p-5 mb-6 step-enter">
+                        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Color</p>
                         <div class="flex items-center gap-3">
                             <input type="color" v-model="solidColor" class="w-9 h-9 rounded-lg cursor-pointer border-0 bg-transparent">
                             <div class="flex gap-1.5">
@@ -1112,7 +1112,7 @@ onUnmounted(() => {
                                     @click="solidColor = c"
                                     :class="[
                                         'w-7 h-7 rounded-lg border transition-all',
-                                        solidColor === c ? 'border-teal/50 ring-1 ring-teal/20' : 'border-white/[0.08]'
+                                        solidColor === c ? 'border-teal/50 ring-1 ring-teal/20' : 'border-gray-300'
                                     ]"
                                     :style="`background: ${c}`"
                                 ></button>
@@ -1121,8 +1121,8 @@ onUnmounted(() => {
                     </div>
 
                     <!-- Pattern options -->
-                    <div v-if="selectedTemplate === 'pattern'" class="bg-surface/50 rounded-xl border border-white/[0.04] p-5 mb-6 step-enter">
-                        <p class="text-xs font-semibold text-white/40 uppercase tracking-wider mb-3">Pattern</p>
+                    <div v-if="selectedTemplate === 'pattern'" class="bg-surface/50 rounded-xl border border-gray-200 p-5 mb-6 step-enter">
+                        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Pattern</p>
                         <div class="flex flex-wrap gap-2 mb-4">
                             <button
                                 v-for="p in patterns"
@@ -1131,18 +1131,18 @@ onUnmounted(() => {
                                 :class="[
                                     'px-3.5 py-2 rounded-lg border text-sm transition-all',
                                     patternType === p.id
-                                        ? 'border-teal/30 bg-teal/[0.06] text-white/70'
-                                        : 'border-white/[0.04] text-white/40 hover:border-white/[0.08]'
+                                        ? 'border-teal/30 bg-teal/[0.06] text-gray-600'
+                                        : 'border-gray-200 text-gray-400 hover:border-gray-300'
                                 ]"
                             >{{ p.name }}</button>
                         </div>
-                        <p class="text-xs font-semibold text-white/40 uppercase tracking-wider mb-2">Color</p>
+                        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Color</p>
                         <input type="color" v-model="patternColor" class="w-9 h-9 rounded-lg cursor-pointer border-0 bg-transparent">
                     </div>
 
                     <!-- Processing mode toggle (Pro only) -->
                     <div v-if="isPro" class="mb-4">
-                        <p class="text-[11px] font-semibold text-white/30 uppercase tracking-wider mb-2">Processing</p>
+                        <p class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-2">Processing</p>
                         <div class="grid grid-cols-2 gap-2">
                             <button
                                 @click="processingMode = 'server'"
@@ -1150,17 +1150,17 @@ onUnmounted(() => {
                                     'relative rounded-xl border p-3 text-left transition-all duration-200',
                                     processingMode === 'server'
                                         ? 'bg-amber-400/[0.08] border-amber-400/30'
-                                        : 'bg-white/[0.02] border-white/[0.06] hover:border-white/[0.1]'
+                                        : 'bg-gray-100/60 border-gray-200 hover:border-gray-300'
                                 ]"
                             >
                                 <div class="flex items-center gap-2 mb-1.5">
-                                    <svg xmlns="http://www.w3.org/2000/svg" :class="['w-3.5 h-3.5', processingMode === 'server' ? 'text-amber-400' : 'text-white/30']" viewBox="0 0 20 20" fill="currentColor">
+                                    <svg xmlns="http://www.w3.org/2000/svg" :class="['w-3.5 h-3.5', processingMode === 'server' ? 'text-amber-400' : 'text-gray-400']" viewBox="0 0 20 20" fill="currentColor">
                                         <path d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" />
                                     </svg>
-                                    <span :class="['text-xs font-bold', processingMode === 'server' ? 'text-amber-400' : 'text-white/50']">Fast</span>
+                                    <span :class="['text-xs font-bold', processingMode === 'server' ? 'text-amber-400' : 'text-gray-500']">Fast</span>
                                     <span v-if="processingMode === 'server'" class="ml-auto text-[9px] font-bold uppercase tracking-wider text-amber-400/60 bg-amber-400/10 px-1.5 py-0.5 rounded">Active</span>
                                 </div>
-                                <p class="text-[10px] leading-relaxed" :class="processingMode === 'server' ? 'text-white/40' : 'text-white/20'">Server-side — ~140x faster. Video uploaded temporarily, deleted after.</p>
+                                <p class="text-[10px] leading-relaxed" :class="processingMode === 'server' ? 'text-gray-400' : 'text-gray-300'">Server-side — ~140x faster. Video uploaded temporarily, deleted after.</p>
                             </button>
                             <button
                                 @click="processingMode = 'browser'"
@@ -1168,30 +1168,30 @@ onUnmounted(() => {
                                     'relative rounded-xl border p-3 text-left transition-all duration-200',
                                     processingMode === 'browser'
                                         ? 'bg-teal/[0.08] border-teal/30'
-                                        : 'bg-white/[0.02] border-white/[0.06] hover:border-white/[0.1]'
+                                        : 'bg-gray-100/60 border-gray-200 hover:border-gray-300'
                                 ]"
                             >
                                 <div class="flex items-center gap-2 mb-1.5">
-                                    <svg xmlns="http://www.w3.org/2000/svg" :class="['w-3.5 h-3.5', processingMode === 'browser' ? 'text-teal' : 'text-white/30']" viewBox="0 0 20 20" fill="currentColor">
+                                    <svg xmlns="http://www.w3.org/2000/svg" :class="['w-3.5 h-3.5', processingMode === 'browser' ? 'text-teal' : 'text-gray-400']" viewBox="0 0 20 20" fill="currentColor">
                                         <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
                                     </svg>
-                                    <span :class="['text-xs font-bold', processingMode === 'browser' ? 'text-teal' : 'text-white/50']">Private</span>
+                                    <span :class="['text-xs font-bold', processingMode === 'browser' ? 'text-teal' : 'text-gray-500']">Private</span>
                                     <span v-if="processingMode === 'browser'" class="ml-auto text-[9px] font-bold uppercase tracking-wider text-teal/60 bg-teal/10 px-1.5 py-0.5 rounded">Active</span>
                                 </div>
-                                <p class="text-[10px] leading-relaxed" :class="processingMode === 'browser' ? 'text-white/40' : 'text-white/20'">In-browser — video never leaves your device. Slower processing.</p>
+                                <p class="text-[10px] leading-relaxed" :class="processingMode === 'browser' ? 'text-gray-400' : 'text-gray-300'">In-browser — video never leaves your device. Slower processing.</p>
                             </button>
                         </div>
                     </div>
 
                     <!-- Time estimate (free users) -->
-                    <div v-if="!isPro && videoDuration > 10" class="mb-4 bg-white/[0.02] rounded-xl border border-white/[0.04] p-4">
+                    <div v-if="!isPro && videoDuration > 10" class="mb-4 bg-gray-100/60 rounded-xl border border-gray-200 p-4">
                         <div class="flex items-center justify-between text-sm">
                             <div class="flex items-center gap-3">
                                 <div class="flex flex-col items-center">
-                                    <span class="text-white/25 text-[10px] uppercase tracking-wider">Browser</span>
-                                    <span class="text-white/50 font-semibold">{{ estimatedBrowserTime }}</span>
+                                    <span class="text-gray-300 text-[10px] uppercase tracking-wider">Browser</span>
+                                    <span class="text-gray-500 font-semibold">{{ estimatedBrowserTime }}</span>
                                 </div>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white/15" viewBox="0 0 20 20" fill="currentColor">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-200" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
                                 </svg>
                                 <div class="flex flex-col items-center">
@@ -1236,7 +1236,7 @@ onUnmounted(() => {
             <div v-if="step === 'processing'" class="step-enter">
                 <div class="max-w-md mx-auto pt-24 pb-20 text-center">
                     <div class="w-16 h-16 mx-auto mb-8 relative">
-                        <div class="absolute inset-0 rounded-full border-2 border-white/[0.06]"></div>
+                        <div class="absolute inset-0 rounded-full border-2 border-gray-200"></div>
                         <svg class="absolute inset-0 animate-spin" viewBox="0 0 64 64" fill="none">
                             <circle cx="32" cy="32" r="30" stroke="url(#prog-grad)" stroke-width="2" stroke-linecap="round" stroke-dasharray="140 60" />
                             <defs>
@@ -1249,8 +1249,8 @@ onUnmounted(() => {
                     </div>
 
                     <h2 class="text-xl font-bold mb-1.5 tracking-tight">Converting...</h2>
-                    <p class="text-sm text-white/30 mb-2">{{ progressMessage }}</p>
-                    <p v-if="estimatedTimeLeft && progress >= 0" class="text-sm text-white/50 font-semibold mb-6 tabular-nums">{{ estimatedTimeLeft }}</p>
+                    <p class="text-sm text-gray-400 mb-2">{{ progressMessage }}</p>
+                    <p v-if="estimatedTimeLeft && progress >= 0" class="text-sm text-gray-500 font-semibold mb-6 tabular-nums">{{ estimatedTimeLeft }}</p>
                     <p v-else class="mb-6"></p>
 
                     <!-- Progress bar -->
@@ -1261,8 +1261,8 @@ onUnmounted(() => {
                         ></div>
                         <div class="absolute inset-0 shimmer rounded-full"></div>
                     </div>
-                    <p v-if="progress >= 0" class="mt-3 text-xs text-white/25 tabular-nums">{{ progress }}%</p>
-                    <p v-else class="mt-3 text-xs text-white/25">Processing on server...</p>
+                    <p v-if="progress >= 0" class="mt-3 text-xs text-gray-300 tabular-nums">{{ progress }}%</p>
+                    <p v-else class="mt-3 text-xs text-gray-300">Processing on server...</p>
 
                     <!-- Switch to fast mode (Pro users in browser mode) -->
                     <div v-if="isPro && processingMode === 'browser' && progress > 0 && progress < 95" class="mt-8">
@@ -1278,7 +1278,7 @@ onUnmounted(() => {
                                 </div>
                                 <div class="flex-1 min-w-0">
                                     <p class="text-sm font-bold text-amber-400 group-hover:text-amber-300 transition">Switch to Fast mode</p>
-                                    <p class="text-[11px] text-white/30">Cancel this and re-process on our server in {{ estimatedServerTime }}</p>
+                                    <p class="text-[11px] text-gray-400">Cancel this and re-process on our server in {{ estimatedServerTime }}</p>
                                 </div>
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-amber-400/50 group-hover:text-amber-400 group-hover:translate-x-0.5 transition-all" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
@@ -1296,8 +1296,8 @@ onUnmounted(() => {
                                 </svg>
                             </div>
                             <div class="flex-1 min-w-0">
-                                <p class="text-sm font-semibold text-white/80 mb-1">Too slow? Pro is {{ estimatedServerTime }} with server processing</p>
-                                <p class="text-xs text-white/30 mb-3">Plus all templates unlocked and future features included.</p>
+                                <p class="text-sm font-semibold text-gray-700 mb-1">Too slow? Pro is {{ estimatedServerTime }} with server processing</p>
+                                <p class="text-xs text-gray-400 mb-3">Plus all templates unlocked and future features included.</p>
                                 <button @click="triggerUpgrade('speed')" class="text-xs font-bold text-amber-400 hover:text-amber-300 transition">
                                     Upgrade to Pro &rarr;
                                 </button>
@@ -1307,7 +1307,7 @@ onUnmounted(() => {
 
                     <!-- Cancel / context reminder -->
                     <div class="mt-10 flex flex-col items-center gap-3">
-                        <div class="inline-flex items-center gap-1.5 text-[11px] text-white/20">
+                        <div class="inline-flex items-center gap-1.5 text-[11px] text-gray-300">
                             <svg v-if="processingMode === 'server'" xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor">
                                 <path d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" />
                             </svg>
@@ -1319,7 +1319,7 @@ onUnmounted(() => {
                         <button
                             v-if="processingMode === 'browser'"
                             @click="cancelBrowserConversion"
-                            class="text-[11px] text-white/20 hover:text-white/40 transition"
+                            class="text-[11px] text-gray-300 hover:text-gray-500 transition"
                         >
                             Cancel conversion
                         </button>
@@ -1337,23 +1337,23 @@ onUnmounted(() => {
                             </svg>
                         </div>
                         <h2 class="text-xl font-bold tracking-tight mb-1">Ready to download</h2>
-                        <p class="text-sm text-white/30">{{ outputFilename }}</p>
+                        <p class="text-sm text-gray-400">{{ outputFilename }}</p>
                     </div>
 
-                    <div class="bg-surface/60 rounded-xl border border-white/[0.04] p-3 mb-8">
+                    <div class="bg-surface/60 rounded-xl border border-gray-200 p-3 mb-8">
                         <video :src="outputUrl" class="max-h-72 mx-auto rounded-lg" controls></video>
                     </div>
 
                     <div class="flex flex-col sm:flex-row gap-3 justify-center">
                         <button
                             @click="downloadOutput"
-                            class="bg-gradient-to-r from-pink-400 to-purple-400 hover:from-pink-500 hover:to-purple-500 text-midnight font-bold px-8 py-3.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-pink-400/10 active:scale-[0.98]"
+                            class="bg-gradient-to-r from-pink-400 to-purple-400 hover:from-pink-500 hover:to-purple-500 text-white font-bold px-8 py-3.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-pink-400/10 active:scale-[0.98]"
                         >
                             Download Video
                         </button>
                         <button
                             @click="startOver"
-                            class="bg-surface/60 hover:bg-surface-light text-white/60 hover:text-white/80 font-semibold px-8 py-3.5 rounded-xl border border-white/[0.04] hover:border-white/[0.08] transition-all"
+                            class="bg-surface/60 hover:bg-surface-light text-gray-600 hover:text-gray-700 font-semibold px-8 py-3.5 rounded-xl border border-gray-200 hover:border-gray-300 transition-all"
                         >
                             Convert Another
                         </button>
@@ -1365,7 +1365,7 @@ onUnmounted(() => {
 
         <!-- Upgrade Modal -->
         <Teleport to="body">
-            <div v-if="showUpgradeModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 text-white" @click.self="showUpgradeModal = false">
+            <div v-if="showUpgradeModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 text-gray-900" @click.self="showUpgradeModal = false">
                 <div class="absolute inset-0 bg-black/70 backdrop-blur-md"></div>
                 <div class="relative max-w-md w-full rounded-2xl overflow-hidden shadow-2xl shadow-amber-500/10 step-enter">
 
@@ -1373,11 +1373,11 @@ onUnmounted(() => {
                     <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-400/60 to-transparent"></div>
                     <div class="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-24 bg-amber-400/10 blur-3xl pointer-events-none"></div>
 
-                    <div class="relative bg-[#111120] border border-white/[0.08] rounded-2xl p-8">
+                    <div class="relative bg-white border border-gray-300 rounded-2xl p-8">
 
                         <!-- Close -->
-                        <button @click="showUpgradeModal = false" class="absolute top-4 right-4 w-8 h-8 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] flex items-center justify-center transition">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white/40" viewBox="0 0 20 20" fill="currentColor">
+                        <button @click="showUpgradeModal = false" class="absolute top-4 right-4 w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
                             </svg>
                         </button>
@@ -1395,8 +1395,8 @@ onUnmounted(() => {
                         </div>
 
                         <!-- Title -->
-                        <h3 class="text-2xl font-extrabold text-center tracking-tight text-white mb-1.5">Go Pro</h3>
-                        <p class="text-center text-white/40 text-sm mb-8">One-time payment. Yours forever.</p>
+                        <h3 class="text-2xl font-extrabold text-center tracking-tight text-gray-900 mb-1.5">Go Pro</h3>
+                        <p class="text-center text-gray-400 text-sm mb-8">One-time payment. Yours forever.</p>
 
                         <!-- Features -->
                         <div class="space-y-4 mb-8">
@@ -1407,8 +1407,8 @@ onUnmounted(() => {
                                     </svg>
                                 </div>
                                 <div>
-                                    <p class="text-sm font-semibold text-white">Unlimited video length</p>
-                                    <p class="text-xs text-white/35">No 60-second cap on conversions</p>
+                                    <p class="text-sm font-semibold text-gray-900">Unlimited video length</p>
+                                    <p class="text-xs text-gray-400">No 60-second cap on conversions</p>
                                 </div>
                             </div>
                             <div class="flex items-center gap-3.5">
@@ -1418,8 +1418,8 @@ onUnmounted(() => {
                                     </svg>
                                 </div>
                                 <div>
-                                    <p class="text-sm font-semibold text-white">All templates unlocked</p>
-                                    <p class="text-xs text-white/35">Gradient Wash, Pattern Fill & future styles</p>
+                                    <p class="text-sm font-semibold text-gray-900">All templates unlocked</p>
+                                    <p class="text-xs text-gray-400">Gradient Wash, Pattern Fill & future styles</p>
                                 </div>
                             </div>
                             <div class="flex items-center gap-3.5">
@@ -1429,23 +1429,23 @@ onUnmounted(() => {
                                     </svg>
                                 </div>
                                 <div>
-                                    <p class="text-sm font-semibold text-white">Lifetime updates</p>
-                                    <p class="text-xs text-white/35">Every new feature, included automatically</p>
+                                    <p class="text-sm font-semibold text-gray-900">Lifetime updates</p>
+                                    <p class="text-xs text-gray-400">Every new feature, included automatically</p>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Divider -->
-                        <div class="border-t border-white/[0.06] mb-6"></div>
+                        <div class="border-t border-gray-200 mb-6"></div>
 
                         <!-- Price -->
                         <div class="text-center mb-6">
                             <div class="flex items-baseline justify-center gap-0.5">
-                                <span class="text-sm font-medium text-white/40 mr-1">USD</span>
-                                <span class="text-4xl font-extrabold text-white">$19</span>
-                                <span class="text-xl font-bold text-white/40">.99</span>
+                                <span class="text-sm font-medium text-gray-400 mr-1">USD</span>
+                                <span class="text-4xl font-extrabold text-gray-900">$19</span>
+                                <span class="text-xl font-bold text-gray-400">.99</span>
                             </div>
-                            <p class="text-xs text-white/25 mt-1.5">One-time &middot; No subscription &middot; No recurring fees</p>
+                            <p class="text-xs text-gray-300 mt-1.5">One-time &middot; No subscription &middot; No recurring fees</p>
                         </div>
 
                         <!-- CTA -->
@@ -1467,16 +1467,16 @@ onUnmounted(() => {
 
                         <!-- Trust -->
                         <div class="flex items-center justify-center gap-3 mt-5">
-                            <div class="flex items-center gap-1.5 text-[11px] text-white/25">
+                            <div class="flex items-center gap-1.5 text-[11px] text-gray-300">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
                                 </svg>
                                 Secured by Stripe
                             </div>
-                            <span class="text-white/10">&middot;</span>
-                            <div class="text-[11px] text-white/25">Instant activation</div>
+                            <span class="text-gray-300">&middot;</span>
+                            <div class="text-[11px] text-gray-300">Instant activation</div>
                         </div>
-                        <button @click="showUpgradeModal = false; showRestoreModal = true" class="block mx-auto mt-3 text-[11px] text-white/20 hover:text-white/40 transition underline underline-offset-2">
+                        <button @click="showUpgradeModal = false; showRestoreModal = true" class="block mx-auto mt-3 text-[11px] text-gray-300 hover:text-gray-500 transition underline underline-offset-2">
                             Already purchased? Restore here
                         </button>
                     </div>
@@ -1486,13 +1486,13 @@ onUnmounted(() => {
 
         <!-- Restore Modal -->
         <Teleport to="body">
-            <div v-if="showRestoreModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 text-white" @click.self="showRestoreModal = false">
+            <div v-if="showRestoreModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 text-gray-900" @click.self="showRestoreModal = false">
                 <div class="absolute inset-0 bg-black/70 backdrop-blur-md"></div>
                 <div class="relative max-w-sm w-full rounded-2xl overflow-hidden shadow-2xl step-enter">
-                    <div class="relative bg-[#111120] border border-white/[0.08] rounded-2xl p-8">
+                    <div class="relative bg-white border border-gray-300 rounded-2xl p-8">
 
-                        <button @click="showRestoreModal = false" class="absolute top-4 right-4 w-8 h-8 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] flex items-center justify-center transition">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white/40" viewBox="0 0 20 20" fill="currentColor">
+                        <button @click="showRestoreModal = false" class="absolute top-4 right-4 w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
                             </svg>
                         </button>
@@ -1506,8 +1506,8 @@ onUnmounted(() => {
                             </div>
                         </div>
 
-                        <h3 class="text-lg font-bold text-center text-white mb-1.5">Restore Pro</h3>
-                        <p class="text-center text-white/35 text-sm mb-6">Enter the email you used at checkout.</p>
+                        <h3 class="text-lg font-bold text-center text-gray-900 mb-1.5">Restore Pro</h3>
+                        <p class="text-center text-gray-400 text-sm mb-6">Enter the email you used at checkout.</p>
 
                         <div v-if="restoreMessage" class="mb-4 bg-teal/[0.06] border border-teal/10 rounded-lg px-4 py-3 text-sm text-teal/80 text-center">
                             {{ restoreMessage }}
@@ -1517,7 +1517,7 @@ onUnmounted(() => {
                             v-model="restoreEmail"
                             type="email"
                             placeholder="you@example.com"
-                            class="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white placeholder-white/25 focus:outline-none focus:border-teal/30 focus:ring-1 focus:ring-teal/20 transition mb-4"
+                            class="w-full bg-gray-100/80 border border-gray-300 rounded-xl px-4 py-3 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-teal/30 focus:ring-1 focus:ring-teal/20 transition mb-4"
                             @keydown.enter="restorePurchase"
                         >
 
@@ -1541,51 +1541,51 @@ onUnmounted(() => {
         </Teleport>
 
         <!-- Footer -->
-        <footer class="border-t border-white/[0.03] mt-8">
+        <footer class="border-t border-gray-200 mt-8">
             <div class="max-w-6xl mx-auto px-6 py-12">
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-10">
                     <div>
-                        <h4 class="text-[11px] font-bold text-white/40 uppercase tracking-wider mb-3">Tool</h4>
+                        <h4 class="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-3">Tool</h4>
                         <ul class="space-y-2">
-                            <li><a href="/" class="text-xs text-white/25 hover:text-white/50 transition">Convert Video</a></li>
-                            <li><a href="/portrait-to-landscape-video-converter" class="text-xs text-white/25 hover:text-white/50 transition">Portrait to Landscape</a></li>
-                            <li><a href="/video-aspect-ratio-converter" class="text-xs text-white/25 hover:text-white/50 transition">Aspect Ratio Converter</a></li>
+                            <li><a href="/" class="text-xs text-gray-300 hover:text-gray-500 transition">Convert Video</a></li>
+                            <li><a href="/portrait-to-landscape-video-converter" class="text-xs text-gray-300 hover:text-gray-500 transition">Portrait to Landscape</a></li>
+                            <li><a href="/video-aspect-ratio-converter" class="text-xs text-gray-300 hover:text-gray-500 transition">Aspect Ratio Converter</a></li>
                         </ul>
                     </div>
                     <div>
-                        <h4 class="text-[11px] font-bold text-white/40 uppercase tracking-wider mb-3">Convert</h4>
+                        <h4 class="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-3">Convert</h4>
                         <ul class="space-y-2">
-                            <li><a href="/convert-tiktok-to-youtube" class="text-xs text-white/25 hover:text-white/50 transition">TikTok to YouTube</a></li>
-                            <li><a href="/convert-reels-to-landscape" class="text-xs text-white/25 hover:text-white/50 transition">Reels to Landscape</a></li>
-                            <li><a href="/vertical-to-horizontal-video" class="text-xs text-white/25 hover:text-white/50 transition">Vertical to Horizontal</a></li>
+                            <li><a href="/convert-tiktok-to-youtube" class="text-xs text-gray-300 hover:text-gray-500 transition">TikTok to YouTube</a></li>
+                            <li><a href="/convert-reels-to-landscape" class="text-xs text-gray-300 hover:text-gray-500 transition">Reels to Landscape</a></li>
+                            <li><a href="/vertical-to-horizontal-video" class="text-xs text-gray-300 hover:text-gray-500 transition">Vertical to Horizontal</a></li>
                         </ul>
                     </div>
                     <div>
-                        <h4 class="text-[11px] font-bold text-white/40 uppercase tracking-wider mb-3">Resources</h4>
+                        <h4 class="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-3">Resources</h4>
                         <ul class="space-y-2">
-                            <li><a href="/blog" class="text-xs text-white/25 hover:text-white/50 transition">Blog</a></li>
-                            <li><a href="/blog/convert-tiktok-videos-to-youtube-format" class="text-xs text-white/25 hover:text-white/50 transition">TikTok to YouTube Guide</a></li>
-                            <li><a href="/blog/convert-9-16-to-16-9-without-black-bars" class="text-xs text-white/25 hover:text-white/50 transition">Remove Black Bars</a></li>
+                            <li><a href="/blog" class="text-xs text-gray-300 hover:text-gray-500 transition">Blog</a></li>
+                            <li><a href="/blog/convert-tiktok-videos-to-youtube-format" class="text-xs text-gray-300 hover:text-gray-500 transition">TikTok to YouTube Guide</a></li>
+                            <li><a href="/blog/convert-9-16-to-16-9-without-black-bars" class="text-xs text-gray-300 hover:text-gray-500 transition">Remove Black Bars</a></li>
                         </ul>
                     </div>
                     <div>
-                        <h4 class="text-[11px] font-bold text-white/40 uppercase tracking-wider mb-3">Product</h4>
+                        <h4 class="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-3">Product</h4>
                         <ul class="space-y-2">
-                            <li><a href="/" class="text-xs text-white/25 hover:text-white/50 transition">Free Converter</a></li>
-                            <li><span @click="triggerUpgrade('footer')" class="text-xs text-white/25 hover:text-white/50 transition cursor-pointer">Upgrade to Pro</span></li>
+                            <li><a href="/" class="text-xs text-gray-300 hover:text-gray-500 transition">Free Converter</a></li>
+                            <li><span @click="triggerUpgrade('footer')" class="text-xs text-gray-300 hover:text-gray-500 transition cursor-pointer">Upgrade to Pro</span></li>
                         </ul>
                     </div>
                 </div>
-                <div class="border-t border-white/[0.04] pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+                <div class="border-t border-gray-200 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
                     <div class="flex items-center gap-2">
                         <div class="w-5 h-5 rounded bg-gradient-to-br from-pink-400/60 to-purple-400/60 flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-midnight" viewBox="0 0 20 20" fill="currentColor">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-white" viewBox="0 0 20 20" fill="currentColor">
                                 <path d="M3 4a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 12a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H4a1 1 0 01-1-1v-4zM11 4a1 1 0 011-1h4a1 1 0 011 1v12a1 1 0 01-1 1h-4a1 1 0 01-1-1V4z" />
                             </svg>
                         </div>
-                        <span class="text-xs text-white/20">&copy; 2026 ConvertPortrait.com</span>
+                        <span class="text-xs text-gray-300">&copy; 2026 ConvertPortrait.com</span>
                     </div>
-                    <p class="text-[11px] text-white/15 text-center leading-relaxed">
+                    <p class="text-[11px] text-gray-200 text-center leading-relaxed">
                         Your video never leaves your device in free mode. 100% browser-based processing via WebAssembly.
                     </p>
                 </div>

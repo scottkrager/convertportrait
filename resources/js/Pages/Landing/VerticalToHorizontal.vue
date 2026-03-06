@@ -73,17 +73,17 @@ const jsonLdFaq = JSON.stringify({
         <component is="script" type="application/ld+json" v-html="jsonLdFaq" />
     </Head>
 
-    <div class="min-h-screen bg-midnight text-white noise-bg mesh-gradient">
+    <div class="min-h-screen bg-midnight text-gray-900 noise-bg mesh-gradient">
         <!-- Header -->
-        <header class="border-b border-white/[0.04]">
+        <header class="border-b border-gray-200">
             <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
                 <Link href="/" class="flex items-center gap-2.5">
                     <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-pink-400 to-purple-400 flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-midnight" viewBox="0 0 20 20" fill="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 20 20" fill="currentColor">
                             <path d="M3 4a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 12a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H4a1 1 0 01-1-1v-4zM11 4a1 1 0 011-1h4a1 1 0 011 1v12a1 1 0 01-1 1h-4a1 1 0 01-1-1V4z" />
                         </svg>
                     </div>
-                    <span class="text-[15px] font-bold tracking-tight text-white/90">ConvertPortrait</span>
+                    <span class="text-[15px] font-bold tracking-tight text-gray-900">ConvertPortrait</span>
                 </Link>
                 <Link href="/" class="text-xs font-semibold text-teal bg-teal/[0.08] hover:bg-teal/[0.14] px-4 py-2 rounded-full border border-teal/15 transition-all">
                     Open Tool
@@ -107,13 +107,13 @@ const jsonLdFaq = JSON.stringify({
                     <span class="font-editorial font-normal text-teal">to Horizontal</span>
                 </h1>
 
-                <p class="text-[15px] sm:text-base text-white/40 max-w-xl mx-auto leading-relaxed mb-8">
+                <p class="text-[15px] sm:text-base text-gray-400 max-w-xl mx-auto leading-relaxed mb-8">
                     Turn any vertical video into a clean horizontal format for YouTube, presentations, TV screens, and more.
                     Your video stays centered with a professional background filling the sides — no cropping, no stretching,
                     no black bars. Free and private.
                 </p>
 
-                <Link href="/" class="inline-flex items-center gap-2 font-bold text-base px-8 py-4 rounded-xl bg-gradient-to-r from-pink-400 to-purple-400 hover:from-pink-500 hover:to-purple-500 text-midnight transition-all duration-200 hover:shadow-lg hover:shadow-pink-400/10 active:scale-[0.98]">
+                <Link href="/" class="inline-flex items-center gap-2 font-bold text-base px-8 py-4 rounded-xl bg-gradient-to-r from-pink-400 to-purple-400 hover:from-pink-500 hover:to-purple-500 text-white transition-all duration-200 hover:shadow-lg hover:shadow-pink-400/10 active:scale-[0.98]">
                     Convert Your Video Now — Free
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -124,17 +124,17 @@ const jsonLdFaq = JSON.stringify({
             <!-- Use Cases -->
             <section class="pb-16">
                 <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-center mb-3">Where You Need Horizontal Video</h2>
-                <p class="text-sm text-white/30 text-center mb-10 max-w-md mx-auto">Vertical video looks out of place on widescreen platforms. Here is where horizontal format matters most.</p>
+                <p class="text-sm text-gray-400 text-center mb-10 max-w-md mx-auto">Vertical video looks out of place on widescreen platforms. Here is where horizontal format matters most.</p>
                 <div class="grid sm:grid-cols-2 gap-4">
-                    <div v-for="uc in useCases" :key="uc.title" class="bg-white/[0.02] rounded-xl border border-white/[0.06] p-5 flex items-start gap-4">
+                    <div v-for="uc in useCases" :key="uc.title" class="bg-gray-100/60 rounded-xl border border-gray-200 p-5 flex items-start gap-4">
                         <div class="w-10 h-10 rounded-lg bg-teal/10 border border-teal/10 flex items-center justify-center shrink-0">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-teal" viewBox="0 0 20 20" fill="currentColor">
                                 <path :d="uc.icon" />
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-sm font-bold text-white/70 mb-1">{{ uc.title }}</h3>
-                            <p class="text-xs text-white/30 leading-relaxed">{{ uc.desc }}</p>
+                            <h3 class="text-sm font-bold text-gray-600 mb-1">{{ uc.title }}</h3>
+                            <p class="text-xs text-gray-400 leading-relaxed">{{ uc.desc }}</p>
                         </div>
                     </div>
                 </div>
@@ -147,29 +147,29 @@ const jsonLdFaq = JSON.stringify({
                     <div class="flex items-start gap-4">
                         <div class="w-10 h-10 rounded-full bg-teal/10 border border-teal/10 flex items-center justify-center text-sm font-bold text-teal shrink-0">1</div>
                         <div>
-                            <h3 class="text-sm font-bold text-white/70 mb-1">Save Your Vertical Video</h3>
-                            <p class="text-xs text-white/30 leading-relaxed">Download or export your vertical video from TikTok, Instagram, your phone's camera roll, or any other source. ConvertPortrait accepts MP4, MOV, WebM, and AVI files.</p>
+                            <h3 class="text-sm font-bold text-gray-600 mb-1">Save Your Vertical Video</h3>
+                            <p class="text-xs text-gray-400 leading-relaxed">Download or export your vertical video from TikTok, Instagram, your phone's camera roll, or any other source. ConvertPortrait accepts MP4, MOV, WebM, and AVI files.</p>
                         </div>
                     </div>
                     <div class="flex items-start gap-4">
                         <div class="w-10 h-10 rounded-full bg-teal/10 border border-teal/10 flex items-center justify-center text-sm font-bold text-teal shrink-0">2</div>
                         <div>
-                            <h3 class="text-sm font-bold text-white/70 mb-1">Upload to ConvertPortrait</h3>
-                            <p class="text-xs text-white/30 leading-relaxed">Open the converter tool and drag your video file onto the page, or click to browse. The tool detects the aspect ratio automatically and prepares your video for conversion.</p>
+                            <h3 class="text-sm font-bold text-gray-600 mb-1">Upload to ConvertPortrait</h3>
+                            <p class="text-xs text-gray-400 leading-relaxed">Open the converter tool and drag your video file onto the page, or click to browse. The tool detects the aspect ratio automatically and prepares your video for conversion.</p>
                         </div>
                     </div>
                     <div class="flex items-start gap-4">
                         <div class="w-10 h-10 rounded-full bg-teal/10 border border-teal/10 flex items-center justify-center text-sm font-bold text-teal shrink-0">3</div>
                         <div>
-                            <h3 class="text-sm font-bold text-white/70 mb-1">Choose Your Background Style</h3>
-                            <p class="text-xs text-white/30 leading-relaxed">Pick from four options: Blurred Mirror (your video blurred as background), Solid Color, Gradient Wash, or Pattern Fill. Preview updates in real time so you can see exactly how it will look.</p>
+                            <h3 class="text-sm font-bold text-gray-600 mb-1">Choose Your Background Style</h3>
+                            <p class="text-xs text-gray-400 leading-relaxed">Pick from four options: Blurred Mirror (your video blurred as background), Solid Color, Gradient Wash, or Pattern Fill. Preview updates in real time so you can see exactly how it will look.</p>
                         </div>
                     </div>
                     <div class="flex items-start gap-4">
                         <div class="w-10 h-10 rounded-full bg-teal/10 border border-teal/10 flex items-center justify-center text-sm font-bold text-teal shrink-0">4</div>
                         <div>
-                            <h3 class="text-sm font-bold text-white/70 mb-1">Convert and Download</h3>
-                            <p class="text-xs text-white/30 leading-relaxed">Click "Convert to Landscape" and wait for processing. Once done, download your 1920x1080 horizontal video file ready for any widescreen platform.</p>
+                            <h3 class="text-sm font-bold text-gray-600 mb-1">Convert and Download</h3>
+                            <p class="text-xs text-gray-400 leading-relaxed">Click "Convert to Landscape" and wait for processing. Once done, download your 1920x1080 horizontal video file ready for any widescreen platform.</p>
                         </div>
                     </div>
                 </div>
@@ -179,8 +179,8 @@ const jsonLdFaq = JSON.stringify({
             <section class="pb-16 text-center">
                 <div class="bg-gradient-to-br from-teal/[0.06] to-emerald/[0.03] rounded-2xl border border-teal/10 p-10">
                     <h2 class="text-2xl font-bold tracking-tight mb-3">Convert Your Vertical Video Now</h2>
-                    <p class="text-sm text-white/40 mb-6 max-w-md mx-auto">No account, no installation, no watermark. Just drop your video and get a horizontal version in minutes.</p>
-                    <Link href="/" class="inline-flex items-center gap-2 font-bold px-8 py-4 rounded-xl bg-gradient-to-r from-pink-400 to-purple-400 hover:from-pink-500 hover:to-purple-500 text-midnight transition-all duration-200 hover:shadow-lg hover:shadow-pink-400/10 active:scale-[0.98]">
+                    <p class="text-sm text-gray-400 mb-6 max-w-md mx-auto">No account, no installation, no watermark. Just drop your video and get a horizontal version in minutes.</p>
+                    <Link href="/" class="inline-flex items-center gap-2 font-bold px-8 py-4 rounded-xl bg-gradient-to-r from-pink-400 to-purple-400 hover:from-pink-500 hover:to-purple-500 text-white transition-all duration-200 hover:shadow-lg hover:shadow-pink-400/10 active:scale-[0.98]">
                         Convert Your Video Now — Free
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -191,43 +191,43 @@ const jsonLdFaq = JSON.stringify({
 
             <!-- FAQ -->
             <section class="pb-20">
-                <h2 class="text-lg font-bold tracking-tight text-center mb-8 text-white/60">Frequently Asked Questions</h2>
+                <h2 class="text-lg font-bold tracking-tight text-center mb-8 text-gray-600">Frequently Asked Questions</h2>
                 <div class="space-y-3 max-w-xl mx-auto">
-                    <details v-for="(faq, i) in faqs" :key="i" class="group bg-white/[0.02] border border-white/[0.06] rounded-xl">
-                        <summary class="flex items-center justify-between cursor-pointer px-5 py-4 text-sm font-semibold text-white/60 hover:text-white/80 transition">
+                    <details v-for="(faq, i) in faqs" :key="i" class="group bg-gray-100/60 border border-gray-200 rounded-xl">
+                        <summary class="flex items-center justify-between cursor-pointer px-5 py-4 text-sm font-semibold text-gray-600 hover:text-gray-700 transition">
                             {{ faq.q }}
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white/20 transition-transform group-open:rotate-180 shrink-0 ml-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-300 transition-transform group-open:rotate-180 shrink-0 ml-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
                         </summary>
-                        <p class="px-5 pb-4 text-xs text-white/30 leading-relaxed">{{ faq.a }}</p>
+                        <p class="px-5 pb-4 text-xs text-gray-400 leading-relaxed">{{ faq.a }}</p>
                     </details>
                 </div>
             </section>
 
             <!-- Internal Links -->
             <section class="pb-16">
-                <h2 class="text-sm font-bold text-white/20 text-center mb-4 uppercase tracking-wider">Related Tools</h2>
+                <h2 class="text-sm font-bold text-gray-300 text-center mb-4 uppercase tracking-wider">Related Tools</h2>
                 <div class="flex flex-wrap justify-center gap-3">
-                    <Link href="/convert-tiktok-to-youtube" class="text-xs text-white/30 hover:text-teal bg-white/[0.02] hover:bg-teal/[0.06] border border-white/[0.06] hover:border-teal/15 px-4 py-2 rounded-full transition-all">TikTok to YouTube Converter</Link>
-                    <Link href="/portrait-to-landscape-video-converter" class="text-xs text-white/30 hover:text-teal bg-white/[0.02] hover:bg-teal/[0.06] border border-white/[0.06] hover:border-teal/15 px-4 py-2 rounded-full transition-all">Portrait to Landscape Converter</Link>
-                    <Link href="/convert-reels-to-landscape" class="text-xs text-white/30 hover:text-teal bg-white/[0.02] hover:bg-teal/[0.06] border border-white/[0.06] hover:border-teal/15 px-4 py-2 rounded-full transition-all">Convert Reels to Landscape</Link>
-                    <Link href="/video-aspect-ratio-converter" class="text-xs text-white/30 hover:text-teal bg-white/[0.02] hover:bg-teal/[0.06] border border-white/[0.06] hover:border-teal/15 px-4 py-2 rounded-full transition-all">Video Aspect Ratio Converter</Link>
+                    <Link href="/convert-tiktok-to-youtube" class="text-xs text-gray-400 hover:text-teal bg-gray-100/60 hover:bg-teal/[0.06] border border-gray-200 hover:border-teal/15 px-4 py-2 rounded-full transition-all">TikTok to YouTube Converter</Link>
+                    <Link href="/portrait-to-landscape-video-converter" class="text-xs text-gray-400 hover:text-teal bg-gray-100/60 hover:bg-teal/[0.06] border border-gray-200 hover:border-teal/15 px-4 py-2 rounded-full transition-all">Portrait to Landscape Converter</Link>
+                    <Link href="/convert-reels-to-landscape" class="text-xs text-gray-400 hover:text-teal bg-gray-100/60 hover:bg-teal/[0.06] border border-gray-200 hover:border-teal/15 px-4 py-2 rounded-full transition-all">Convert Reels to Landscape</Link>
+                    <Link href="/video-aspect-ratio-converter" class="text-xs text-gray-400 hover:text-teal bg-gray-100/60 hover:bg-teal/[0.06] border border-gray-200 hover:border-teal/15 px-4 py-2 rounded-full transition-all">Video Aspect Ratio Converter</Link>
                 </div>
             </section>
         </main>
 
         <!-- Footer -->
-        <footer class="border-t border-white/[0.03] mt-8">
+        <footer class="border-t border-gray-200 mt-8">
             <div class="max-w-6xl mx-auto px-6 py-10">
                 <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
                     <div class="flex items-center gap-2">
                         <div class="w-5 h-5 rounded bg-gradient-to-br from-teal/60 to-emerald/60 flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-midnight" viewBox="0 0 20 20" fill="currentColor">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-white" viewBox="0 0 20 20" fill="currentColor">
                                 <path d="M3 4a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 12a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H4a1 1 0 01-1-1v-4zM11 4a1 1 0 011-1h4a1 1 0 011 1v12a1 1 0 01-1 1h-4a1 1 0 01-1-1V4z" />
                             </svg>
                         </div>
-                        <span class="text-xs text-white/25">ConvertPortrait.com</span>
+                        <span class="text-xs text-gray-300">ConvertPortrait.com</span>
                     </div>
-                    <p class="text-[11px] text-white/15 text-center leading-relaxed">
+                    <p class="text-[11px] text-gray-200 text-center leading-relaxed">
                         Free vertical to horizontal video converter. Browser-based processing — your files never leave your device.
                     </p>
                 </div>

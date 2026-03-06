@@ -73,17 +73,17 @@ const jsonLdFaq = JSON.stringify({
         <component is="script" type="application/ld+json" v-html="jsonLdFaq" />
     </Head>
 
-    <div class="min-h-screen bg-midnight text-white noise-bg mesh-gradient">
+    <div class="min-h-screen bg-midnight text-gray-900 noise-bg mesh-gradient">
         <!-- Header -->
-        <header class="border-b border-white/[0.04]">
+        <header class="border-b border-gray-200">
             <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
                 <Link href="/" class="flex items-center gap-2.5">
                     <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-pink-400 to-purple-400 flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-midnight" viewBox="0 0 20 20" fill="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 20 20" fill="currentColor">
                             <path d="M3 4a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 12a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H4a1 1 0 01-1-1v-4zM11 4a1 1 0 011-1h4a1 1 0 011 1v12a1 1 0 01-1 1h-4a1 1 0 01-1-1V4z" />
                         </svg>
                     </div>
-                    <span class="text-[15px] font-bold tracking-tight text-white/90">ConvertPortrait</span>
+                    <span class="text-[15px] font-bold tracking-tight text-gray-900">ConvertPortrait</span>
                 </Link>
                 <Link href="/" class="text-xs font-semibold text-teal bg-teal/[0.08] hover:bg-teal/[0.14] px-4 py-2 rounded-full border border-teal/15 transition-all">
                     Open Tool
@@ -107,13 +107,13 @@ const jsonLdFaq = JSON.stringify({
                     <span class="font-editorial font-normal text-teal">to Landscape Video</span>
                 </h1>
 
-                <p class="text-[15px] sm:text-base text-white/40 max-w-xl mx-auto leading-relaxed mb-8">
+                <p class="text-[15px] sm:text-base text-gray-400 max-w-xl mx-auto leading-relaxed mb-8">
                     Repurpose your best Instagram Reels for YouTube, presentations, TV screens, and more.
                     ConvertPortrait transforms your vertical Reels into professional 16:9 landscape videos
                     with stylish backgrounds — no black bars, no cropping, no quality loss.
                 </p>
 
-                <Link href="/" class="inline-flex items-center gap-2 font-bold text-base px-8 py-4 rounded-xl bg-gradient-to-r from-pink-400 to-purple-400 hover:from-pink-500 hover:to-purple-500 text-midnight transition-all duration-200 hover:shadow-lg hover:shadow-pink-400/10 active:scale-[0.98]">
+                <Link href="/" class="inline-flex items-center gap-2 font-bold text-base px-8 py-4 rounded-xl bg-gradient-to-r from-pink-400 to-purple-400 hover:from-pink-500 hover:to-purple-500 text-white transition-all duration-200 hover:shadow-lg hover:shadow-pink-400/10 active:scale-[0.98]">
                     Convert Your Video Now — Free
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -124,11 +124,11 @@ const jsonLdFaq = JSON.stringify({
             <!-- Why Convert Reels -->
             <section class="pb-16">
                 <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-center mb-3">Why Convert Your Reels to Landscape?</h2>
-                <p class="text-sm text-white/30 text-center mb-10 max-w-lg mx-auto">Instagram Reels are created in 9:16 portrait format, optimized for mobile feeds. But many platforms and use cases demand 16:9 landscape video. Here is where landscape Reels shine.</p>
+                <p class="text-sm text-gray-400 text-center mb-10 max-w-lg mx-auto">Instagram Reels are created in 9:16 portrait format, optimized for mobile feeds. But many platforms and use cases demand 16:9 landscape video. Here is where landscape Reels shine.</p>
                 <div class="grid sm:grid-cols-2 gap-4">
-                    <div v-for="reason in reasons" :key="reason.title" class="bg-white/[0.02] rounded-xl border border-white/[0.06] p-5">
-                        <h3 class="text-sm font-bold text-white/70 mb-2">{{ reason.title }}</h3>
-                        <p class="text-xs text-white/30 leading-relaxed">{{ reason.desc }}</p>
+                    <div v-for="reason in reasons" :key="reason.title" class="bg-gray-100/60 rounded-xl border border-gray-200 p-5">
+                        <h3 class="text-sm font-bold text-gray-600 mb-2">{{ reason.title }}</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">{{ reason.desc }}</p>
                     </div>
                 </div>
             </section>
@@ -139,43 +139,43 @@ const jsonLdFaq = JSON.stringify({
                 <div class="grid sm:grid-cols-3 gap-6 stagger">
                     <div class="text-center">
                         <div class="w-10 h-10 mx-auto mb-4 rounded-full bg-teal/10 border border-teal/10 flex items-center justify-center text-sm font-bold text-teal">1</div>
-                        <h3 class="text-sm font-semibold text-white/70 mb-2">Save Your Reel</h3>
-                        <p class="text-xs text-white/30 leading-relaxed">Download your Instagram Reel to your device using Instagram's built-in save option or a screen recording. Then drag the file into ConvertPortrait.</p>
+                        <h3 class="text-sm font-semibold text-gray-600 mb-2">Save Your Reel</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">Download your Instagram Reel to your device using Instagram's built-in save option or a screen recording. Then drag the file into ConvertPortrait.</p>
                     </div>
                     <div class="text-center">
                         <div class="w-10 h-10 mx-auto mb-4 rounded-full bg-teal/10 border border-teal/10 flex items-center justify-center text-sm font-bold text-teal">2</div>
-                        <h3 class="text-sm font-semibold text-white/70 mb-2">Pick a Background Style</h3>
-                        <p class="text-xs text-white/30 leading-relaxed">Choose from Blurred Mirror, Solid Color, Gradient Wash, or Pattern Fill. Preview updates instantly so you see exactly what the output will look like.</p>
+                        <h3 class="text-sm font-semibold text-gray-600 mb-2">Pick a Background Style</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">Choose from Blurred Mirror, Solid Color, Gradient Wash, or Pattern Fill. Preview updates instantly so you see exactly what the output will look like.</p>
                     </div>
                     <div class="text-center">
                         <div class="w-10 h-10 mx-auto mb-4 rounded-full bg-teal/10 border border-teal/10 flex items-center justify-center text-sm font-bold text-teal">3</div>
-                        <h3 class="text-sm font-semibold text-white/70 mb-2">Convert & Download</h3>
-                        <p class="text-xs text-white/30 leading-relaxed">Click convert and wait for processing. Download your 1920x1080 landscape video, ready for YouTube, Vimeo, presentations, or any widescreen platform.</p>
+                        <h3 class="text-sm font-semibold text-gray-600 mb-2">Convert & Download</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">Click convert and wait for processing. Download your 1920x1080 landscape video, ready for YouTube, Vimeo, presentations, or any widescreen platform.</p>
                     </div>
                 </div>
             </section>
 
             <!-- Reels vs YouTube comparison -->
             <section class="pb-16">
-                <div class="bg-surface/60 rounded-2xl border border-white/[0.06] p-8 sm:p-10">
+                <div class="bg-surface/60 rounded-2xl border border-gray-200 p-8 sm:p-10">
                     <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-center mb-6">Instagram Reels vs YouTube Format</h2>
                     <div class="grid grid-cols-2 gap-4 mb-6">
-                        <div class="bg-white/[0.02] rounded-xl border border-white/[0.04] p-5 text-center">
+                        <div class="bg-gray-100/60 rounded-xl border border-gray-200 p-5 text-center">
                             <div class="w-12 h-20 mx-auto mb-3 rounded-lg border-2 border-pink-400/30 bg-pink-400/[0.06] flex items-center justify-center">
                                 <span class="text-[10px] text-pink-400/60 font-bold">9:16</span>
                             </div>
-                            <p class="text-xs text-white/30 font-semibold">Instagram Reels</p>
-                            <p class="text-[11px] text-white/20 mt-1">1080 x 1920 portrait</p>
+                            <p class="text-xs text-gray-400 font-semibold">Instagram Reels</p>
+                            <p class="text-[11px] text-gray-300 mt-1">1080 x 1920 portrait</p>
                         </div>
-                        <div class="bg-white/[0.02] rounded-xl border border-teal/10 p-5 text-center">
+                        <div class="bg-gray-100/60 rounded-xl border border-teal/10 p-5 text-center">
                             <div class="w-20 h-12 mx-auto mb-3 rounded-lg border-2 border-teal/30 bg-teal/[0.06] flex items-center justify-center">
                                 <span class="text-[10px] text-teal/60 font-bold">16:9</span>
                             </div>
-                            <p class="text-xs text-white/30 font-semibold">YouTube / Landscape</p>
-                            <p class="text-[11px] text-white/20 mt-1">1920 x 1080 widescreen</p>
+                            <p class="text-xs text-gray-400 font-semibold">YouTube / Landscape</p>
+                            <p class="text-[11px] text-gray-300 mt-1">1920 x 1080 widescreen</p>
                         </div>
                     </div>
-                    <p class="text-xs text-white/25 text-center max-w-lg mx-auto leading-relaxed">
+                    <p class="text-xs text-gray-300 text-center max-w-lg mx-auto leading-relaxed">
                         ConvertPortrait places your Reel at full height in the center of a 1920x1080 landscape frame. The side panels are filled with your chosen background — not ugly black bars. The result is a professional-looking widescreen video that fills the player on any platform.
                     </p>
                 </div>
@@ -185,8 +185,8 @@ const jsonLdFaq = JSON.stringify({
             <section class="pb-16 text-center">
                 <div class="bg-gradient-to-br from-teal/[0.06] to-emerald/[0.03] rounded-2xl border border-teal/10 p-10">
                     <h2 class="text-2xl font-bold tracking-tight mb-3">Repurpose Your Reels Today</h2>
-                    <p class="text-sm text-white/40 mb-6 max-w-md mx-auto">Give your best Instagram content a second life on YouTube and beyond. Convert in minutes, completely free.</p>
-                    <Link href="/" class="inline-flex items-center gap-2 font-bold px-8 py-4 rounded-xl bg-gradient-to-r from-pink-400 to-purple-400 hover:from-pink-500 hover:to-purple-500 text-midnight transition-all duration-200 hover:shadow-lg hover:shadow-pink-400/10 active:scale-[0.98]">
+                    <p class="text-sm text-gray-400 mb-6 max-w-md mx-auto">Give your best Instagram content a second life on YouTube and beyond. Convert in minutes, completely free.</p>
+                    <Link href="/" class="inline-flex items-center gap-2 font-bold px-8 py-4 rounded-xl bg-gradient-to-r from-pink-400 to-purple-400 hover:from-pink-500 hover:to-purple-500 text-white transition-all duration-200 hover:shadow-lg hover:shadow-pink-400/10 active:scale-[0.98]">
                         Convert Your Video Now — Free
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -197,43 +197,43 @@ const jsonLdFaq = JSON.stringify({
 
             <!-- FAQ -->
             <section class="pb-20">
-                <h2 class="text-lg font-bold tracking-tight text-center mb-8 text-white/60">Frequently Asked Questions</h2>
+                <h2 class="text-lg font-bold tracking-tight text-center mb-8 text-gray-600">Frequently Asked Questions</h2>
                 <div class="space-y-3 max-w-xl mx-auto">
-                    <details v-for="(faq, i) in faqs" :key="i" class="group bg-white/[0.02] border border-white/[0.06] rounded-xl">
-                        <summary class="flex items-center justify-between cursor-pointer px-5 py-4 text-sm font-semibold text-white/60 hover:text-white/80 transition">
+                    <details v-for="(faq, i) in faqs" :key="i" class="group bg-gray-100/60 border border-gray-200 rounded-xl">
+                        <summary class="flex items-center justify-between cursor-pointer px-5 py-4 text-sm font-semibold text-gray-600 hover:text-gray-700 transition">
                             {{ faq.q }}
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white/20 transition-transform group-open:rotate-180 shrink-0 ml-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-300 transition-transform group-open:rotate-180 shrink-0 ml-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
                         </summary>
-                        <p class="px-5 pb-4 text-xs text-white/30 leading-relaxed">{{ faq.a }}</p>
+                        <p class="px-5 pb-4 text-xs text-gray-400 leading-relaxed">{{ faq.a }}</p>
                     </details>
                 </div>
             </section>
 
             <!-- Internal Links -->
             <section class="pb-16">
-                <h2 class="text-sm font-bold text-white/20 text-center mb-4 uppercase tracking-wider">Related Tools</h2>
+                <h2 class="text-sm font-bold text-gray-300 text-center mb-4 uppercase tracking-wider">Related Tools</h2>
                 <div class="flex flex-wrap justify-center gap-3">
-                    <Link href="/convert-tiktok-to-youtube" class="text-xs text-white/30 hover:text-teal bg-white/[0.02] hover:bg-teal/[0.06] border border-white/[0.06] hover:border-teal/15 px-4 py-2 rounded-full transition-all">TikTok to YouTube Converter</Link>
-                    <Link href="/portrait-to-landscape-video-converter" class="text-xs text-white/30 hover:text-teal bg-white/[0.02] hover:bg-teal/[0.06] border border-white/[0.06] hover:border-teal/15 px-4 py-2 rounded-full transition-all">Portrait to Landscape Converter</Link>
-                    <Link href="/vertical-to-horizontal-video" class="text-xs text-white/30 hover:text-teal bg-white/[0.02] hover:bg-teal/[0.06] border border-white/[0.06] hover:border-teal/15 px-4 py-2 rounded-full transition-all">Vertical to Horizontal Video</Link>
-                    <Link href="/video-aspect-ratio-converter" class="text-xs text-white/30 hover:text-teal bg-white/[0.02] hover:bg-teal/[0.06] border border-white/[0.06] hover:border-teal/15 px-4 py-2 rounded-full transition-all">Video Aspect Ratio Converter</Link>
+                    <Link href="/convert-tiktok-to-youtube" class="text-xs text-gray-400 hover:text-teal bg-gray-100/60 hover:bg-teal/[0.06] border border-gray-200 hover:border-teal/15 px-4 py-2 rounded-full transition-all">TikTok to YouTube Converter</Link>
+                    <Link href="/portrait-to-landscape-video-converter" class="text-xs text-gray-400 hover:text-teal bg-gray-100/60 hover:bg-teal/[0.06] border border-gray-200 hover:border-teal/15 px-4 py-2 rounded-full transition-all">Portrait to Landscape Converter</Link>
+                    <Link href="/vertical-to-horizontal-video" class="text-xs text-gray-400 hover:text-teal bg-gray-100/60 hover:bg-teal/[0.06] border border-gray-200 hover:border-teal/15 px-4 py-2 rounded-full transition-all">Vertical to Horizontal Video</Link>
+                    <Link href="/video-aspect-ratio-converter" class="text-xs text-gray-400 hover:text-teal bg-gray-100/60 hover:bg-teal/[0.06] border border-gray-200 hover:border-teal/15 px-4 py-2 rounded-full transition-all">Video Aspect Ratio Converter</Link>
                 </div>
             </section>
         </main>
 
         <!-- Footer -->
-        <footer class="border-t border-white/[0.03] mt-8">
+        <footer class="border-t border-gray-200 mt-8">
             <div class="max-w-6xl mx-auto px-6 py-10">
                 <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
                     <div class="flex items-center gap-2">
                         <div class="w-5 h-5 rounded bg-gradient-to-br from-teal/60 to-emerald/60 flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-midnight" viewBox="0 0 20 20" fill="currentColor">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-white" viewBox="0 0 20 20" fill="currentColor">
                                 <path d="M3 4a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 12a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H4a1 1 0 01-1-1v-4zM11 4a1 1 0 011-1h4a1 1 0 011 1v12a1 1 0 01-1 1h-4a1 1 0 01-1-1V4z" />
                             </svg>
                         </div>
-                        <span class="text-xs text-white/25">ConvertPortrait.com</span>
+                        <span class="text-xs text-gray-300">ConvertPortrait.com</span>
                     </div>
-                    <p class="text-[11px] text-white/15 text-center leading-relaxed">
+                    <p class="text-[11px] text-gray-200 text-center leading-relaxed">
                         Free Instagram Reels to landscape converter. Browser-based — your video never leaves your device.
                     </p>
                 </div>

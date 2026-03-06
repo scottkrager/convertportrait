@@ -9,7 +9,7 @@ Portrait-to-landscape video converter. Freemium SaaS — free browser-based proc
 - **Video Processing:** AWS Lambda + FFmpeg (Pro server-side), FFmpeg.wasm 0.12 (browser-side)
 - **Cloud:** AWS — Lambda, S3, ECR (us-east-1)
 - **Payments:** Stripe (one-time checkout, webhooks)
-- **Deployment:** DigitalOcean App Platform, Docker, Apache
+- **Deployment:** DigitalOcean App Platform, Docker, Nginx
 
 ## Project Structure
 

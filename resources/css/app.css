@@ -5,17 +5,17 @@
 
 @theme {
     --font-sans: 'Outfit', ui-sans-serif, system-ui, sans-serif;
-    --color-midnight: #110b1a;
-    --color-surface: #1a1225;
-    --color-surface-light: #241a32;
-    --color-surface-hover: #2e2240;
-    --color-teal: #f472b6;
-    --color-teal-dark: #db2777;
-    --color-teal-dim: #831843;
-    --color-emerald: #c084fc;
-    --color-success: #a78bfa;
-    --color-warning: #fbbf24;
-    --color-danger: #f87171;
+    --color-midnight: #fefcff;
+    --color-surface: #f5f0ff;
+    --color-surface-light: #ede5ff;
+    --color-surface-hover: #e4d9ff;
+    --color-teal: #e24a8e;
+    --color-teal-dark: #c2276e;
+    --color-teal-dim: #fce7f3;
+    --color-emerald: #a855f7;
+    --color-success: #8b5cf6;
+    --color-warning: #f59e0b;
+    --color-danger: #ef4444;
 }
 
 /* Noise texture overlay */
@@ -58,9 +58,9 @@
 /* Gradient mesh background */
 .mesh-gradient {
     background-image:
-        radial-gradient(ellipse at 20% 50%, rgba(244, 114, 182, 0.07) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 20%, rgba(192, 132, 252, 0.05) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 80%, rgba(244, 114, 182, 0.04) 0%, transparent 50%);
+        radial-gradient(ellipse at 20% 50%, rgba(244, 114, 182, 0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(168, 85, 247, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 80%, rgba(244, 114, 182, 0.06) 0%, transparent 50%);
 }
 
 /* Upload zone pulse */
@@ -69,13 +69,13 @@
 }
 
 @keyframes uploadPulse {
-    0%, 100% { border-color: rgba(244, 114, 182, 0.15); }
-    50% { border-color: rgba(244, 114, 182, 0.35); }
+    0%, 100% { border-color: rgba(226, 74, 142, 0.2); }
+    50% { border-color: rgba(226, 74, 142, 0.5); }
 }
 
 /* Progress shimmer */
 .shimmer {
-    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%);
+    background: linear-gradient(90deg, transparent 0%, rgba(226,74,142,0.15) 50%, transparent 100%);
     background-size: 200% 100%;
     animation: shimmer 1.5s ease-in-out infinite;
 }
