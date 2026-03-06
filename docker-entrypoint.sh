@@ -30,4 +30,7 @@ php artisan view:cache
 mkdir -p /var/www/html/storage/app/temp
 chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
+# Start Inertia SSR server in background
+node /var/www/html/bootstrap/ssr/ssr.js &
+
 exec apache2-foreground
