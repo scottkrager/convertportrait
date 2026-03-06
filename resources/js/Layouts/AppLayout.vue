@@ -36,7 +36,7 @@ defineProps({
                         </div>
                         <span class="text-[15px] font-bold tracking-tight text-gray-900">ConvertPortrait</span>
                     </a>
-                    <nav class="hidden sm:flex items-center gap-4 text-sm text-gray-400">
+                    <nav class="hidden sm:flex items-center gap-4 text-sm text-gray-600">
                         <a href="/" class="hover:text-gray-600 transition">Tool</a>
                         <a href="/blog" class="hover:text-gray-600 transition">Blog</a>
                     </nav>
@@ -61,35 +61,35 @@ defineProps({
                     <div>
                         <h4 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-4">Tool</h4>
                         <ul class="space-y-2.5">
-                            <li><a href="/" class="text-sm text-gray-400 hover:text-gray-600 transition">Convert Video</a></li>
-                            <li><a href="/portrait-to-landscape-video-converter" class="text-sm text-gray-400 hover:text-gray-600 transition">Portrait to Landscape</a></li>
-                            <li><a href="/video-aspect-ratio-converter" class="text-sm text-gray-400 hover:text-gray-600 transition">Aspect Ratio Converter</a></li>
+                            <li><a href="/" class="text-sm text-gray-600 hover:text-gray-800 transition">Convert Video</a></li>
+                            <li><a href="/portrait-to-landscape-video-converter" class="text-sm text-gray-600 hover:text-gray-800 transition">Portrait to Landscape</a></li>
+                            <li><a href="/video-aspect-ratio-converter" class="text-sm text-gray-600 hover:text-gray-800 transition">Aspect Ratio Converter</a></li>
                         </ul>
                     </div>
                     <div>
                         <h4 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-4">Convert</h4>
                         <ul class="space-y-2.5">
-                            <li><a href="/convert-tiktok-to-youtube" class="text-sm text-gray-400 hover:text-gray-600 transition">TikTok to YouTube</a></li>
-                            <li><a href="/convert-reels-to-landscape" class="text-sm text-gray-400 hover:text-gray-600 transition">Reels to Landscape</a></li>
-                            <li><a href="/vertical-to-horizontal-video" class="text-sm text-gray-400 hover:text-gray-600 transition">Vertical to Horizontal</a></li>
+                            <li><a href="/convert-tiktok-to-youtube" class="text-sm text-gray-600 hover:text-gray-800 transition">TikTok to YouTube</a></li>
+                            <li><a href="/convert-reels-to-landscape" class="text-sm text-gray-600 hover:text-gray-800 transition">Reels to Landscape</a></li>
+                            <li><a href="/vertical-to-horizontal-video" class="text-sm text-gray-600 hover:text-gray-800 transition">Vertical to Horizontal</a></li>
                         </ul>
                     </div>
                     <div>
                         <h4 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-4">Resources</h4>
                         <ul class="space-y-2.5">
-                            <li><a href="/blog" class="text-sm text-gray-400 hover:text-gray-600 transition">Blog</a></li>
+                            <li><a href="/blog" class="text-sm text-gray-600 hover:text-gray-800 transition">Blog</a></li>
                         </ul>
                     </div>
                     <div>
                         <h4 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-4">Product</h4>
                         <ul class="space-y-2.5">
-                            <li><a href="/" class="text-sm text-gray-400 hover:text-gray-600 transition">Free Converter</a></li>
+                            <li><a href="/" class="text-sm text-gray-600 hover:text-gray-800 transition">Free Converter</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="border-t border-gray-200 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-                    <p class="text-xs text-gray-300">&copy; {{ new Date().getFullYear() }} ConvertPortrait. All rights reserved.</p>
-                    <p class="text-xs text-gray-300">Your video never leaves your device in free mode.</p>
+                    <p class="text-xs text-gray-500">&copy; {{ new Date().getFullYear() }} ConvertPortrait. All rights reserved.</p>
+                    <p class="text-xs text-gray-500">Your video never leaves your device in free mode.</p>
                 </div>
             </div>
         </footer>
