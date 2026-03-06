@@ -29,7 +29,7 @@ defineProps({
             <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
                 <div class="flex items-center gap-6">
                     <a href="/" class="flex items-center gap-2.5">
-                        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-teal to-emerald flex items-center justify-center">
+                        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-pink-400 to-purple-400 flex items-center justify-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-midnight" viewBox="0 0 20 20" fill="currentColor">
                                 <path d="M3 4a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 12a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H4a1 1 0 01-1-1v-4zM11 4a1 1 0 011-1h4a1 1 0 011 1v12a1 1 0 01-1 1h-4a1 1 0 01-1-1V4z" />
                             </svg>
@@ -42,7 +42,7 @@ defineProps({
                     </nav>
                 </div>
                 <div class="flex items-center gap-3">
-                    <a href="/" class="text-xs font-semibold text-midnight bg-gradient-to-r from-teal to-emerald px-4 py-2 rounded-full hover:opacity-90 transition">
+                    <a href="/" class="text-xs font-semibold text-midnight bg-gradient-to-r from-pink-400 to-purple-400 px-4 py-2 rounded-full hover:opacity-90 transition">
                         Convert Now
                     </a>
                 </div>

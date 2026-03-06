@@ -652,7 +652,7 @@ onUnmounted(() => {
         <header class="border-b border-white/[0.04]">
             <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
                 <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-teal to-emerald flex items-center justify-center">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-pink-400 to-purple-400 flex items-center justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-midnight" viewBox="0 0 20 20" fill="currentColor">
                             <path d="M3 4a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 12a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H4a1 1 0 01-1-1v-4zM11 4a1 1 0 011-1h4a1 1 0 011 1v12a1 1 0 01-1 1h-4a1 1 0 01-1-1V4z" />
                         </svg>
@@ -699,14 +699,14 @@ onUnmounted(() => {
                         </div>
 
                         <h1 class="text-4xl sm:text-[3.25rem] font-extrabold tracking-tight leading-[1.1] mb-5">
-                            Portrait to landscape,
+                            Make your videos
                             <br>
-                            <span class="font-editorial font-normal text-teal">right in your browser</span>
+                            <span class="font-editorial font-normal text-teal">look amazing everywhere</span>
                         </h1>
 
                         <p class="text-[15px] sm:text-base text-white/40 max-w-md mx-auto leading-relaxed">
-                            Convert TikToks, Reels, and Shorts to 16:9 landscape.
-                            No server, no account, no data collection. Just you and your video.
+                            Turn your TikToks, Reels, and Shorts into gorgeous landscape videos.
+                            Free, private, and takes literally seconds.
                         </p>
                     </div>
 
@@ -825,8 +825,8 @@ onUnmounted(() => {
 
                     <!-- Use Cases -->
                     <div class="mt-20">
-                        <h2 class="text-lg font-bold tracking-tight text-center mb-3 text-white/60">Convert any portrait video to landscape</h2>
-                        <p class="text-sm text-white/25 text-center max-w-lg mx-auto mb-10 leading-relaxed">Whether you're repurposing TikToks for YouTube, preparing clips for a presentation, or reformatting Reels for widescreen — ConvertPortrait handles it all.</p>
+                        <h2 class="text-lg font-bold tracking-tight text-center mb-3 text-white/60">Works with all your fave platforms</h2>
+                        <p class="text-sm text-white/25 text-center max-w-lg mx-auto mb-10 leading-relaxed">Repurpose your TikToks for YouTube, turn Reels into widescreen content, or make your Shorts look stunning on any screen.</p>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <a href="/convert-tiktok-to-youtube" class="group bg-white/[0.02] border border-white/[0.06] rounded-xl p-5 hover:border-teal/20 hover:bg-surface-light/30 transition-all duration-300">
@@ -932,8 +932,8 @@ onUnmounted(() => {
 
                     <!-- Why ConvertPortrait -->
                     <div class="mt-20">
-                        <h2 class="text-lg font-bold tracking-tight text-center mb-3 text-white/60">Why creators choose ConvertPortrait</h2>
-                        <p class="text-sm text-white/25 text-center max-w-lg mx-auto mb-10 leading-relaxed">The fastest way to turn portrait videos into landscape format. No software to install, no account to create.</p>
+                        <h2 class="text-lg font-bold tracking-tight text-center mb-3 text-white/60">Why creators love it</h2>
+                        <p class="text-sm text-white/25 text-center max-w-lg mx-auto mb-10 leading-relaxed">The easiest way to make your vertical content look gorgeous in landscape. No downloads, no sign-ups, just vibes.</p>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div class="bg-white/[0.02] border border-white/[0.06] rounded-xl p-5">
@@ -1218,7 +1218,7 @@ onUnmounted(() => {
                     <button
                         @click="startConversion"
                         :disabled="ffmpegLoading"
-                        class="w-full font-bold text-base py-4 rounded-xl transition-all duration-200 active:scale-[0.99] bg-gradient-to-r from-teal to-emerald hover:from-teal-dark hover:to-teal text-white hover:shadow-lg hover:shadow-teal/10 disabled:opacity-40 disabled:cursor-not-allowed"
+                        class="w-full font-bold text-base py-4 rounded-xl transition-all duration-200 active:scale-[0.99] bg-gradient-to-r from-pink-400 to-purple-400 hover:from-pink-500 hover:to-purple-500 text-white hover:shadow-lg hover:shadow-pink-400/10 disabled:opacity-40 disabled:cursor-not-allowed"
                     >
                         <span v-if="ffmpegLoading" class="inline-flex items-center gap-2 opacity-70">
                             <svg class="animate-spin w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -1241,8 +1241,8 @@ onUnmounted(() => {
                             <circle cx="32" cy="32" r="30" stroke="url(#prog-grad)" stroke-width="2" stroke-linecap="round" stroke-dasharray="140 60" />
                             <defs>
                                 <linearGradient id="prog-grad" x1="0" y1="0" x2="64" y2="64">
-                                    <stop offset="0%" stop-color="#2dd4bf" />
-                                    <stop offset="100%" stop-color="#34d399" stop-opacity="0.2" />
+                                    <stop offset="0%" stop-color="#f472b6" />
+                                    <stop offset="100%" stop-color="#c084fc" stop-opacity="0.2" />
                                 </linearGradient>
                             </defs>
                         </svg>
@@ -1256,7 +1256,7 @@ onUnmounted(() => {
                     <!-- Progress bar -->
                     <div class="relative bg-surface rounded-full h-2.5 overflow-hidden">
                         <div v-if="progress >= 0"
-                            class="absolute inset-y-0 left-0 bg-gradient-to-r from-teal to-emerald rounded-full transition-all duration-500 ease-out"
+                            class="absolute inset-y-0 left-0 bg-gradient-to-r from-pink-400 to-purple-400 rounded-full transition-all duration-500 ease-out"
                             :style="`width: ${Math.max(progress, 3)}%`"
                         ></div>
                         <div class="absolute inset-0 shimmer rounded-full"></div>
@@ -1347,7 +1347,7 @@ onUnmounted(() => {
                     <div class="flex flex-col sm:flex-row gap-3 justify-center">
                         <button
                             @click="downloadOutput"
-                            class="bg-gradient-to-r from-teal to-emerald hover:from-teal-dark hover:to-teal text-midnight font-bold px-8 py-3.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-teal/10 active:scale-[0.98]"
+                            class="bg-gradient-to-r from-pink-400 to-purple-400 hover:from-pink-500 hover:to-purple-500 text-midnight font-bold px-8 py-3.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-pink-400/10 active:scale-[0.98]"
                         >
                             Download Video
                         </button>
@@ -1524,7 +1524,7 @@ onUnmounted(() => {
                         <button
                             @click="restorePurchase"
                             :disabled="restoreLoading || !restoreEmail"
-                            class="w-full bg-gradient-to-r from-teal to-emerald hover:from-teal-dark hover:to-teal disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold py-3 rounded-xl transition-all duration-200 active:scale-[0.98]"
+                            class="w-full bg-gradient-to-r from-pink-400 to-purple-400 hover:from-pink-500 hover:to-purple-500 disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold py-3 rounded-xl transition-all duration-200 active:scale-[0.98]"
                         >
                             <span v-if="restoreLoading" class="inline-flex items-center gap-2">
                                 <svg class="animate-spin w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -1578,7 +1578,7 @@ onUnmounted(() => {
                 </div>
                 <div class="border-t border-white/[0.04] pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
                     <div class="flex items-center gap-2">
-                        <div class="w-5 h-5 rounded bg-gradient-to-br from-teal/60 to-emerald/60 flex items-center justify-center">
+                        <div class="w-5 h-5 rounded bg-gradient-to-br from-pink-400/60 to-purple-400/60 flex items-center justify-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-midnight" viewBox="0 0 20 20" fill="currentColor">
                                 <path d="M3 4a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 12a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H4a1 1 0 01-1-1v-4zM11 4a1 1 0 011-1h4a1 1 0 011 1v12a1 1 0 01-1 1h-4a1 1 0 01-1-1V4z" />
                             </svg>

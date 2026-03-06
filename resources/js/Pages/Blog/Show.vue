@@ -58,7 +58,7 @@ function formatDate(dateStr) {
                 <p class="text-sm text-white/35 mb-6">Convert portrait videos to landscape format — free, private, no upload required.</p>
                 <a
                     href="/"
-                    class="inline-flex items-center gap-2 bg-gradient-to-r from-teal to-emerald text-midnight font-bold text-sm px-6 py-3 rounded-full hover:opacity-90 transition"
+                    class="inline-flex items-center gap-2 bg-gradient-to-r from-pink-400 to-purple-400 text-midnight font-bold text-sm px-6 py-3 rounded-full hover:opacity-90 transition"
                 >
                     Convert Your Video Now
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">

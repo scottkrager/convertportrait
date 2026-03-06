@@ -78,7 +78,7 @@ const jsonLdFaq = JSON.stringify({
         <header class="border-b border-white/[0.04]">
             <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
                 <Link href="/" class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-teal to-emerald flex items-center justify-center">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-pink-400 to-purple-400 flex items-center justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-midnight" viewBox="0 0 20 20" fill="currentColor">
                             <path d="M3 4a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 12a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H4a1 1 0 01-1-1v-4zM11 4a1 1 0 011-1h4a1 1 0 011 1v12a1 1 0 01-1 1h-4a1 1 0 01-1-1V4z" />
                         </svg>
@@ -113,7 +113,7 @@ const jsonLdFaq = JSON.stringify({
                     with professional backgrounds filling the sides. Free and private.
                 </p>
 
-                <Link href="/" class="inline-flex items-center gap-2 font-bold text-base px-8 py-4 rounded-xl bg-gradient-to-r from-teal to-emerald hover:from-teal-dark hover:to-teal text-midnight transition-all duration-200 hover:shadow-lg hover:shadow-teal/10 active:scale-[0.98]">
+                <Link href="/" class="inline-flex items-center gap-2 font-bold text-base px-8 py-4 rounded-xl bg-gradient-to-r from-pink-400 to-purple-400 hover:from-pink-500 hover:to-purple-500 text-midnight transition-all duration-200 hover:shadow-lg hover:shadow-pink-400/10 active:scale-[0.98]">
                     Convert Your Video Now — Free
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -221,7 +221,7 @@ const jsonLdFaq = JSON.stringify({
                 <div class="bg-gradient-to-br from-teal/[0.06] to-emerald/[0.03] rounded-2xl border border-teal/10 p-10">
                     <h2 class="text-2xl font-bold tracking-tight mb-3">Change Your Video's Aspect Ratio</h2>
                     <p class="text-sm text-white/40 mb-6 max-w-md mx-auto">Convert portrait to landscape in three clicks. No software, no account, no watermark. Completely free.</p>
-                    <Link href="/" class="inline-flex items-center gap-2 font-bold px-8 py-4 rounded-xl bg-gradient-to-r from-teal to-emerald hover:from-teal-dark hover:to-teal text-midnight transition-all duration-200 hover:shadow-lg hover:shadow-teal/10 active:scale-[0.98]">
+                    <Link href="/" class="inline-flex items-center gap-2 font-bold px-8 py-4 rounded-xl bg-gradient-to-r from-pink-400 to-purple-400 hover:from-pink-500 hover:to-purple-500 text-midnight transition-all duration-200 hover:shadow-lg hover:shadow-pink-400/10 active:scale-[0.98]">
                         Convert Your Video Now — Free
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />

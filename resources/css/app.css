@@ -4,16 +4,16 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
-    --color-midnight: #0a0a12;
-    --color-surface: #13131f;
-    --color-surface-light: #1c1c2e;
-    --color-surface-hover: #22223a;
-    --color-teal: #2dd4bf;
-    --color-teal-dark: #0d9488;
-    --color-teal-dim: #134e4a;
-    --color-emerald: #34d399;
-    --color-success: #22c55e;
+    --font-sans: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+    --color-midnight: #110b1a;
+    --color-surface: #1a1225;
+    --color-surface-light: #241a32;
+    --color-surface-hover: #2e2240;
+    --color-teal: #f472b6;
+    --color-teal-dark: #db2777;
+    --color-teal-dim: #831843;
+    --color-emerald: #c084fc;
+    --color-success: #a78bfa;
     --color-warning: #fbbf24;
     --color-danger: #f87171;
 }
@@ -58,9 +58,9 @@
 /* Gradient mesh background */
 .mesh-gradient {
     background-image:
-        radial-gradient(ellipse at 20% 50%, rgba(45, 212, 191, 0.06) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 20%, rgba(52, 211, 153, 0.04) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 80%, rgba(45, 212, 191, 0.03) 0%, transparent 50%);
+        radial-gradient(ellipse at 20% 50%, rgba(244, 114, 182, 0.07) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(192, 132, 252, 0.05) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 80%, rgba(244, 114, 182, 0.04) 0%, transparent 50%);
 }
 
 /* Upload zone pulse */
@@ -69,8 +69,8 @@
 }
 
 @keyframes uploadPulse {
-    0%, 100% { border-color: rgba(45, 212, 191, 0.15); }
-    50% { border-color: rgba(45, 212, 191, 0.35); }
+    0%, 100% { border-color: rgba(244, 114, 182, 0.15); }
+    50% { border-color: rgba(244, 114, 182, 0.35); }
 }
 
 /* Progress shimmer */
@@ -85,8 +85,9 @@
     100% { background-position: -200% 0; }
 }
 
-/* Italic accent font */
+/* Accent font */
 .font-editorial {
-    font-family: 'Newsreader', Georgia, serif;
-    font-style: italic;
+    font-family: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+    font-weight: 300;
+    font-style: normal;
 }
