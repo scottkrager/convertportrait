@@ -661,12 +661,9 @@ onUnmounted(() => {
                 </div>
                 <div class="flex items-center gap-3">
                     <!-- Privacy badge -->
-                    <div class="hidden sm:flex items-center gap-2 text-xs text-white/35 bg-white/[0.03] px-3 py-1.5 rounded-full border border-white/[0.04]">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-teal" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
-                        </svg>
-                        <span>Zero uploads &middot; Runs locally</span>
-                    </div>
+                    <nav class="hidden sm:flex items-center gap-4 text-sm text-white/35">
+                        <a href="/blog" class="hover:text-white/60 transition">Blog</a>
+                    </nav>
                     <!-- Pro badge or upgrade button -->
                     <button
                         v-if="isPro"
@@ -823,6 +820,160 @@ onUnmounted(() => {
                                 <p class="text-sm font-semibold text-white/60 mb-1">Download landscape</p>
                                 <p class="text-xs text-white/25 leading-relaxed">Get a 1920x1080 video ready for YouTube, presentations, or any widescreen display.</p>
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Use Cases -->
+                    <div class="mt-20">
+                        <h2 class="text-lg font-bold tracking-tight text-center mb-3 text-white/60">Convert any portrait video to landscape</h2>
+                        <p class="text-sm text-white/25 text-center max-w-lg mx-auto mb-10 leading-relaxed">Whether you're repurposing TikToks for YouTube, preparing clips for a presentation, or reformatting Reels for widescreen — ConvertPortrait handles it all.</p>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <a href="/convert-tiktok-to-youtube" class="group bg-white/[0.02] border border-white/[0.06] rounded-xl p-5 hover:border-teal/20 hover:bg-surface-light/30 transition-all duration-300">
+                                <div class="flex items-start gap-3.5">
+                                    <div class="w-9 h-9 rounded-lg bg-pink-500/10 border border-pink-500/10 flex items-center justify-center shrink-0 mt-0.5">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-pink-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" /></svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-semibold text-white/70 group-hover:text-white/90 transition mb-1">TikTok to YouTube</p>
+                                        <p class="text-xs text-white/25 leading-relaxed">Convert 9:16 TikTok videos to 16:9 landscape format ready for YouTube uploads.</p>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="/convert-reels-to-landscape" class="group bg-white/[0.02] border border-white/[0.06] rounded-xl p-5 hover:border-teal/20 hover:bg-surface-light/30 transition-all duration-300">
+                                <div class="flex items-start gap-3.5">
+                                    <div class="w-9 h-9 rounded-lg bg-purple-500/10 border border-purple-500/10 flex items-center justify-center shrink-0 mt-0.5">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-purple-400" viewBox="0 0 20 20" fill="currentColor"><path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" /></svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-semibold text-white/70 group-hover:text-white/90 transition mb-1">Instagram Reels to Landscape</p>
+                                        <p class="text-xs text-white/25 leading-relaxed">Repurpose your Reels for widescreen platforms without cropping or stretching.</p>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="/vertical-to-horizontal-video" class="group bg-white/[0.02] border border-white/[0.06] rounded-xl p-5 hover:border-teal/20 hover:bg-surface-light/30 transition-all duration-300">
+                                <div class="flex items-start gap-3.5">
+                                    <div class="w-9 h-9 rounded-lg bg-blue-500/10 border border-blue-500/10 flex items-center justify-center shrink-0 mt-0.5">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-blue-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 4a1 1 0 011-1h4a1 1 0 010 2H6.414l2.293 2.293a1 1 0 01-1.414 1.414L5 6.414V8a1 1 0 01-2 0V4zm9 1a1 1 0 110-2h4a1 1 0 011 1v4a1 1 0 11-2 0V6.414l-2.293 2.293a1 1 0 11-1.414-1.414L13.586 5H12zm-9 7a1 1 0 112 0v1.586l2.293-2.293a1 1 0 011.414 1.414L5.414 15H7a1 1 0 110 2H3a1 1 0 01-1-1v-4zm13.657 3.657a1 1 0 01-1.414 0L12.95 13.364a1 1 0 011.414-1.414l2.293 2.293V12.95a1 1 0 112 0v4a1 1 0 01-1 1h-4a1 1 0 110-2h1.586z" clip-rule="evenodd" /></svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-semibold text-white/70 group-hover:text-white/90 transition mb-1">Vertical to Horizontal</p>
+                                        <p class="text-xs text-white/25 leading-relaxed">Convert any vertical video to horizontal for presentations, TV screens, and more.</p>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="/video-aspect-ratio-converter" class="group bg-white/[0.02] border border-white/[0.06] rounded-xl p-5 hover:border-teal/20 hover:bg-surface-light/30 transition-all duration-300">
+                                <div class="flex items-start gap-3.5">
+                                    <div class="w-9 h-9 rounded-lg bg-teal/10 border border-teal/10 flex items-center justify-center shrink-0 mt-0.5">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-teal" viewBox="0 0 20 20" fill="currentColor"><path d="M5 3a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V5a2 2 0 00-2-2H5zm9 4a1 1 0 10-2 0v6a1 1 0 102 0V7zm-3 2a1 1 0 10-2 0v4a1 1 0 102 0V9zM8 11a1 1 0 10-2 0v2a1 1 0 102 0v-2z" /></svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-semibold text-white/70 group-hover:text-white/90 transition mb-1">Aspect Ratio Converter</p>
+                                        <p class="text-xs text-white/25 leading-relaxed">Change video aspect ratio from 9:16 to 16:9 — no black bars, no quality loss.</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Background Styles Detail -->
+                    <div class="mt-20">
+                        <h2 class="text-lg font-bold tracking-tight text-center mb-3 text-white/60">4 background styles to choose from</h2>
+                        <p class="text-sm text-white/25 text-center max-w-lg mx-auto mb-10 leading-relaxed">Your portrait video stays centered and sharp. The background fills the 16:9 frame with the style you choose.</p>
+
+                        <div class="space-y-3">
+                            <div class="bg-white/[0.02] border border-white/[0.06] rounded-xl p-5">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-16 h-10 rounded-lg bg-gradient-to-r from-surface-light/80 via-surface/60 to-surface-light/80 flex items-center justify-center shrink-0 border border-white/[0.06] overflow-hidden">
+                                        <div class="w-4 h-9 bg-white/10 rounded-sm"></div>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-semibold text-white/70 mb-1">Blurred Mirror <span class="text-[10px] text-emerald/60 font-medium ml-1.5">FREE</span></p>
+                                        <p class="text-xs text-white/30 leading-relaxed">Your video is blurred and scaled to fill the entire background. Creates a cohesive, professional look that extends your content naturally. The most popular choice for YouTube uploads.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white/[0.02] border border-white/[0.06] rounded-xl p-5">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-16 h-10 rounded-lg bg-[#1a1a2e] flex items-center justify-center shrink-0 border border-white/[0.06]">
+                                        <div class="w-4 h-9 bg-white/10 rounded-sm"></div>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-semibold text-white/70 mb-1">Solid Color <span class="text-[10px] text-emerald/60 font-medium ml-1.5">FREE</span></p>
+                                        <p class="text-xs text-white/30 leading-relaxed">Pick any color for a clean, minimal backdrop. Great for branded content where you want the sides to match your brand colors. Includes a color picker and preset options.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white/[0.02] border border-white/[0.06] rounded-xl p-5">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-16 h-10 rounded-lg bg-gradient-to-r from-orange-500/40 to-purple-500/40 flex items-center justify-center shrink-0 border border-white/[0.06]">
+                                        <div class="w-4 h-9 bg-white/10 rounded-sm"></div>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-semibold text-white/70 mb-1">Gradient Wash <span class="text-[10px] text-amber-400/60 font-bold ml-1.5">PRO</span></p>
+                                        <p class="text-xs text-white/30 leading-relaxed">Beautiful color gradients like Sunset, Ocean, Neon, Forest, and Mono. Adds visual energy and depth to your landscape video. Five hand-picked presets to choose from.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white/[0.02] border border-white/[0.06] rounded-xl p-5">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-16 h-10 rounded-lg bg-[#111] flex items-center justify-center shrink-0 border border-white/[0.06] relative overflow-hidden">
+                                        <div class="absolute inset-0 opacity-30" style="background-image: radial-gradient(circle, rgba(45,212,191,0.4) 1px, transparent 1px); background-size: 6px 6px;"></div>
+                                        <div class="w-4 h-9 bg-white/10 rounded-sm relative z-10"></div>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-semibold text-white/70 mb-1">Pattern Fill <span class="text-[10px] text-amber-400/60 font-bold ml-1.5">PRO</span></p>
+                                        <p class="text-xs text-white/30 leading-relaxed">Geometric patterns — dots, lines, or chevrons — with your choice of color. Adds texture and style without distracting from your content.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Why ConvertPortrait -->
+                    <div class="mt-20">
+                        <h2 class="text-lg font-bold tracking-tight text-center mb-3 text-white/60">Why creators choose ConvertPortrait</h2>
+                        <p class="text-sm text-white/25 text-center max-w-lg mx-auto mb-10 leading-relaxed">The fastest way to turn portrait videos into landscape format. No software to install, no account to create.</p>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="bg-white/[0.02] border border-white/[0.06] rounded-xl p-5">
+                                <p class="text-sm font-semibold text-white/60 mb-1.5">No cropping, no stretching</p>
+                                <p class="text-xs text-white/25 leading-relaxed">Your original video is preserved at full resolution. We add a styled background to fill the 16:9 frame — never cut content from your video.</p>
+                            </div>
+                            <div class="bg-white/[0.02] border border-white/[0.06] rounded-xl p-5">
+                                <p class="text-sm font-semibold text-white/60 mb-1.5">Works in your browser</p>
+                                <p class="text-xs text-white/25 leading-relaxed">No downloads, no installs. ConvertPortrait uses WebAssembly to process video directly in your browser. Your files never leave your device.</p>
+                            </div>
+                            <div class="bg-white/[0.02] border border-white/[0.06] rounded-xl p-5">
+                                <p class="text-sm font-semibold text-white/60 mb-1.5">1920x1080 Full HD output</p>
+                                <p class="text-xs text-white/25 leading-relaxed">Every converted video outputs at 1920x1080 — the standard for YouTube, presentations, and any widescreen display.</p>
+                            </div>
+                            <div class="bg-white/[0.02] border border-white/[0.06] rounded-xl p-5">
+                                <p class="text-sm font-semibold text-white/60 mb-1.5">Pro: 140x faster with server processing</p>
+                                <p class="text-xs text-white/25 leading-relaxed">Upgrade to Pro for $19.99 (lifetime) and convert videos in seconds with server-side FFmpeg. Plus all premium templates included.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Blog Teaser -->
+                    <div class="mt-20">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-lg font-bold tracking-tight text-white/60">From the blog</h2>
+                            <a href="/blog" class="text-xs text-teal/60 hover:text-teal transition font-medium">View all &rarr;</a>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <a href="/blog/convert-9-16-to-16-9-without-black-bars" class="group bg-white/[0.02] border border-white/[0.06] rounded-xl p-5 hover:border-teal/20 hover:bg-surface-light/30 transition-all duration-300">
+                                <p class="text-sm font-semibold text-white/60 group-hover:text-white/80 transition mb-1.5 leading-snug">Best Ways to Convert 9:16 to 16:9 Without Black Bars</p>
+                                <p class="text-xs text-white/25 leading-relaxed line-clamp-2">Black bars ruin the viewing experience. Here are the best ways to convert vertical video to landscape while keeping it professional.</p>
+                            </a>
+                            <a href="/blog/convert-tiktok-videos-to-youtube-format" class="group bg-white/[0.02] border border-white/[0.06] rounded-xl p-5 hover:border-teal/20 hover:bg-surface-light/30 transition-all duration-300">
+                                <p class="text-sm font-semibold text-white/60 group-hover:text-white/80 transition mb-1.5 leading-snug">How to Convert TikTok Videos to YouTube Format</p>
+                                <p class="text-xs text-white/25 leading-relaxed line-clamp-2">TikTok is 9:16 portrait, YouTube is 16:9 landscape. Here's how to convert between them without losing quality.</p>
+                            </a>
+                            <a href="/blog/portrait-vs-landscape-video-when-to-convert" class="group bg-white/[0.02] border border-white/[0.06] rounded-xl p-5 hover:border-teal/20 hover:bg-surface-light/30 transition-all duration-300">
+                                <p class="text-sm font-semibold text-white/60 group-hover:text-white/80 transition mb-1.5 leading-snug">Portrait vs Landscape Video: When to Convert</p>
+                                <p class="text-xs text-white/25 leading-relaxed line-clamp-2">Understanding when to convert between formats can help you reach more viewers and repurpose content across platforms.</p>
+                            </a>
                         </div>
                     </div>
 
@@ -1391,19 +1542,51 @@ onUnmounted(() => {
 
         <!-- Footer -->
         <footer class="border-t border-white/[0.03] mt-8">
-            <div class="max-w-6xl mx-auto px-6 py-10">
-                <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="max-w-6xl mx-auto px-6 py-12">
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-10">
+                    <div>
+                        <h4 class="text-[11px] font-bold text-white/40 uppercase tracking-wider mb-3">Tool</h4>
+                        <ul class="space-y-2">
+                            <li><a href="/" class="text-xs text-white/25 hover:text-white/50 transition">Convert Video</a></li>
+                            <li><a href="/portrait-to-landscape-video-converter" class="text-xs text-white/25 hover:text-white/50 transition">Portrait to Landscape</a></li>
+                            <li><a href="/video-aspect-ratio-converter" class="text-xs text-white/25 hover:text-white/50 transition">Aspect Ratio Converter</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-[11px] font-bold text-white/40 uppercase tracking-wider mb-3">Convert</h4>
+                        <ul class="space-y-2">
+                            <li><a href="/convert-tiktok-to-youtube" class="text-xs text-white/25 hover:text-white/50 transition">TikTok to YouTube</a></li>
+                            <li><a href="/convert-reels-to-landscape" class="text-xs text-white/25 hover:text-white/50 transition">Reels to Landscape</a></li>
+                            <li><a href="/vertical-to-horizontal-video" class="text-xs text-white/25 hover:text-white/50 transition">Vertical to Horizontal</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-[11px] font-bold text-white/40 uppercase tracking-wider mb-3">Resources</h4>
+                        <ul class="space-y-2">
+                            <li><a href="/blog" class="text-xs text-white/25 hover:text-white/50 transition">Blog</a></li>
+                            <li><a href="/blog/convert-tiktok-videos-to-youtube-format" class="text-xs text-white/25 hover:text-white/50 transition">TikTok to YouTube Guide</a></li>
+                            <li><a href="/blog/convert-9-16-to-16-9-without-black-bars" class="text-xs text-white/25 hover:text-white/50 transition">Remove Black Bars</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-[11px] font-bold text-white/40 uppercase tracking-wider mb-3">Product</h4>
+                        <ul class="space-y-2">
+                            <li><a href="/" class="text-xs text-white/25 hover:text-white/50 transition">Free Converter</a></li>
+                            <li><span @click="triggerUpgrade('footer')" class="text-xs text-white/25 hover:text-white/50 transition cursor-pointer">Upgrade to Pro</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="border-t border-white/[0.04] pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
                     <div class="flex items-center gap-2">
                         <div class="w-5 h-5 rounded bg-gradient-to-br from-teal/60 to-emerald/60 flex items-center justify-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-midnight" viewBox="0 0 20 20" fill="currentColor">
                                 <path d="M3 4a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 12a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H4a1 1 0 01-1-1v-4zM11 4a1 1 0 011-1h4a1 1 0 011 1v12a1 1 0 01-1 1h-4a1 1 0 01-1-1V4z" />
                             </svg>
                         </div>
-                        <span class="text-xs text-white/25">ConvertPortrait.com</span>
+                        <span class="text-xs text-white/20">&copy; 2026 ConvertPortrait.com</span>
                     </div>
                     <p class="text-[11px] text-white/15 text-center leading-relaxed">
-                        100% browser-based video converter. Your files are processed locally using WebAssembly
-                        and are never uploaded, stored, or accessible to anyone but you.
+                        Your video never leaves your device in free mode. 100% browser-based processing via WebAssembly.
                     </p>
                 </div>
             </div>
