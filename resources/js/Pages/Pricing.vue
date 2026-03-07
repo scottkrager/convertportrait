@@ -207,11 +207,11 @@ const faqs = [
                 <h2 class="text-lg font-bold tracking-tight text-center mb-8 text-gray-900">Frequently asked questions</h2>
                 <div class="space-y-3">
                     <details v-for="faq in faqs" :key="faq.q" class="group bg-gray-100/60 border border-gray-200 rounded-xl">
-                        <summary class="flex items-center justify-between cursor-pointer px-5 py-4 text-sm font-semibold text-gray-700 hover:text-gray-900 transition">
+                        <summary class="flex items-center justify-between cursor-pointer px-5 py-4 text-base font-semibold text-gray-700 hover:text-gray-900 transition">
                             {{ faq.q }}
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-500 transition-transform group-open:rotate-180" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
                         </summary>
-                        <p class="px-5 pb-4 text-xs text-gray-600 leading-relaxed">{{ faq.a }}</p>
+                        <p class="px-5 pb-4 text-sm text-gray-600 leading-relaxed">{{ faq.a }}</p>
                     </details>
                 </div>
             </div>

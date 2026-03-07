@@ -75,18 +75,25 @@ const jsonLdFaq = JSON.stringify({
 
     <div class="min-h-screen bg-midnight text-gray-900 noise-bg mesh-gradient">
         <!-- Header -->
-        <header class="border-b border-gray-200">
+        <header class="border-b border-gray-200/80 bg-white/60 backdrop-blur-sm sticky top-0 z-50">
             <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-                <Link href="/" class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-pink-400 to-purple-400 flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M3 4a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 12a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H4a1 1 0 01-1-1v-4zM11 4a1 1 0 011-1h4a1 1 0 011 1v12a1 1 0 01-1 1h-4a1 1 0 01-1-1V4z" />
-                        </svg>
-                    </div>
-                    <span class="text-[15px] font-bold tracking-tight text-gray-900">ConvertPortrait</span>
-                </Link>
-                <Link href="/" class="text-xs font-semibold text-teal bg-teal/[0.08] hover:bg-teal/[0.14] px-4 py-2 rounded-full border border-teal/15 transition-all">
-                    Open Tool
+                <div class="flex items-center gap-8">
+                    <Link href="/" class="flex items-center gap-2.5">
+                        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-pink-400 to-purple-400 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M3 4a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 12a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H4a1 1 0 01-1-1v-4zM11 4a1 1 0 011-1h4a1 1 0 011 1v12a1 1 0 01-1 1h-4a1 1 0 01-1-1V4z" />
+                            </svg>
+                        </div>
+                        <span class="text-[15px] font-bold tracking-tight text-gray-900">ConvertPortrait</span>
+                    </Link>
+                    <nav class="hidden sm:flex items-center gap-5 text-sm font-medium text-gray-500">
+                        <Link href="/" class="hover:text-gray-900 transition">Tool</Link>
+                        <Link href="/pricing" class="hover:text-gray-900 transition">Pricing</Link>
+                        <Link href="/blog" class="hover:text-gray-900 transition">Blog</Link>
+                    </nav>
+                </div>
+                <Link href="/" class="text-sm font-semibold text-white bg-gradient-to-r from-pink-400 to-purple-400 px-5 py-2 rounded-full hover:opacity-90 transition shadow-sm">
+                    Convert Now
                 </Link>
             </div>
         </header>
@@ -139,7 +146,7 @@ const jsonLdFaq = JSON.stringify({
                             </div>
                         </div>
                         <h3 class="text-sm font-bold text-gray-600 mb-1">{{ conv.label }}</h3>
-                        <p class="text-xs text-gray-600">{{ conv.desc }}</p>
+                        <p class="text-sm text-gray-600">{{ conv.desc }}</p>
                     </div>
                 </div>
             </section>
@@ -174,7 +181,7 @@ const jsonLdFaq = JSON.stringify({
                             <p class="text-[10px] text-gray-500 mt-0.5">YouTube, TV, presentations</p>
                         </div>
                     </div>
-                    <p class="text-xs text-gray-500 leading-relaxed">
+                    <p class="text-sm text-gray-500 leading-relaxed">
                         When you change a video's aspect ratio without cropping or stretching, the empty areas need to be filled.
                         ConvertPortrait fills those areas with your choice of professional backgrounds — blurred mirror, solid color,
                         gradient wash, or geometric patterns — instead of leaving ugly black bars.
@@ -193,7 +200,7 @@ const jsonLdFaq = JSON.stringify({
                             </svg>
                         </div>
                         <h3 class="text-sm font-bold text-gray-600 mb-2">No Upload Required</h3>
-                        <p class="text-xs text-gray-600 leading-relaxed">Your video is processed in your browser. No data leaves your device in free mode. No account, no tracking, complete privacy.</p>
+                        <p class="text-sm text-gray-600 leading-relaxed">Your video is processed in your browser. No data leaves your device in free mode. No account, no tracking, complete privacy.</p>
                     </div>
                     <div class="bg-gray-100/60 rounded-xl border border-gray-200 p-6">
                         <div class="w-10 h-10 rounded-lg bg-teal/10 border border-teal/10 flex items-center justify-center mb-4">
@@ -202,7 +209,7 @@ const jsonLdFaq = JSON.stringify({
                             </svg>
                         </div>
                         <h3 class="text-sm font-bold text-gray-600 mb-2">No Quality Loss</h3>
-                        <p class="text-xs text-gray-600 leading-relaxed">Your original video is placed at its native resolution inside the landscape frame. No cropping, no stretching, no re-encoding artifacts.</p>
+                        <p class="text-sm text-gray-600 leading-relaxed">Your original video is placed at its native resolution inside the landscape frame. No cropping, no stretching, no re-encoding artifacts.</p>
                     </div>
                     <div class="bg-gray-100/60 rounded-xl border border-gray-200 p-6">
                         <div class="w-10 h-10 rounded-lg bg-teal/10 border border-teal/10 flex items-center justify-center mb-4">
@@ -211,7 +218,7 @@ const jsonLdFaq = JSON.stringify({
                             </svg>
                         </div>
                         <h3 class="text-sm font-bold text-gray-600 mb-2">Professional Backgrounds</h3>
-                        <p class="text-xs text-gray-600 leading-relaxed">Four background styles — blurred mirror, solid color, gradient wash, and pattern fill — replace ugly black bars with clean, professional designs.</p>
+                        <p class="text-sm text-gray-600 leading-relaxed">Four background styles — blurred mirror, solid color, gradient wash, and pattern fill — replace ugly black bars with clean, professional designs.</p>
                     </div>
                 </div>
             </section>
@@ -239,7 +246,7 @@ const jsonLdFaq = JSON.stringify({
                             {{ faq.q }}
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-500 transition-transform group-open:rotate-180 shrink-0 ml-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
                         </summary>
-                        <p class="px-5 pb-4 text-xs text-gray-600 leading-relaxed">{{ faq.a }}</p>
+                        <p class="px-5 pb-4 text-sm text-gray-600 leading-relaxed">{{ faq.a }}</p>
                     </details>
                 </div>
             </section>
@@ -268,7 +275,7 @@ const jsonLdFaq = JSON.stringify({
                         </div>
                         <span class="text-xs text-gray-500">ConvertPortrait.com</span>
                     </div>
-                    <p class="text-[11px] text-gray-500 text-center leading-relaxed">
+                    <p class="text-xs text-gray-500 text-center leading-relaxed">
                         Free video aspect ratio converter. Change 9:16 to 16:9 in your browser — no upload, no software required.
                     </p>
                 </div>

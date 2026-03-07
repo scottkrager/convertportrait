@@ -25,9 +25,9 @@ defineProps({
 
     <div class="min-h-screen bg-midnight text-white noise-bg mesh-gradient flex flex-col">
         <!-- Header -->
-        <header class="border-b border-gray-200">
+        <header class="border-b border-gray-200/80 bg-white/60 backdrop-blur-sm sticky top-0 z-50">
             <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-                <div class="flex items-center gap-6">
+                <div class="flex items-center gap-8">
                     <a href="/" class="flex items-center gap-2.5">
                         <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-pink-400 to-purple-400 flex items-center justify-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 20 20" fill="currentColor">
@@ -36,17 +36,15 @@ defineProps({
                         </div>
                         <span class="text-[15px] font-bold tracking-tight text-gray-900">ConvertPortrait</span>
                     </a>
-                    <nav class="hidden sm:flex items-center gap-4 text-sm text-gray-600">
-                        <a href="/" class="hover:text-gray-600 transition">Tool</a>
-                        <a href="/pricing" class="hover:text-gray-600 transition">Pricing</a>
-                        <a href="/blog" class="hover:text-gray-600 transition">Blog</a>
+                    <nav class="hidden sm:flex items-center gap-5 text-sm font-medium text-gray-500">
+                        <a href="/" class="hover:text-gray-900 transition">Tool</a>
+                        <a href="/pricing" class="hover:text-gray-900 transition">Pricing</a>
+                        <a href="/blog" class="hover:text-gray-900 transition">Blog</a>
                     </nav>
                 </div>
-                <div class="flex items-center gap-3">
-                    <a href="/" class="text-xs font-semibold text-white bg-gradient-to-r from-pink-400 to-purple-400 px-4 py-2 rounded-full hover:opacity-90 transition">
-                        Convert Now
-                    </a>
-                </div>
+                <a href="/" class="text-sm font-semibold text-white bg-gradient-to-r from-pink-400 to-purple-400 px-5 py-2 rounded-full hover:opacity-90 transition shadow-sm">
+                    Convert Now
+                </a>
             </div>
         </header>
 

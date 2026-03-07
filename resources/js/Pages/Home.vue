@@ -649,7 +649,7 @@ onUnmounted(() => {
     <div class="min-h-screen bg-midnight text-gray-900 noise-bg mesh-gradient">
 
         <!-- Header -->
-        <header class="border-b border-gray-200">
+        <header class="border-b border-gray-200/80 bg-white/60 backdrop-blur-sm sticky top-0 z-50">
             <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
                 <div class="flex items-center gap-2.5">
                     <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-pink-400 to-purple-400 flex items-center justify-center">
@@ -661,9 +661,9 @@ onUnmounted(() => {
                 </div>
                 <div class="flex items-center gap-3">
                     <!-- Privacy badge -->
-                    <nav class="hidden sm:flex items-center gap-4 text-sm text-gray-600">
-                        <a href="/pricing" class="hover:text-gray-600 transition">Pricing</a>
-                        <a href="/blog" class="hover:text-gray-600 transition">Blog</a>
+                    <nav class="hidden sm:flex items-center gap-5 text-sm font-medium text-gray-500">
+                        <a href="/pricing" class="hover:text-gray-900 transition">Pricing</a>
+                        <a href="/blog" class="hover:text-gray-900 transition">Blog</a>
                     </nav>
                     <!-- Pro badge or upgrade button -->
                     <button

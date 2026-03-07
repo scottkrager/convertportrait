@@ -68,18 +68,25 @@ const jsonLdFaq = JSON.stringify({
 
     <div class="min-h-screen bg-midnight text-gray-900 noise-bg mesh-gradient">
         <!-- Header -->
-        <header class="border-b border-gray-200">
+        <header class="border-b border-gray-200/80 bg-white/60 backdrop-blur-sm sticky top-0 z-50">
             <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-                <Link href="/" class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-pink-400 to-purple-400 flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M3 4a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 12a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H4a1 1 0 01-1-1v-4zM11 4a1 1 0 011-1h4a1 1 0 011 1v12a1 1 0 01-1 1h-4a1 1 0 01-1-1V4z" />
-                        </svg>
-                    </div>
-                    <span class="text-[15px] font-bold tracking-tight text-gray-900">ConvertPortrait</span>
-                </Link>
-                <Link href="/" class="text-xs font-semibold text-teal bg-teal/[0.08] hover:bg-teal/[0.14] px-4 py-2 rounded-full border border-teal/15 transition-all">
-                    Open Tool
+                <div class="flex items-center gap-8">
+                    <Link href="/" class="flex items-center gap-2.5">
+                        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-pink-400 to-purple-400 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M3 4a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 12a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H4a1 1 0 01-1-1v-4zM11 4a1 1 0 011-1h4a1 1 0 011 1v12a1 1 0 01-1 1h-4a1 1 0 01-1-1V4z" />
+                            </svg>
+                        </div>
+                        <span class="text-[15px] font-bold tracking-tight text-gray-900">ConvertPortrait</span>
+                    </Link>
+                    <nav class="hidden sm:flex items-center gap-5 text-sm font-medium text-gray-500">
+                        <Link href="/" class="hover:text-gray-900 transition">Tool</Link>
+                        <Link href="/pricing" class="hover:text-gray-900 transition">Pricing</Link>
+                        <Link href="/blog" class="hover:text-gray-900 transition">Blog</Link>
+                    </nav>
+                </div>
+                <Link href="/" class="text-sm font-semibold text-white bg-gradient-to-r from-pink-400 to-purple-400 px-5 py-2 rounded-full hover:opacity-90 transition shadow-sm">
+                    Convert Now
                 </Link>
             </div>
         </header>
@@ -147,17 +154,17 @@ const jsonLdFaq = JSON.stringify({
                     <div class="text-center">
                         <div class="w-10 h-10 mx-auto mb-4 rounded-full bg-teal/10 border border-teal/10 flex items-center justify-center text-sm font-bold text-teal">1</div>
                         <h3 class="text-sm font-semibold text-gray-600 mb-2">Upload Your TikTok</h3>
-                        <p class="text-xs text-gray-600 leading-relaxed">Save your TikTok video to your device, then drag and drop it into ConvertPortrait. Supports MP4, MOV, WebM, and AVI.</p>
+                        <p class="text-sm text-gray-600 leading-relaxed">Save your TikTok video to your device, then drag and drop it into ConvertPortrait. Supports MP4, MOV, WebM, and AVI.</p>
                     </div>
                     <div class="text-center">
                         <div class="w-10 h-10 mx-auto mb-4 rounded-full bg-teal/10 border border-teal/10 flex items-center justify-center text-sm font-bold text-teal">2</div>
                         <h3 class="text-sm font-semibold text-gray-600 mb-2">Choose a Background</h3>
-                        <p class="text-xs text-gray-600 leading-relaxed">Pick from blurred mirror, solid color, gradient wash, or geometric pattern to fill the sides of your landscape video.</p>
+                        <p class="text-sm text-gray-600 leading-relaxed">Pick from blurred mirror, solid color, gradient wash, or geometric pattern to fill the sides of your landscape video.</p>
                     </div>
                     <div class="text-center">
                         <div class="w-10 h-10 mx-auto mb-4 rounded-full bg-teal/10 border border-teal/10 flex items-center justify-center text-sm font-bold text-teal">3</div>
                         <h3 class="text-sm font-semibold text-gray-600 mb-2">Download for YouTube</h3>
-                        <p class="text-xs text-gray-600 leading-relaxed">Get a 1920x1080 landscape video ready to upload to YouTube, embed in presentations, or share anywhere widescreen is expected.</p>
+                        <p class="text-sm text-gray-600 leading-relaxed">Get a 1920x1080 landscape video ready to upload to YouTube, embed in presentations, or share anywhere widescreen is expected.</p>
                     </div>
                 </div>
             </section>
@@ -237,7 +244,7 @@ const jsonLdFaq = JSON.stringify({
                             {{ faq.q }}
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-500 transition-transform group-open:rotate-180 shrink-0 ml-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
                         </summary>
-                        <p class="px-5 pb-4 text-xs text-gray-600 leading-relaxed">{{ faq.a }}</p>
+                        <p class="px-5 pb-4 text-sm text-gray-600 leading-relaxed">{{ faq.a }}</p>
                     </details>
                 </div>
             </section>
@@ -266,7 +273,7 @@ const jsonLdFaq = JSON.stringify({
                         </div>
                         <span class="text-xs text-gray-500">ConvertPortrait.com</span>
                     </div>
-                    <p class="text-[11px] text-gray-500 text-center leading-relaxed">
+                    <p class="text-xs text-gray-500 text-center leading-relaxed">
                         Free online video converter. Convert TikTok, Reels, and Shorts to landscape format.
                         100% browser-based in free mode — your video never leaves your device.
                     </p>
