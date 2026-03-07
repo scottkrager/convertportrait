@@ -22,7 +22,7 @@ function formatDate(dateStr) {
         <div class="max-w-4xl mx-auto px-6 pt-16 sm:pt-24 pb-20">
             <!-- Hero -->
             <div class="text-center mb-14 stagger">
-                <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight mb-4">
+                <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight text-gray-900 mb-4">
                     The <span class="font-editorial font-normal text-teal">ConvertPortrait</span> Blog
                 </h1>
                 <p class="text-[15px] text-gray-600 max-w-lg mx-auto leading-relaxed">

@@ -23,7 +23,7 @@ defineProps({
         <meta v-if="metaDescription" name="twitter:description" :content="metaDescription" />
     </Head>
 
-    <div class="min-h-screen bg-midnight text-white noise-bg mesh-gradient flex flex-col">
+    <div class="min-h-screen bg-midnight text-gray-900 noise-bg mesh-gradient flex flex-col">
         <!-- Header -->
         <header class="border-b border-gray-200/80 bg-white/60 backdrop-blur-sm sticky top-0 z-50">
             <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
